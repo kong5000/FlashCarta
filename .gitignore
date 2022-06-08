@@ -2,3 +2,4 @@
 /audio
 config.json
 keyfile.json
+.env

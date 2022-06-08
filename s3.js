@@ -1,4 +1,6 @@
 var AWS = require('aws-sdk');
+const fs = require('fs');
+
 AWS.config.loadFromPath('./config.json');
 
 AWS.config.update({region: 'us-west-1'});
@@ -14,5 +16,24 @@ function getSignedAudioUrl(key){
     console.log('The URL is', url);
 }
 
-getSignedAudioUrl('test-audio.mp3')
+
+
+async function uploadToAudioBucket(BUCKET_NAME, filename, fileContent){
+      try {
+        const params = {
+            Bucket: BUCKET_NAME,
+            Key: filename,
+            Body: fileContent
+          }
+        const stored = await s3.upload(params).promise()
+        console.log(stored);
+      } catch (err) {
+        console.log(err)
+      }
+}
+
+module.exports = {
+    uploadToAudioBucket,
+    getSignedAudioUrl
+}
 
