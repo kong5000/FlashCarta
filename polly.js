@@ -8,7 +8,7 @@ const Polly = new AWS.Polly({
 });
 
 
-function pollyTextToSpeech(text, voiceId, engine) {
+function pollyTextToSpeech(text, outputFileName, voiceId, engine) {
     //Additional param attributes https://docs.aws.amazon.com/polly/latest/dg/API_SynthesizeSpeech.html
     let params = {
         'Engine': engine,
@@ -23,7 +23,7 @@ function pollyTextToSpeech(text, voiceId, engine) {
         } else if (data) {
             if (data.AudioStream instanceof Buffer) {
                 //write Audio stream to file relative to this program
-                fs.writeFile("./speech2.mp3", data.AudioStream, function (err) {
+                fs.writeFile(`./audio/${outputFileName}.mp3`, data.AudioStream, function (err) {
                     if (err) {
                         return console.log(err)
                     }

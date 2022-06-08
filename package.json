@@ -11,5 +11,8 @@
   "dependencies": {
     "@google-cloud/text-to-speech": "^3.4.0",
     "aws-sdk": "^2.1145.0"
+  },
+  "devDependencies": {
+    "fast-csv": "^4.3.6"
   }
 }

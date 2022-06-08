@@ -1,4 +1,4 @@
 const {pollyTextToSpeech} = require('./polly')
 
-pollyTextToSpeech("Olá! Bem-vindo Marina", "Camila", "neural")
+pollyTextToSpeech("Olá! Bem-vindo Marina", "filename", "Camila", "neural")
 
