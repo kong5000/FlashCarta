@@ -21,14 +21,10 @@ Card Schema
 	word: string
 	definition(s):  array
 	ownerid? // null default, not null a user
-	difficulty {
-        number_of_ratings: 1200
-        average_difficulty: 4.5 //update averge difficulty with every user rating
-    }
 
 User Schema:
 	language(s)
-	deck (array of card id’s)
+	deck (array of card id’s) // unbound array
 	progress tracker ????
 	mistakes tracker
 	username

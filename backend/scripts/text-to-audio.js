@@ -1,5 +1,5 @@
 //script to read csv file of portuguese words and convert them to speech
-const { pollyTextToSpeech } = require('../polly')
+const { pollyTextToSpeech } = require('../../polly')
 const fs = require('fs');
 const path = require('path');
 const csv = require('fast-csv');
