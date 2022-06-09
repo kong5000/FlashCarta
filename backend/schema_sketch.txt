@@ -1,0 +1,39 @@
+Card Schema
+	obj_id
+
+	filename[
+		{
+            src: enum(human, polly, ibm)
+            name: string (human recorder name/id, or api voice name)
+		    filename/key:
+		    age:
+		    country:
+		    state:
+		    city:
+		    accent:
+		    gender:
+		}
+	]
+
+	language: string/enum
+	frequency order num
+	type(s): (adj/noun etc) array
+	word: string
+	definition(s):  array
+	ownerid? // null default, not null a user
+	difficulty {
+        number_of_ratings: 1200
+        average_difficulty: 4.5 //update averge difficulty with every user rating
+    }
+
+User Schema:
+	language(s)
+	deck (array of card id’s)
+	progress tracker ????
+	mistakes tracker
+	username
+	preferences
+	subscription status
+	custom card count
+	custom audio count
+	

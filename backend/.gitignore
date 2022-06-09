@@ -1,0 +1,5 @@
+/node_modules
+/audio
+config.json
+keyfile.json
+.env
