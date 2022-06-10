@@ -14,6 +14,7 @@ const definitionSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
     id: String, //same as firebase uuid
+    languages: Array, //{language: Portuguese, score: 1000}
     settings: Object,
 })
 const cardSchema = new mongoose.Schema({
@@ -23,6 +24,13 @@ const cardSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
 
+//Record statitistics after every session. Record user score for the day across all exercises completed.
+const dailyRecordSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    date: Date,
+    language: String,
+    score: Number
+})
 
 const Note = mongoose.model('Note', noteSchema)
 
