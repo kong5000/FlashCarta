@@ -36,9 +36,16 @@ const uiConfig = {
 const App = () => {
   const [user, setUser] = useState(false); // Local signed-in state.
 
-  const testBackend = () => {
-    console.log("TEST")
-    axios.post('http://localhost:5001/add-card', {user})
+  const testBackend = async () => {
+    try{
+      const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+      await axios.post('http://localhost:5001/add-card', {idToken})
+    }catch(err){
+      /**@todo trigger error message for user */
+      if(err.response){
+        console.log(err.response.data)
+      }
+    }
   }
   // // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {

@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const auth = require('./auth')
 
 const app = express()
 app.use(cors())
@@ -18,9 +19,8 @@ app.post('/signup', (req, res) => {
   //Create User doc (statistics, settings, progress)
 })
 
-app.post('/add-card', (req, res) => {
-  console.log(req.body)
-  console.log("Hello")
+app.post('/add-card', auth.isAuthorized, (req, res) => {
+  console.log(res.locals.user)
 })
 
 app.delete('/delete-card', (req, res) => {
