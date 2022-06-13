@@ -24,7 +24,8 @@ const cardSchema = new mongoose.Schema({
     definition: { type: mongoose.Schema.Types.ObjectId, ref: 'Definition' },
     difficultyHistory: Array, //Last 5
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-})
+}) 
+/**@todo index on user ID */
 
 //Record statitistics after every session. Record user score for the day across all exercises completed.
 const dailyRecordSchema = new mongoose.Schema({
@@ -34,7 +35,6 @@ const dailyRecordSchema = new mongoose.Schema({
     score: Number
 })
 
-/**@todo too many input parameters */
 const insertDefinitions = async (definitions) => {
     if(!Array.isArray(definitions)){}
 

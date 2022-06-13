@@ -4,6 +4,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAN1juJdKNwSJDoF69STf2qVVvNT3_DYss",
@@ -31,8 +32,14 @@ const uiConfig = {
 };
 
 
+
 const App = () => {
   const [user, setUser] = useState(false); // Local signed-in state.
+
+  const testBackend = () => {
+    console.log("TEST")
+    axios.post('http://localhost:5001/add-card', {user})
+  }
   // // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
     const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
@@ -57,6 +64,7 @@ const App = () => {
       <h1>My App</h1>
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
+      <button onClick={testBackend}>TEST</button>
     </div>
   );
 }

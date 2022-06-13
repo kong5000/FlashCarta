@@ -1,6 +1,12 @@
 const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+
 const app = express()
-const port = 3000
+app.use(cors())
+app.use(bodyParser.json())
+
+const port = 5001
 
 app.post('/login', (req, res) => {
   //Return Settings, Stats, and Card Stack
@@ -13,8 +19,8 @@ app.post('/signup', (req, res) => {
 })
 
 app.post('/add-card', (req, res) => {
-  const {user, word, definition, language} = req.body
-
+  console.log(req.body)
+  console.log("Hello")
 })
 
 app.delete('/delete-card', (req, res) => {
