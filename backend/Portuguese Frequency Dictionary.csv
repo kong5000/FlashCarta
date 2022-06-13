@@ -1,301 +1,205 @@
-Portuguese,Type,English,
-o,at,the,
-de,prp,from,
-em,prp,"in, on",
-em,cj,and,
-que,cj,"what, that, than",
-ser,v,to be,
-um,at,"a, one",
-por,prp,"by, through, for",
-para,prp,"to, for, in order to",
-a,prp,"to, at",
-não,av,"no, not",
-com ,prp,with,
-ter,v,to have,
-se,pn,"yourself, themself, themselves",
-o,pn,"it, him, her, them, you",
-seu,aj,"yours, theirs, his, hers",
-como,cj/av,"how, like",
-estar,v,to be,
-mais,aj/av,"more, most",
-mas,cj,but,
-fazer,v,"to make, to do",
-poder,v,to be able to,
-este,aj,this,
-ou,cj,"or, either",
-ele,pn,"he, it",
-esse,aj,that,
-outro,aj,"other, another",
-muito,aj/av,"very, much, many",
-haver,v,to have,
-ir,v,to go,
-todo,aj,"all, every",
-eu,pn,I,
-já,av,"already, now",
-dizer,v,to tell,
-ano,nm,year,
-dar,v,to give,
-também,av,also,
-quando,cj/av,when,
-mesmo,aj,same,
-ver,v,to see,
-até,prp,"until, even",
-dois,num,two,
-ainda,av,"still, yet",
-isso,pn,that,
-grande,aj,"big, grand",
-vez,nf,"time, turn",
-algum,aj,some,
-ela,pn,"she, it",
-depois,av,after,
-entre,prp,"between, among",
-dia,nm,day,
-só,av,"only, just",
-aquele,aj,that,
-sobre,prp,"about, over",
-primeiro,aj/av,first,
-ficar,v,"to stay, to become",
-dever,v,to owe,
-passar,v,"to go through, to spend time",
-saber,v,to know,
-assim,av,like this,
-querer,v,to want,
-onde,av,where,
-novo,aj,new,
-sem ,prp,without,
-vir,v,to come,
-tempo,nm,"time, weather",
-bem,av,"well, very",
-porque,cj,because,
-meu,aj,"my, mine",
-pessoa,nf,person,
-coisa,nf,thing,
-então,av,"then, so",
-quem,pn,whom,
-sempre,av,always,
-qual,aj,which,
-chegar,v,to arrive,
-vida,nf,life,
-pouco,aj/av,a little,
-homem,nm,man,
-parte,nf,part,
-tudo,pn,"everything, all",
-casa,nf,"house, home",
-agora,av,now,
-lhe,pn,"to you, to him, to her",
-trabalho,nm,work,
-nosso,aj,our,
-levar,v,to carry,
-pois,cj,"for, because",
-deixar,v,"to leave, allow",
-bom,aj,good,
-começar,v,"to begin, start",
-próprio,aj,very own,
-maior,aj,"greater, larger",
-caso,nm,case,
-falar,v,to speark,
-país,nm,country,
-forma,nf,"form, way",
-cada,aj,"each, every",
-hoje,n/av,today,
-nem,cj,"neither, not, nor",
-três,num,three,
-se,cj,if,
-encontrar,v,"to find, to meet",
-meio,n/aj/av,"way, half, middle",
-aqui,av,here,
-mundo,mn,world,
-apenas,av,"only, just",
-estado,nm,"state, condition",
-segundo,n/aj/prp,second,
-qualquer,pn,any,
-cidade,nf,city,
-menos,aj/av,"less, fewer",
-governo,nm,government,
-partir,v,to leave,
-conseguir,v,"to succeed, to be able to",
-tanto,aj/av,so much,
-lado,nm,side,
-chamar,v,to call,
-melhor,aj/av,"better, best",
-pensar,v,to think,
-nome,nm,name,
-isto,pn,this,
-certo,aj/av,"certain, right",
-mulher,nf,"woman, wife",
-conhecer,v,to know,
-exemplo,nm,example,
-existir,v,to exist,
-antes,av,before,
-tal,aj/av,such,
-você,pn,you,
-lá,av,there,
-durante,prp,during,
-terra,nf,"land, earth",
-último,aj,last,
-desde,prp,since,
-contra,prp,against,
-aí,av,there,
-parecer,v,to seem,
-pequeno,aj,small,
-quanto,aj/av,how much,
-nada,pn,nothing,
-português,na,Portuguese,
-filho,nm,son,
-tornar,v,"to become, to turn into",
-água,nf,water,
-direito,na,"right, law",
-público,na,public,
-entrar,v,to enter,
-problema,nm,problem,
-viver,v,to live,
-além,av,in addition to,
-pôr,v,"to put, to place",
-história,nf,"story, history",
-grupo,nm,group,
-hora,nf,hour,
-sair,v,to leave,
-acabar,v,"to finish, to end",
-continuar,v,to continue,
-tão,av,"so, as",
-nunca,av,never,
-dentro,av,"within, in",
-voltar,v,to return,
-tomar,v,"to take, to drink",
-obra,nf,"work, project",
-facto,nm,fact,
-ponto,nm,"point, period",
-trabalhar,v,to work,
-fim,nm,"purpose, end",
-quase,av,almost,parents (PL)
-pai,nm,father,
-apresentar,v,"to introduce, present",
-relação,nf,relation,
-criar,v,to create,
-considerar,v,to consider,
-momento,nm,moment,
-receber,v,to receive,
-ideia,nf,idea,
-política,nf,politics,
-vários,aj,"various, many",
-lugar,nm,place,
-sentir,v,to feel,
-livro,nm,book,
-nós,pn,"we, us",
-mês,nm,month,
-alto,na,"tall, high",
-força,nf,"force, power",
-acontecer,v,to happen,
-família,nf,family,
-tipo,nm,"type, like",
-presidente,nm,president,
-mil,num,thousand,
-tratar,v,to treat,
-enquanto,av,while,
-perder,v,to lose,
-achar,v,to find,
-escrever,v,to write,
-quatro,num,four,
-usar,v,to use,
-único,aj,"only, unique",
-nenhum,aj,none,
-contar,v,"to tell, to count",
-real,na,"real, royal, currency of Brazil",
-palavra,nf,word,
-embora,cj,"although, even though",
-diferente,,,
-possível,,,
-importante,,,
-mostrar,,,
-social,,,
-ali,,,
-claro,,,
-mão,,,
-logo,,,
-rio,,,
-seguir,,,
-situação,,,
-questão,,,
-procurar,,,
-campo,,,
-através,,,
-brasileiro,,,
-tentar,,,
-serviço,,,
-lei,,,
-criança,,,
-próximo,,,
-nacional,,,
-trazer,,,
-geral,,,
-frente,,,
-aparecer,,,
-manter,,,
-colocar,,,
-conta,,,
-pedir,,,
-cinco,,,
-escola,,,
-verdade,,,
-corpo,,,
-morrer,,,
-guerra,,,
-música,,,
-região,,,
-baixo,,,
-professor,,,
-longo,,,
-acção,,,
-entender,,,
-movimento,,,
-branco,,,
-processo,,,
-ganhar,,,
-arte,,,
-papel,,,
-sim,,,
-esperar,,,
-fundo,,,
-senhor,,,
-número,,,
-definir,,,
-tarde,,,
-abrir,,,
-sociedade,,,
-povo,,,
-forte,,,
-cabeça,,,
-altura,,,
-volta,,,
-condição,,,
-apesar,,,
-valor,,,
-mãe,,,
-servir,,,
-pagar,,,
-causa,,,
-antigo,,,
-maneira,,,
-humano,,,
-sentido,,,
-permitir,,,
-deus,,,
-modo,,,
-gente,,,
-imagem,,,
-época,,,
-noite,,,
-velho,,,
-cair,,,
-aquilo,,,
-projecto,,,
-final,,,
-acreditar,,,
-jornal,,,
-razão,,,
-espécie,,,
-junto,,,
-preciso,,,
-século,,,
-precisar,,,
-ler,,,
+word,type,definition,ranking
+o,at,the,1
+de,prp,from,2
+em,prp,"in, on",3
+e,cj,and,4
+que,cj,"what, that, than",5
+ser,v,to be,6
+um,at,"a, one",7
+por,prp,"by, through, for",8
+para,prp,"to, for, in order to",9
+a,prp,"to, at",10
+não,av,"no, not",11
+com ,prp,with,12
+ter,v,to have,13
+se,pn,"yourself, themself, themselves",14
+o,pn,"it, him, her, them, you",15
+seu,aj,"yours, theirs, his, hers",16
+como,cj/av,"how, like",17
+estar,v,to be,18
+mais,aj/av,"more, most",19
+mas,cj,but,20
+fazer,v,"to make, to do",21
+poder,v,to be able to,22
+este,aj,this,23
+ou,cj,"or, either",24
+ele,pn,"he, it",25
+esse,aj,that,26
+outro,aj,"other, another",27
+muito,aj/av,"very, much, many",28
+haver,v,to have,29
+ir,v,to go,30
+todo,aj,"all, every",31
+eu,pn,I,32
+já,av,"already, now",33
+dizer,v,to tell,34
+ano,nm,year,35
+dar,v,to give,36
+também,av,also,37
+quando,cj/av,when,38
+mesmo,aj,same,39
+ver,v,to see,40
+até,prp,"until, even",41
+dois,num,two,42
+ainda,av,"still, yet",43
+isso,pn,that,44
+grande,aj,"big, grand",45
+vez,nf,"time, turn",46
+algum,aj,some,47
+ela,pn,"she, it",48
+depois,av,after,49
+entre,prp,"between, among",50
+dia,nm,day,51
+só,av,"only, just",52
+aquele,aj,that,53
+sobre,prp,"about, over",54
+primeiro,aj/av,first,55
+ficar,v,"to stay, to become",56
+dever,v,to owe,57
+passar,v,"to go through, to spend time",58
+saber,v,to know,59
+assim,av,like this,60
+querer,v,to want,61
+onde,av,where,62
+novo,aj,new,63
+sem ,prp,without,64
+vir,v,to come,65
+tempo,nm,"time, weather",66
+bem,av,"well, very",67
+porque,cj,because,68
+meu,aj,"my, mine",69
+pessoa,nf,person,70
+coisa,nf,thing,71
+então,av,"then, so",72
+quem,pn,whom,73
+sempre,av,always,74
+qual,aj,which,75
+chegar,v,to arrive,76
+vida,nf,life,77
+pouco,aj/av,a little,78
+homem,nm,man,79
+parte,nf,part,80
+tudo,pn,"everything, all",81
+casa,nf,"house, home",82
+agora,av,now,83
+lhe,pn,"to you, to him, to her",84
+trabalho,nm,work,85
+nosso,aj,our,86
+levar,v,to carry,87
+pois,cj,"for, because",88
+deixar,v,"to leave, allow",89
+bom,aj,good,90
+começar,v,"to begin, start",91
+próprio,aj,very own,92
+maior,aj,"greater, larger",93
+caso,nm,case,94
+falar,v,to speark,95
+país,nm,country,96
+forma,nf,"form, way",97
+cada,aj,"each, every",98
+hoje,n/av,today,99
+nem,cj,"neither, not, nor",100
+três,num,three,101
+se,cj,if,102
+encontrar,v,"to find, to meet",103
+meio,n/aj/av,"way, half, middle",104
+aqui,av,here,105
+mundo,mn,world,106
+apenas,av,"only, just",107
+estado,nm,"state, condition",108
+segundo,n/aj/prp,second,109
+qualquer,pn,any,110
+cidade,nf,city,111
+menos,aj/av,"less, fewer",112
+governo,nm,government,113
+partir,v,to leave,114
+conseguir,v,"to succeed, to be able to",115
+tanto,aj/av,so much,116
+lado,nm,side,117
+chamar,v,to call,118
+melhor,aj/av,"better, best",119
+pensar,v,to think,120
+nome,nm,name,121
+isto,pn,this,122
+certo,aj/av,"certain, right",123
+mulher,nf,"woman, wife",124
+conhecer,v,to know,125
+exemplo,nm,example,126
+existir,v,to exist,127
+antes,av,before,128
+tal,aj/av,such,129
+você,pn,you,130
+lá,av,there,131
+durante,prp,during,132
+terra,nf,"land, earth",133
+último,aj,last,134
+desde,prp,since,135
+contra,prp,against,136
+aí,av,there,137
+parecer,v,to seem,138
+pequeno,aj,small,139
+quanto,aj/av,how much,140
+nada,pn,nothing,141
+português,na,Portuguese,142
+filho,nm,son,143
+tornar,v,"to become, to turn into",144
+água,nf,water,145
+direito,na,"right, law",146
+público,na,public,147
+entrar,v,to enter,148
+problema,nm,problem,149
+viver,v,to live,150
+além,av,in addition to,151
+pôr,v,"to put, to place",152
+história,nf,"story, history",153
+grupo,nm,group,154
+hora,nf,hour,155
+sair,v,to leave,156
+acabar,v,"to finish, to end",157
+continuar,v,to continue,158
+tão,av,"so, as",159
+nunca,av,never,160
+dentro,av,"within, in",161
+voltar,v,to return,162
+tomar,v,"to take, to drink",163
+obra,nf,"work, project",164
+facto,nm,fact,165
+ponto,nm,"point, period",166
+trabalhar,v,to work,167
+fim,nm,"purpose, end",168
+quase,av,almost,169
+pai,nm,father,170
+apresentar,v,"to introduce, present",171
+relação,nf,relation,172
+criar,v,to create,173
+considerar,v,to consider,174
+momento,nm,moment,175
+receber,v,to receive,176
+ideia,nf,idea,177
+política,nf,politics,178
+vários,aj,"various, many",179
+lugar,nm,place,180
+sentir,v,to feel,181
+livro,nm,book,182
+nós,pn,"we, us",183
+mês,nm,month,184
+alto,na,"tall, high",185
+força,nf,"force, power",186
+acontecer,v,to happen,187
+família,nf,family,188
+tipo,nm,"type, like",189
+presidente,nm,president,190
+mil,num,thousand,191
+tratar,v,to treat,192
+enquanto,av,while,193
+perder,v,to lose,194
+achar,v,to find,195
+escrever,v,to write,196
+quatro,num,four,197
+usar,v,to use,198
+único,aj,"only, unique",199
+nenhum,aj,none,200
+contar,v,"to tell, to count",201
+real,na,"real, royal, currency of Brazil",202
+palavra,nf,word,203
+embora,cj,"although, even though",204

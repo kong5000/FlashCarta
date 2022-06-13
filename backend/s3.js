@@ -16,8 +16,6 @@ function getSignedAudioUrl(key){
     console.log('The URL is', url);
 }
 
-
-
 async function uploadToAudioBucket(BUCKET_NAME, filename, fileContent){
       try {
         const params = {

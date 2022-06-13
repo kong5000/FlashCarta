@@ -1,16 +1,18 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
-
-const url = process.env.MONGO_CONNECTION
+mongoose.connect(process.env.MONGO_CONNECTION)
 
 const definitionSchema = new mongoose.Schema({
     language: String,
     ranking: Number, //the most common word of a language would have ranking 1
-    word: String, //word in foreign language
-    definition: String, //definition in english
+    word: { type : String, required : true }, //word in foreign language
+    definition: { type : String, required : true }, //definition in english
     type: String, //adjective, verb etc...
-    owner: String //Either a user ID for user made definitions or null for default definitions
+    creator: String //Either a user ID for user made definitions or null for default definitions
 })
+
+//Enforce 1 definition for each word in each language
+definitionSchema.index({ "language": 1, "word": 1, "ranking": 1}, { "unique": true });
 
 const userSchema = new mongoose.Schema({
     id: String, //same as firebase uuid
@@ -20,7 +22,7 @@ const userSchema = new mongoose.Schema({
 const cardSchema = new mongoose.Schema({
     lastSeen: Date,
     definition: { type: mongoose.Schema.Types.ObjectId, ref: 'Definition' },
-    difficultyHistory: Array,
+    difficultyHistory: Array, //Last 5
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
 
@@ -32,23 +34,34 @@ const dailyRecordSchema = new mongoose.Schema({
     score: Number
 })
 
-const Note = mongoose.model('Note', noteSchema)
+/**@todo too many input parameters */
+const insertDefinitions = async (definitions) => {
+    if(!Array.isArray(definitions)){}
 
-mongoose
-    .connect(url)
-    .then((result) => {
-        console.log('connected')
+    let models = definitions.map(def => {  
+        const {language, ranking, word, definition, type, creator} = def
+        const definitionModel = mongoose.model('Definition', definitionSchema)
 
-        const note = new Note({
-            content: 'AAAA',
-            date: new Date(),
-            important: true,
+        return newDefinition = new definitionModel({
+            language,
+            ranking,
+            word,
+            definition,
+            type,
+            creator
         })
+    })
+    try{
+        await Promise.all(models.map(model => model.save()))
+        console.log("All definitions saved in db")
+    }catch(err){
+        console.log(err)
+    }
 
-        return note.save()
-    })
-    .then(() => {
-        console.log('note saved!')
-        return mongoose.connection.close()
-    })
-    .catch((err) => console.log(err))
+}
+
+module.exports = {
+    insertDefinitions
+}
+
+ 
