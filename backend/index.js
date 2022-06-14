@@ -6,6 +6,7 @@ const auth = require('./auth')
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
+// app.use(auth.isAuthorized) 
 
 const port = 5001
 
@@ -21,6 +22,11 @@ app.post('/signup', (req, res) => {
 
 app.post('/add-card', auth.isAuthorized, (req, res) => {
   console.log(res.locals.user)
+})
+
+app.get('/get-deck', auth.isAuthorized, (req, res) => {
+  console.log(res.locals.user)
+
 })
 
 app.delete('/delete-card', (req, res) => {

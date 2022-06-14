@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import FirebaseLogin from './firebase'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAN1juJdKNwSJDoF69STf2qVVvNT3_DYss",
@@ -17,29 +16,15 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-const uiConfig = {
-  // Popup signin flow rather than redirect flow.
-  signInFlow: 'popup',
-  // We will display Google and Facebook as auth providers.
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID
-  ],
-  callbacks: {
-    // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => false,
-  },
-};
-
-
-
 const App = () => {
   const [user, setUser] = useState(false); // Local signed-in state.
 
   const testBackend = async () => {
     try{
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-      await axios.post('http://localhost:5001/add-card', {idToken})
+      console.log(idToken)
+      // await axios.post('http://localhost:5001/add-card', {idToken})
+      await axios.get('http://localhost:5001/get-deck', { headers: {"Authorization" : `Bearer ${idToken}`} });
     }catch(err){
       /**@todo trigger error message for user */
       if(err.response){
@@ -51,9 +36,6 @@ const App = () => {
   useEffect(() => {
     const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       setUser(user);
-      console.log(user)
-      console.log(user.displayName)
-
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
@@ -62,7 +44,7 @@ const App = () => {
       <div>
         <h1>My App</h1>
         <p>Please sign-in:</p>
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        <FirebaseLogin setUser={setUser}/>
       </div>
     );
   }
