@@ -23,10 +23,12 @@ const userSchema = new mongoose.Schema({
 })
 const cardSchema = new mongoose.Schema({
     lastSeen: Date,
-    definition: { type: mongoose.Schema.Types.ObjectId, ref: 'Definition' },
-    difficultyHistory: Array, //Last 5
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    definition: { type: mongoose.Schema.Types.ObjectId, ref: 'Definition', required: true },
+    difficultyHistory: { type: Array, default: [null, null, null, null] },
+    user: { type: String, required: true }
 })
+const cardModel = mongoose.model('Card', cardSchema)
+
 /**@todo index on user ID */
 
 //Record statitistics after every session. Record user score for the day across all exercises completed.
@@ -71,11 +73,38 @@ const insertDefinitions = async (definitions) => {
     } catch (err) {
         console.log(err)
     }
+}
+
+const upsertCard = async (userId, card) => {
+    //Check if exists
+    // Get previous array
+    // [1, 2, 3, 4, 5]
+    // difficultyHistory.pop()
+    // difficultyHistory.push(newRating)
+    // update lastScene
+    //Create new card
+    const existingCard = await cardModel.findOne({user: userId, definition: card._id})
+    console.log(existingCard)
+    if(existingCard){
+        const difficultyHistory = existingCard.difficultyHistory
+        difficultyHistory.pop()
+        difficultyHistory.unshift(card.rating)
+        await cardModel.updateOne({_id :existingCard._id}, {difficultyHistory})
+        console.log("card updated")
+        return
+    }
+    const newCard = new cardModel({
+        lastSeen: Date.now(),
+        definition: card._id,
+        user: userId
+    })
+    await newCard.save()
 
 }
 
 module.exports = {
     insertDefinitions,
-    getDefinitions
+    getDefinitions,
+    upsertCard
 }
 

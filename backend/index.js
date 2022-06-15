@@ -2,9 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { getDefinitions } = require('./mongo')
+const { getDefinitions, upsertCard } = require('./mongo')
 const app = express()
-const NodeCache = require( "node-cache" );
+const NodeCache = require("node-cache");
 const cache = new NodeCache();
 
 app.use(cors())
@@ -23,9 +23,16 @@ app.post('/signup', (req, res) => {
   //Create User doc (statistics, settings, progress)
 })
 
-app.post('/add-card', auth.isAuthorized, (req, res) => {
+app.post('/add-card', auth.isAuthorized, async (req, res) => {
   //Attach existing definition id and upload a card to mongo
-  console.log(res.locals.user)
+  const userId = res.locals.user.user_id
+  const card = req.body
+  try {
+    await upsertCard(userId, card)
+  } catch (err) {
+    console.log(err)
+    return res.status(400).send("Unable to upsert card to mongo")
+  }
 })
 
 app.post('/add-custom-card', auth.isAuthorized, (req, res) => {
@@ -50,12 +57,12 @@ app.get('/get-deck/:language/:set', auth.isAuthorized, async (req, res) => {
   const start = set * SET_SIZE
   const end = start + SET_SIZE
   try {
-    let deck = cache.get( `${language + set}` );
-    if ( deck == undefined ){
+    let deck = cache.get(`${language + set}`);
+    if (deck == undefined) {
       console.log("Set not cached, retrieving from database")
       deck = await getDefinitions(language, start, end)
       const success = cache.set(`${language + set}`, deck)
-    }else{
+    } else {
       console.log(`Successfully retrieved ${language} set ${set} from cache`)
     }
     return res.status(200).send(deck)
@@ -63,6 +70,11 @@ app.get('/get-deck/:language/:set', auth.isAuthorized, async (req, res) => {
     console.log(err)
     return res.status(400).send("Could not retrieve deck definitions")
   }
+})
+
+app.get('/cards', auth.isAuthorized, (req, res) => {
+  const user = res.locals.user
+  //Query mongo for user cards
 })
 
 app.delete('/delete-card', (req, res) => {
