@@ -4,6 +4,9 @@ const bodyParser = require('body-parser')
 const auth = require('./auth')
 const { getDefinitions } = require('./mongo')
 const app = express()
+const NodeCache = require( "node-cache" );
+const cache = new NodeCache();
+
 app.use(cors())
 app.use(bodyParser.json())
 // app.use(auth.isAuthorized) 
@@ -27,9 +30,7 @@ app.post('/add-card', auth.isAuthorized, (req, res) => {
 app.get('/get-deck/:language/:start/:end', auth.isAuthorized, async (req, res) => {
   const { language, start, end } = req.params
   try {
-    console.log(res.locals.user)
     const deck = await getDefinitions(language, start, end)
-    console.log(deck)
     return res.status(200).send(deck)
   } catch (err) {
     console.log(err)
@@ -42,9 +43,13 @@ app.get('/get-deck/:language/:set', auth.isAuthorized, async (req, res) => {
   const start = set * SET_SIZE
   const end = start + SET_SIZE
   try {
-    console.log(res.locals.user)
-    const deck = await getDefinitions(language, start, end)
-    console.log(deck)
+    let deck = cache.get( `${language + set}` );
+    if ( deck == undefined ){
+      console.log("Set not cached, retrieving from database")
+      deck = await getDefinitions(language, start, end)
+    }else{
+      console.log(`Successfully retrieved ${language} set ${set} from cache`)
+    }
     return res.status(200).send(deck)
   } catch (err) {
     console.log(err)
@@ -52,10 +57,14 @@ app.get('/get-deck/:language/:set', auth.isAuthorized, async (req, res) => {
   }
 })
 
-
-
 app.delete('/delete-card', (req, res) => {
 
+})
+
+app.delete('/flush-cache', (req, res) => {
+  /**@todo endpoint to flush cache without restarting the server, admin access only */
+  // When word definitions are updated, need to flush cache
+  // cache.flushAll()
 })
 
 app.listen(port, () => {
