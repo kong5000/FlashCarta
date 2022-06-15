@@ -24,6 +24,13 @@ app.post('/signup', (req, res) => {
 })
 
 app.post('/add-card', auth.isAuthorized, (req, res) => {
+  //Attach existing definition id and upload a card to mongo
+  console.log(res.locals.user)
+})
+
+app.post('/add-custom-card', auth.isAuthorized, (req, res) => {
+  //Create new definition object upload to mongo
+  //Attach new definition id to card object and upload card to mongo
   console.log(res.locals.user)
 })
 
@@ -47,6 +54,7 @@ app.get('/get-deck/:language/:set', auth.isAuthorized, async (req, res) => {
     if ( deck == undefined ){
       console.log("Set not cached, retrieving from database")
       deck = await getDefinitions(language, start, end)
+      const success = cache.set(`${language + set}`, deck)
     }else{
       console.log(`Successfully retrieved ${language} set ${set} from cache`)
     }

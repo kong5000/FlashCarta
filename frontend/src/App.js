@@ -2,8 +2,10 @@ import './App.css';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getDeck, addCard } from './services/api';
 import FirebaseLogin from './firebase'
+import Card from './Card'
+import { getContrastRatio } from '@mui/material';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAN1juJdKNwSJDoF69STf2qVVvNT3_DYss",
@@ -18,16 +20,33 @@ firebase.initializeApp(firebaseConfig);
 
 const App = () => {
   const [user, setUser] = useState(false); // Local signed-in state.
+  const [cardOpen, setCardOpen] = useState(false)
+  const [activeCardIndex, setActiveCardIndex] = useState(0)
+  const [deck, setDeck] = useState(null)
 
+  const handleKeyDown = (e) => {
+    if(cardOpen){
+      if(e.key === " " || e.key === "Enter") return //Space and enter seem to convert to numbers, reject them explicitly
+
+      if(Number.isInteger(Number(e.key)) && Number(e.key) <= 3){
+        setActiveCardIndex(activeCardIndex + 1)
+        setCardOpen(false)
+      }
+    }else{
+      if(e.key == " " || e.key == "Enter"){
+        setCardOpen(true)
+      }
+    }
+  }
   const testBackend = async () => {
-    try{
+    try {
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-      console.log(idToken)
-      // await axios.post('http://localhost:5001/add-card', {idToken})
-      await axios.get('http://localhost:5001/get-deck', { headers: {"Authorization" : `Bearer ${idToken}`} });
-    }catch(err){
+      const deck = await getDeck(idToken, "pt", 0)
+      console.log(deck)
+      setDeck(deck)
+    } catch (err) {
       /**@todo trigger error message for user */
-      if(err.response){
+      if (err.response) {
         console.log(err.response.data)
       }
     }
@@ -44,13 +63,17 @@ const App = () => {
       <div>
         <h1>My App</h1>
         <p>Please sign-in:</p>
-        <FirebaseLogin setUser={setUser}/>
+        <FirebaseLogin setUser={setUser} />
       </div>
     );
   }
   return (
-    <div>
+    <div id="main-div" onKeyDown={handleKeyDown}
+    tabIndex="0">
+      <Card setCardOpen={setCardOpen} cardOpen={cardOpen} activeCardIndex={activeCardIndex} deck={deck}/>
       <h1>My App</h1>
+      {cardOpen}
+
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
       <button onClick={testBackend}>TEST</button>
