@@ -12,32 +12,31 @@ const definitionSchema = new mongoose.Schema({
 })
 const definitionModel = mongoose.model('Definition', definitionSchema)
 
-
 //Enforce 1 definition for each word in each language
 definitionSchema.index({ "language": 1, "word": 1, "ranking": 1 }, { "unique": true });
 
 const userSchema = new mongoose.Schema({
     id: String, //same as firebase uuid
     languages: Array, //{language: Portuguese, score: 1000}
-    settings: Object,
+    comprehensionScaling: {type: Number, default: 1},
+    rankingScaling: {type: Number, default: 1}
 })
+
 const cardSchema = new mongoose.Schema({
     lastSeen: Date,
-    definition: { type: mongoose.Schema.Types.ObjectId, ref: 'Definition', required: true },
-    difficultyHistory: { type: Array, default: [null, null, null, null] },
-    user: { type: String, required: true }
-})
-const cardModel = mongoose.model('Card', cardSchema)
-
-/**@todo index on user ID */
-
-//Record statitistics after every session. Record user score for the day across all exercises completed.
-const dailyRecordSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    date: Date,
+    user: { type: String, required: true },
+    priority: { type: Number, required: true },
+    ignored: { type: Boolean, default: false },
     language: String,
-    score: Number
+    ranking: Number, //the most common word of a language would have ranking 1
+    word: { type: String, required: true }, //word in foreign language
+    definition: { type: String, required: true }, //definition in english
+    type: String, //adjective, verb etc...
+    creator: String //Either a user ID for user made definitions or null for default definitions
 })
+
+cardSchema.index({ user: 1, priority: 1, ignored: 1 })
+const cardModel = mongoose.model('Card', cardSchema)
 
 const getDefinitions = async (language, startRank, endRank) => {
     const definitions = await definitionModel.find(
@@ -75,36 +74,45 @@ const insertDefinitions = async (definitions) => {
     }
 }
 
-const upsertCard = async (userId, card) => {
-    //Check if exists
-    // Get previous array
-    // [1, 2, 3, 4, 5]
-    // difficultyHistory.pop()
-    // difficultyHistory.push(newRating)
-    // update lastScene
-    //Create new card
-    const existingCard = await cardModel.findOne({user: userId, definition: card._id})
-    console.log(existingCard)
-    if(existingCard){
-        const difficultyHistory = existingCard.difficultyHistory
-        difficultyHistory.pop()
-        difficultyHistory.unshift(card.rating)
-        await cardModel.updateOne({_id :existingCard._id}, {difficultyHistory})
-        console.log("card updated")
-        return
-    }
-    const newCard = new cardModel({
-        lastSeen: Date.now(),
-        definition: card._id,
-        user: userId
-    })
-    await newCard.save()
-
+const updateCardRating = async (user, comprehension) => {
+    const newRating = comprehension * user.comprehensionScaling
+    await cardModel.updateOne({ _id: existingCard._id }, { ranking: newRanking })
+    console.log("card updated")
 }
+
+const initializePriority = (card, user) => {
+    return card.ranking * user.rankingScaling
+}
+
+const generateDeck = async (deckRequest) => {
+    const { userId, language, start, end } = deckRequest
+    const definitions = await getDefinitions(language, start, end)
+    let cards = []
+    // let user = getUser(userId)
+    definitions.forEach(def => {
+        const newCard = {
+            lastSeen: Date.now(),
+            user: userId,
+            priority: initializePriority(card, user),
+            definition: def.definition,
+            word: def.word,
+            ranking: def.ranking,
+            language: def.language,
+            type: def.type,
+            creator: def.creator
+        }
+        cards.push(newCard)
+    })
+
+    cardModel.insertMany(cards, (err, docs) => {
+        console.log("Success!")
+    })
+}
+
+// generateDeck({ userId: "test", language:"pt", start:0, end:5 })
 
 module.exports = {
     insertDefinitions,
     getDefinitions,
-    upsertCard
+    updateCardRating
 }
-

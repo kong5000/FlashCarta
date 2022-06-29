@@ -1,11 +1,14 @@
 import './App.css';
 import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
+import 'firebase/compat/functions'
 import { useEffect, useState } from 'react';
-import { getDeck, addCard } from './services/api';
+import { getDeck, upsertCard } from './services/api';
 import FirebaseLogin from './firebase'
 import Card from './Card'
-import { getContrastRatio } from '@mui/material';
+import { loadStripe } from '@stripe/stripe-js';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAN1juJdKNwSJDoF69STf2qVVvNT3_DYss",
@@ -24,16 +27,22 @@ const App = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0)
   const [deck, setDeck] = useState(null)
 
-  const handleKeyDown = (e) => {
-    if(cardOpen){
-      if(e.key === " " || e.key === "Enter") return //Space and enter seem to convert to numbers, reject them explicitly
+  const options = {
+    // passing the client secret obtained from the server
+    clientSecret: '{{CLIENT_SECRET}}',
+  };
 
-      if(Number.isInteger(Number(e.key)) && Number(e.key) <= 3){
+  const handleKeyDown = (e) => {
+    if (cardOpen) {
+      if (e.key === " " || e.key === "Enter") return //Space and enter seem to convert to numbers, reject them explicitly
+
+      if (Number.isInteger(Number(e.key)) && Number(e.key) <= 3) {
+        recordCardRating(Number(e.key))
         setActiveCardIndex(activeCardIndex + 1)
         setCardOpen(false)
       }
-    }else{
-      if(e.key == " " || e.key == "Enter"){
+    } else {
+      if (e.key == " " || e.key == "Enter") {
         setCardOpen(true)
       }
     }
@@ -51,7 +60,50 @@ const App = () => {
       }
     }
   }
-  // // Listen to the Firebase Auth state and set the local state.
+  const recordCardRating = async (rating) => {
+    try {
+      const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+      await upsertCard(idToken, { ...deck[activeCardIndex], rating })
+    } catch (err) {
+      /**@todo trigger error message for user */
+      if (err.response) {
+        console.log(err.response.data)
+      }
+    }
+  }
+  const sendToCheckout = async () => {
+    let doc = await firebase.default
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .collection('checkout_sessions')
+      .add({
+        price: 'price_1LG1teHLjVvtqNCUyiUuVc0u',
+        success_url: window.location.origin,
+        cancel_url: window.location.origin
+      })
+      .then((docRef) => {
+        docRef.onSnapshot(async (snap) => {
+          const { error, sessionId } = snap.data()
+          if(error){
+            alert(`Error with firebase ${error.message}`)
+          }
+          if(sessionId){
+            const stripe = await loadStripe('pk_test_51HbtriHLjVvtqNCUdeNqD2LmQKxykYCZDPyA6U2iP8lWacRyJcF42XV9p8OtqHh5eiCykijbKaVTcKefoTEM3lOO00dGsZRblp');
+            await stripe.redirectToCheckout({sessionId})
+          }
+        })
+      })
+    console.log(doc)
+  }
+  const sendToCustomerPoral = async () => {
+    const functionRef = firebase
+    .functions()
+    .httpsCallable('ext-firestore-stripe-payments-createPortalLink')
+    const {data} = await functionRef({ returnUrl:window.location.origin})
+    window.location.assign(data.url)
+  }
+  // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
     const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       setUser(user);
@@ -69,14 +121,16 @@ const App = () => {
   }
   return (
     <div id="main-div" onKeyDown={handleKeyDown}
-    tabIndex="0">
-      <Card setCardOpen={setCardOpen} cardOpen={cardOpen} activeCardIndex={activeCardIndex} deck={deck}/>
+      tabIndex="0">
+      <Card setCardOpen={setCardOpen} cardOpen={cardOpen} activeCardIndex={activeCardIndex} deck={deck} />
       <h1>My App</h1>
       {cardOpen}
 
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
-      <button onClick={testBackend}>TEST</button>
+      <button onClick={sendToCheckout}>TEST HELLLO </button>
+      <button onClick={sendToCustomerPoral}>Customer Portal </button>
+
     </div>
   );
 }

@@ -13,6 +13,7 @@ export const getDeck = async (idToken, language, set) => {
     const res = await axios.get(BASE_URL + `/get-deck/${language}/${set}`, { headers: { "Authorization": `Bearer ${idToken}` } });
     return res.data
 }
-export const addCard = async (idToken, data) => {
-    await axios.post(BASE_URL + "/add-card", { headers: { "Authorization": `Bearer ${idToken}` } }, { data })
+
+export const upsertCard = async (idToken, card) => {
+    await axios.post(BASE_URL + "/add-card", card, { headers: { "Authorization": `Bearer ${idToken}` } })
 }

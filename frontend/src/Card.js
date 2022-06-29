@@ -33,7 +33,7 @@ export default function WordCard({setCardOpen, cardOpen, deck, activeCardIndex})
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
-        title=     {deck && deck[activeCardIndex].word}
+        title= {deck && deck[activeCardIndex].word}
       />
 
       <CardContent>
