@@ -42,7 +42,19 @@
   outline: none;
 }
 
-.icon{
-  width: 125px;
+.icon {
+  width: 110px;
+  margin: 20px;
   cursor: pointer;
+}
+
+.circle {
+  background-color: rgb(45, 222, 45);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  z-index: -4;
+  position: relative;
+  top: -105px;
+  left: 5px;
 }

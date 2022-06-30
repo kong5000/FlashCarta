@@ -14,7 +14,7 @@ function Icon() {
             renderer: "svg",
             loop: true,
             autoplay: false,
-            animationData: require("./13-pizza-outline-edited.json")
+            animationData: require("./13-pizza-flat-edited.json")
         });
 
         return () => {
@@ -24,23 +24,32 @@ function Icon() {
 
     return (
         <div className="icon">
-            <h1>React Lottie Demo</h1>
             <div
                 className="animation"
                 ref={container}
                 onMouseEnter={() => lottie.play()}
                 onMouseLeave={() => lottie.stop()}
             />
+            <div className="circle">
 
-            <Box sx={{ position: 'relative' }}>
+            </div>
+            <Box sx={{
+                position: 'relative',
+                top: -227,
+                left: -17,
+                zIndex: -2,
+            }}>
+
+
                 <CircularProgress
                     variant="determinate"
                     sx={{
+                        position: 'absolute',
                         color: (theme) =>
                             theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
                     }}
-                    size={100}
-                    thickness={4}
+                    size={145}
+                    thickness={3.5}
                     value={100}
                 />
                 <CircularProgress
@@ -48,7 +57,7 @@ function Icon() {
                     value={50}
                     disableShrink
                     sx={{
-                        color: (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),
+                        color: (theme) => (theme.palette.mode === 'light' ? '#ffd700' : '#ffd700'),
                         animationDuration: '550ms',
                         position: 'absolute',
                         left: 0,
@@ -56,8 +65,8 @@ function Icon() {
                             strokeLinecap: 'round',
                         },
                     }}
-                    size={100}
-                    thickness={4}
+                    size={145}
+                    thickness={3.5}
                 />
             </Box>
         </div>
