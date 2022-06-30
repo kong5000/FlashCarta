@@ -5,33 +5,64 @@ import CircularProgress, {
 } from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-function Icon() {
+function Icon(props) {
+    const { animation, progress } = props
+    let lottieAnimation = null
+    switch (animation) {
+        case "food":
+            lottieAnimation = require("./pizza.json")
+            break;
+        case "transport":
+            lottieAnimation = require("./electric-car.json")
+            break;
+        case "clothes":
+            lottieAnimation = require("./walking-person.json")
+            break;
+        case "body":
+            lottieAnimation = require("./heart.json")
+            break;
+        case "animals":
+            lottieAnimation = require("./turkey.json")
+            break;
+        case "blue-book":
+            lottieAnimation = require("./blue-book.json")
+            break;
+        case "red-book":
+            lottieAnimation = require("./red-book.json")
+            break;
+        case "brown-book":
+            lottieAnimation = require("./brown-book.json")
+            break;
+        case "black-book":
+            lottieAnimation = require("./black-book.json")
+            break;
+        default:
+            lottieAnimation = require("./lock.json")
+    }
     const container = useRef(null);
-
     useEffect(() => {
         lottie.loadAnimation({
+            name: animation,
             container: container.current,
             renderer: "svg",
             loop: true,
             autoplay: false,
-            animationData: require("./13-pizza-flat-edited.json")
+            animationData: lottieAnimation
         });
-
         return () => {
             lottie.destroy();
         };
-    }, []);
+    }, [animation]);
 
     return (
         <div className="icon">
             <div
                 className="animation"
                 ref={container}
-                onMouseEnter={() => lottie.play()}
+                onMouseEnter={() => lottie.play(animation)}
                 onMouseLeave={() => lottie.stop()}
             />
             <div className="circle">
-
             </div>
             <Box sx={{
                 position: 'relative',
@@ -39,8 +70,6 @@ function Icon() {
                 left: -17,
                 zIndex: -2,
             }}>
-
-
                 <CircularProgress
                     variant="determinate"
                     sx={{
@@ -54,7 +83,7 @@ function Icon() {
                 />
                 <CircularProgress
                     variant="determinate"
-                    value={50}
+                    value={progress}
                     disableShrink
                     sx={{
                         color: (theme) => (theme.palette.mode === 'light' ? '#ffd700' : '#ffd700'),

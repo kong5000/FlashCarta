@@ -124,7 +124,16 @@ const App = () => {
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
       <button onClick={sendToCheckout}>TEST HELLLO </button>
       <button onClick={sendToCustomerPoral}>Customer Portal </button>
-      <Icon/>
+      <Icon animation="locked" progress={10}/>
+      <Icon animation="food" progress={50}/>
+      <Icon animation="transport" progress={75}/>
+      <Icon animation="clothes" progress={100}/>
+      <Icon animation="body" progress={100}/>
+      <Icon animation="animals" progress={100}/>
+      <Icon animation="red-book" progress={100}/>
+      <Icon animation="blue-book" progress={100}/>
+      <Icon animation="brown-book" progress={100}/>
+      <Icon animation="black-book" progress={100}/>
     </div>
   );
 }
