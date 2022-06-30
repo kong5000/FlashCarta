@@ -41,3 +41,8 @@
 #main-div:focus {
   outline: none;
 }
+
+.icon{
+  width: 125px;
+  cursor: pointer;
+}

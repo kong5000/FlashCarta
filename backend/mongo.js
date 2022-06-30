@@ -19,7 +19,9 @@ const userSchema = new mongoose.Schema({
     id: String, //same as firebase uuid
     languages: Array, //{language: Portuguese, score: 1000}
     comprehensionScaling: {type: Number, default: 1},
-    rankingScaling: {type: Number, default: 1}
+    rankingScaling: {type: Number, default: 1},
+    subscription: String,
+    cardsPerSession: {type: Number, default: 15}
 })
 
 const cardSchema = new mongoose.Schema({
@@ -32,11 +34,17 @@ const cardSchema = new mongoose.Schema({
     word: { type: String, required: true }, //word in foreign language
     definition: { type: String, required: true }, //definition in english
     type: String, //adjective, verb etc...
-    creator: String //Either a user ID for user made definitions or null for default definitions
+    creator: String, //Either a user ID for user made definitions or null for default definitions,
+    category: String  //Parts of the body, actions, animals etc... //null for default cards
 })
 
-cardSchema.index({ user: 1, priority: 1, ignored: 1 })
+cardSchema.index({ user: 1, priority: 1, word: 1 })
 const cardModel = mongoose.model('Card', cardSchema)
+
+const cardGroud = new mongoose.Schema({
+    name: {type: String, required: true},
+    wordList: {type: Array, required: true}
+})
 
 const getDefinitions = async (language, startRank, endRank) => {
     const definitions = await definitionModel.find(

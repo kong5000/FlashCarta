@@ -8,8 +8,7 @@ import { getDeck, upsertCard } from './services/api';
 import FirebaseLogin from './firebase'
 import Card from './Card'
 import { loadStripe } from '@stripe/stripe-js';
-
-
+import Icon from './Icon'
 const firebaseConfig = {
   apiKey: "AIzaSyAN1juJdKNwSJDoF69STf2qVVvNT3_DYss",
   authDomain: "flash-card-app-351417.firebaseapp.com",
@@ -26,11 +25,6 @@ const App = () => {
   const [cardOpen, setCardOpen] = useState(false)
   const [activeCardIndex, setActiveCardIndex] = useState(0)
   const [deck, setDeck] = useState(null)
-
-  const options = {
-    // passing the client secret obtained from the server
-    clientSecret: '{{CLIENT_SECRET}}',
-  };
 
   const handleKeyDown = (e) => {
     if (cardOpen) {
@@ -130,7 +124,7 @@ const App = () => {
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
       <button onClick={sendToCheckout}>TEST HELLLO </button>
       <button onClick={sendToCustomerPoral}>Customer Portal </button>
-
+      <Icon/>
     </div>
   );
 }

@@ -2,15 +2,13 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { getDefinitions, upsertCard } = require('./mongo')
+const { getDefinitions } = require('./mongo')
 const app = express()
-const NodeCache = require("node-cache");
-const cache = new NodeCache();
 
 app.use(cors())
 app.use(bodyParser.json())
 // app.use(auth.isAuthorized) 
-const SET_SIZE = 25
+const SET_SIZE = 15
 const port = 5001
 
 app.post('/login', (req, res) => {
@@ -23,68 +21,20 @@ app.post('/signup', (req, res) => {
   //Create User doc (statistics, settings, progress)
 })
 
-app.post('/add-card', auth.isAuthorized, async (req, res) => {
-  //Attach existing definition id and upload a card to mongo
-  const userId = res.locals.user.user_id
-  const card = req.body
-  try {
-    await upsertCard(userId, card)
-  } catch (err) {
-    console.log(err)
-    return res.status(400).send("Unable to upsert card to mongo")
-  }
-})
-
 app.post('/add-custom-card', auth.isAuthorized, (req, res) => {
   //Create new definition object upload to mongo
   //Attach new definition id to card object and upload card to mongo
   console.log(res.locals.user)
 })
 
-app.get('/get-deck/:language/:start/:end', auth.isAuthorized, async (req, res) => {
-  const { language, start, end } = req.params
-  try {
-    const deck = await getDefinitions(language, start, end)
-    return res.status(200).send(deck)
-  } catch (err) {
-    console.log(err)
-    return res.status(400).send("Could not retrieve deck definitions")
-  }
-})
+app.get('/get-deck/:language/:userId', auth.isAuthorized, async (req, res) => {
+  const { language, userId } = req.params
+  //Get 15 of the lowest rank cards from userId
 
-app.get('/get-deck/:language/:set', auth.isAuthorized, async (req, res) => {
-  const { language, set } = req.params
-  const start = set * SET_SIZE
-  const end = start + SET_SIZE
-  try {
-    let deck = cache.get(`${language + set}`);
-    if (deck == undefined) {
-      console.log("Set not cached, retrieving from database")
-      deck = await getDefinitions(language, start, end)
-      const success = cache.set(`${language + set}`, deck)
-    } else {
-      console.log(`Successfully retrieved ${language} set ${set} from cache`)
-    }
-    return res.status(200).send(deck)
-  } catch (err) {
-    console.log(err)
-    return res.status(400).send("Could not retrieve deck definitions")
-  }
-})
-
-app.get('/cards', auth.isAuthorized, (req, res) => {
-  const user = res.locals.user
-  //Query mongo for user cards
 })
 
 app.delete('/delete-card', (req, res) => {
 
-})
-
-app.delete('/flush-cache', (req, res) => {
-  /**@todo endpoint to flush cache without restarting the server, admin access only */
-  // When word definitions are updated, need to flush cache
-  // cache.flushAll()
 })
 
 app.listen(port, () => {
