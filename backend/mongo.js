@@ -39,10 +39,10 @@ const cardSchema = new mongoose.Schema({
     category: String  //Parts of the body, actions, animals etc... //null for default cards
 })
 
-cardSchema.index({ user: 1, priority: 1, word: 1 })
+cardSchema.index({ user: 1, priority: 1, word: 1 }, { unique: true })
 const cardModel = mongoose.model('Card', cardSchema)
 
-const getDefinitions = async (language, startRank, endRank) => {
+const getDefinitionsByRanking = async (language, startRank, endRank) => {
     const definitions = await definitionModel.find(
         {
             language,
@@ -54,7 +54,12 @@ const getDefinitions = async (language, startRank, endRank) => {
     )
     return definitions
 }
-
+const getDefinitionsByCategory = async (language, category) => {
+    const definitions = await definitionModel.find(
+        { language, category }
+    )
+    return definitions
+}
 const insertDefinitions = async (definitions) => {
     if (!Array.isArray(definitions)) { }
 
@@ -106,8 +111,13 @@ const initializePriority = (card, user) => {
 }
 
 const generateDeck = async (deckRequest) => {
-    const { userId, language, start, end } = deckRequest
-    const definitions = await getDefinitions(language, start, end)
+    const { userId, language, start, end, category } = deckRequest
+    const definitions = null
+    if (category) {
+        definitions = await getDefinitionsByCategory(language, category)
+    } else {
+        definitions = await getDefinitionsByRanking(language, start, end)
+    }
     let cards = []
     // let user = getUser(userId)
     definitions.forEach(def => {
@@ -120,7 +130,8 @@ const generateDeck = async (deckRequest) => {
             ranking: def.ranking,
             language: def.language,
             type: def.type,
-            creator: def.creator
+            creator: def.creator,
+            category
         }
         cards.push(newCard)
     })
@@ -134,5 +145,6 @@ const generateDeck = async (deckRequest) => {
 
 module.exports = {
     insertDefinitions,
-    getDefinitions
+    getDefinitionsByRanking,
+    getDefinitionsByCategory
 }
