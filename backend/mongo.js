@@ -17,13 +17,14 @@ const definitionModel = mongoose.model('Definition', definitionSchema)
 definitionSchema.index({ "language": 1, "word": 1, "ranking": 1 }, { "unique": true });
 
 const userSchema = new mongoose.Schema({
-    id: String, //same as firebase uuid
-    languages: Array, //{language: Portuguese, score: 1000}
+    _id: String, //same as firebase uuid
+    languages: Array,
     comprehensionScaling: { type: Number, default: 1 },
     rankingScaling: { type: Number, default: 1 },
     subscription: String,
     cardsPerSession: { type: Number, default: 15 }
 })
+const userModel = mongoose.model('User', userSchema)
 
 const cardSchema = new mongoose.Schema({
     lastSeen: Date,
@@ -141,7 +142,7 @@ const generateDeck = async (deckRequest) => {
     })
     let promise = new Promise((resolve, reject) => {
         let newDeck = cardModel.insertMany(cards, (err, docs) => {
-            if(!err){
+            if (!err) {
                 resolve(docs)
             }
             reject(err)
@@ -153,11 +154,30 @@ const generateDeck = async (deckRequest) => {
 
 const getDeckByCategory = async (userId, language, category) => {
     const cards = await cardModel.find(
-        { language, category, user: userId}
+        { language, category, user: userId }
     )
     return cards
 }
 // generateDeck({ userId: "a", language:"pt", start:0, end:5, category: "clothing" })
+const createNewUserInfo = async (userId) => {
+    const newUserInfo = new userModel({
+        _id: userId,
+        languages: ['pt'],
+    })
+    let newUserDoc = await newUserInfo.save()
+    return newUserDoc
+}
+
+const getUserStatistics = async (userId) => {
+    const cards = await cardModel.find(
+        { user: userId }
+    )
+    const cardRatings = new Array(6).fill(0)
+    cards.forEach(card => {
+        cardRatings[card.priority] += 1
+    })
+    console.log(cardRatings)
+}
 
 module.exports = {
     insertDefinitions,
@@ -165,4 +185,5 @@ module.exports = {
     getDefinitionsByCategory,
     getDeckByCategory,
     generateDeck,
+    createNewUserInfo
 }
