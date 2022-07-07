@@ -127,7 +127,7 @@ const App = () => {
       <Icon animation="locked" progress={10}/>
       <Icon animation="food" progress={50}/>
       <Icon animation="transport" progress={75}/>
-      <Icon animation="clothes" progress={100}/>
+      <Icon animation="clothing" progress={100}/>
       <Icon animation="body" progress={100}/>
       <Icon animation="animals" progress={100}/>
       <Icon animation="red-book" progress={100}/>

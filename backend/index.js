@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { getDefinitions } = require('./mongo')
+const { getDefinitions, getDeckByCategory, generateDeck } = require('./mongo')
 const app = express()
 
 app.use(cors())
@@ -30,7 +30,20 @@ app.post('/add-custom-card', auth.isAuthorized, (req, res) => {
 app.get('/get-deck/:language/:userId', auth.isAuthorized, async (req, res) => {
   const { language, userId } = req.params
   //Get 15 of the lowest rank cards from userId
+})
 
+app.get('/get-deck-category/:language/:category', auth.isAuthorized, async (req, res) => {
+  const { language, category } = req.params
+  console.log(req.params)
+  const user = res.locals.user
+  let deck = await getDeckByCategory(user.uid, language, category)
+  if (deck.length === 0) {
+    console.log("generating deck")
+    const deckRequest = { userId: user.uid, language, category }
+    deck = await generateDeck(deckRequest)
+  }
+  console.log("return deck")
+  return res.status(200).send(deck)
 })
 
 app.delete('/delete-card', (req, res) => {

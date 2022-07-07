@@ -4,6 +4,8 @@ import CircularProgress, {
     circularProgressClasses,
 } from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { getDeckByCategory } from './services/api'
+import firebase from 'firebase/compat/app';
 
 function Icon(props) {
     const { animation, progress } = props
@@ -15,7 +17,7 @@ function Icon(props) {
         case "transport":
             lottieAnimation = require("./electric-car.json")
             break;
-        case "clothes":
+        case "clothing":
             lottieAnimation = require("./walking-person.json")
             break;
         case "body":
@@ -39,6 +41,7 @@ function Icon(props) {
         default:
             lottieAnimation = require("./lock.json")
     }
+
     const container = useRef(null);
     useEffect(() => {
         lottie.loadAnimation({
@@ -54,8 +57,15 @@ function Icon(props) {
         };
     }, [animation]);
 
+    const handleClick = async () => {
+        const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+
+        const deck = await getDeckByCategory( idToken,'pt', animation)
+        console.log(deck)
+    }
+
     return (
-        <div className="icon">
+        <div className="icon" onClick={handleClick}>
             <div
                 className="animation"
                 ref={container}

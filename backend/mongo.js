@@ -107,12 +107,13 @@ const getNumberOfMasteredCards = async (user, language) => {
 }
 
 const initializePriority = (card, user) => {
-    return card.ranking * user.rankingScaling
+    //Return 0 for now, maybe use user settings to set priority of card.
+    return 0
 }
 
 const generateDeck = async (deckRequest) => {
     const { userId, language, start, end, category } = deckRequest
-    const definitions = null
+    let definitions = null
     if (category) {
         definitions = await getDefinitionsByCategory(language, category)
     } else {
@@ -120,11 +121,14 @@ const generateDeck = async (deckRequest) => {
     }
     let cards = []
     // let user = getUser(userId)
+    let user = {
+        rankingScaling: 1
+    }
     definitions.forEach(def => {
         const newCard = {
             lastSeen: Date.now(),
             user: userId,
-            priority: initializePriority(card, user),
+            priority: initializePriority(def, user),
             definition: def.definition,
             word: def.word,
             ranking: def.ranking,
@@ -135,16 +139,30 @@ const generateDeck = async (deckRequest) => {
         }
         cards.push(newCard)
     })
-
-    cardModel.insertMany(cards, (err, docs) => {
-        console.log("Success!")
+    let promise = new Promise((resolve, reject) => {
+        let newDeck = cardModel.insertMany(cards, (err, docs) => {
+            if(!err){
+                resolve(docs)
+            }
+            reject(err)
+        })
     })
+    result = await promise
+    return result
 }
 
-// generateDeck({ userId: "test", language:"pt", start:0, end:5 })
+const getDeckByCategory = async (userId, language, category) => {
+    const cards = await cardModel.find(
+        { language, category, user: userId}
+    )
+    return cards
+}
+// generateDeck({ userId: "a", language:"pt", start:0, end:5, category: "clothing" })
 
 module.exports = {
     insertDefinitions,
     getDefinitionsByRanking,
-    getDefinitionsByCategory
+    getDefinitionsByCategory,
+    getDeckByCategory,
+    generateDeck,
 }
