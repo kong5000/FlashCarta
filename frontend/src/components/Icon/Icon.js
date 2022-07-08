@@ -10,34 +10,34 @@ function Icon(props) {
     let lottieAnimation = null
     switch (animation) {
         case "food":
-            lottieAnimation = require("./pizza.json")
+            lottieAnimation = require("./animations/pizza.json")
             break;
         case "transport":
-            lottieAnimation = require("./electric-car.json")
+            lottieAnimation = require("./animations/electric-car.json")
             break;
         case "clothing":
-            lottieAnimation = require("./walking-person.json")
+            lottieAnimation = require("./animations/walking-person.json")
             break;
         case "body":
-            lottieAnimation = require("./heart.json")
+            lottieAnimation = require("./animations/heart.json")
             break;
         case "animals":
-            lottieAnimation = require("./turkey.json")
+            lottieAnimation = require("./animations/turkey.json")
             break;
         case "blue-book":
-            lottieAnimation = require("./blue-book.json")
+            lottieAnimation = require("./animations/blue-book.json")
             break;
         case "red-book":
-            lottieAnimation = require("./red-book.json")
+            lottieAnimation = require("./animations/red-book.json")
             break;
         case "brown-book":
-            lottieAnimation = require("./brown-book.json")
+            lottieAnimation = require("./animations/brown-book.json")
             break;
         case "black-book":
-            lottieAnimation = require("./black-book.json")
+            lottieAnimation = require("./animations/black-book.json")
             break;
         default:
-            lottieAnimation = require("./lock.json")
+            lottieAnimation = require("./animations/lock.json")
     }
 
     const container = useRef(null);

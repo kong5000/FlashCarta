@@ -4,8 +4,7 @@ import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 import 'firebase/compat/functions'
 import { useEffect, useState } from 'react';
-import { getDeck, upsertCard, getDeckByCategory } from './services/api';
-import { loadStripe } from '@stripe/stripe-js';
+import { upsertCard } from '../services/api';
 import SignIn from './SignIn';
 import Dashboard from './Dashboard';
 import {
@@ -47,19 +46,7 @@ const App = () => {
       }
     }
   }
-  const testBackend = async () => {
-    try {
-      const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-      const deck = await getDeck(idToken, "pt", 0)
-      console.log(deck)
-      setDeck(deck)
-    } catch (err) {
-      /**@todo trigger error message for user */
-      if (err.response) {
-        console.log(err.response.data)
-      }
-    }
-  }
+
   const recordCardRating = async (rating) => {
     try {
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
@@ -71,45 +58,22 @@ const App = () => {
       }
     }
   }
-  const sendToCheckout = async () => {
-    let doc = await firebase.default
-      .firestore()
-      .collection('users')
-      .doc(user.uid)
-      .collection('checkout_sessions')
-      .add({
-        price: 'price_1LG1teHLjVvtqNCUyiUuVc0u',
-        success_url: window.location.origin,
-        cancel_url: window.location.origin
-      })
-      .then((docRef) => {
-        docRef.onSnapshot(async (snap) => {
-          const { error, sessionId } = snap.data()
-          if (error) {
-            alert(`Error with firebase ${error.message}`)
-          }
-          if (sessionId) {
-            const stripe = await loadStripe('pk_test_51HbtriHLjVvtqNCUdeNqD2LmQKxykYCZDPyA6U2iP8lWacRyJcF42XV9p8OtqHh5eiCykijbKaVTcKefoTEM3lOO00dGsZRblp');
-            await stripe.redirectToCheckout({ sessionId })
-          }
-        })
-      })
-    console.log(doc)
-  }
-  const sendToCustomerPoral = async () => {
-    const functionRef = firebase
-      .functions()
-      .httpsCallable('ext-firestore-stripe-payments-createPortalLink')
-    const { data } = await functionRef({ returnUrl: window.location.origin })
-    window.location.assign(data.url)
-  }
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem('user')
     if (userFromLocalStorage) {
       setUser(JSON.parse(userFromLocalStorage))
     }
-  }, [])
+    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user))
+        setUser(user);
+        navigate('/dashboard')
+      }
+    });
+    return () => unregisterAuthObserver(); //remove Firebase observers when the component unmounts.
+  }, []);
+
 
   return (
     <Routes>

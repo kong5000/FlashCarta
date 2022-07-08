@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 import { loadStripe } from '@stripe/stripe-js';
-import { getDeckByCategory } from './services/api';
+import { getDeckByCategory } from '../services/api';
 import { useNavigate } from "react-router-dom"
 const Dashboard = ({ user }) => {
   const navigate = useNavigate()
