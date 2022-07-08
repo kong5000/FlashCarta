@@ -46,7 +46,25 @@
   width: 110px;
   margin: 20px;
 }
+
+.navbar-button-icon {
+ width: 50px;
+}
+
+.navbar-button {
+  display: flex;
+  line-height: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-left: 2%;
+  margin-right: 2%;
+  cursor: pointer;
+}
+.navbar-button:hover .navbar-button-label{ color: red; }
+
 .animation{
+  display: block;
   cursor: pointer;
 }
 .circle {
@@ -58,4 +76,8 @@
   position: relative;
   top: -105px;
   left: 5px;
+}
+.country-flag{
+  height: 30px;
+  border-radius: 7px;
 }
