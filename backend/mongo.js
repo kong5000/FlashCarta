@@ -176,7 +176,7 @@ const getUserStatistics = async (userId) => {
     cards.forEach(card => {
         cardRatings[card.priority] += 1
     })
-    console.log(cardRatings)
+    return cardRatings
 }
 
 module.exports = {
@@ -185,5 +185,6 @@ module.exports = {
     getDefinitionsByCategory,
     getDeckByCategory,
     generateDeck,
-    createNewUserInfo
+    createNewUserInfo,
+    getUserStatistics
 }

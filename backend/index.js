@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { getDefinitions, getDeckByCategory, generateDeck } = require('./mongo')
+const { getUserStatistics, getDeckByCategory, generateDeck } = require('./mongo')
 const app = express()
 
 app.use(cors())
@@ -34,16 +34,28 @@ app.get('/get-deck/:language/:userId', auth.isAuthorized, async (req, res) => {
 
 app.get('/get-deck-category/:language/:category', auth.isAuthorized, async (req, res) => {
   const { language, category } = req.params
-  console.log(req.params)
   const user = res.locals.user
+
   let deck = await getDeckByCategory(user.uid, language, category)
   if (deck.length === 0) {
     console.log("generating deck")
     const deckRequest = { userId: user.uid, language, category }
     deck = await generateDeck(deckRequest)
   }
+
   console.log("return deck")
   return res.status(200).send(deck)
+})
+
+app.get('/get-statistics', auth.isAuthorized, async (req, res) => {
+  const user = res.locals.user
+  try{
+    const stats = await getUserStatistics(user.uid)
+    return res.status(200).send(stats)
+  }catch(err){
+    console.log(err)
+    return res.status(400).send('Could not retrieve user statistics')
+  }
 })
 
 app.delete('/delete-card', (req, res) => {

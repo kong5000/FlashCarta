@@ -8,7 +8,7 @@ import { getDeckByCategory } from './services/api'
 import firebase from 'firebase/compat/app';
 
 function Icon(props) {
-    const { animation, progress } = props
+    const { animation, progress, onClick, category } = props
     let lottieAnimation = null
     switch (animation) {
         case "food":
@@ -57,15 +57,8 @@ function Icon(props) {
         };
     }, [animation]);
 
-    const handleClick = async () => {
-        const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-
-        const deck = await getDeckByCategory( idToken,'pt', animation)
-        console.log(deck)
-    }
-
     return (
-        <div className="icon" onClick={handleClick}>
+        <div className="icon" onClick={() => onClick(category)}>
             <div
                 className="animation"
                 ref={container}
