@@ -1,10 +1,8 @@
 import Icon from './Icon/Icon'
-import NavbarButton from './NavbarButton/NavbarButton';
-const Categories = ({ categoryClickHandler }) => {
+
+const Categories = ({categoryClickHandler}) => {
     return (
         <div>
-            <NavbarButton category={"shop"} onClick={() => { alert('button clicked') }} />
-
             <Icon animation="locked" progress={10} />
             <Icon animation="food" category="food" onClick={categoryClickHandler} progress={50} />
             <Icon animation="transport" category="transport" onClick={categoryClickHandler} progress={75} />

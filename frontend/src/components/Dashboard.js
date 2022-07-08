@@ -6,7 +6,7 @@ import 'firebase/compat/auth';
 import { loadStripe } from '@stripe/stripe-js';
 import { getDeckByCategory } from '../services/api';
 import { useNavigate } from "react-router-dom"
-import Navbar from './Navbar'
+import NavBar from './NavBar'
 
 const Dashboard = ({ user }) => {
   const navigate = useNavigate()
@@ -61,7 +61,7 @@ const Dashboard = ({ user }) => {
   return (
     <div id="main-div"
       tabIndex="0">
-      <Navbar/>
+      <NavBar/>
       <h1>My App</h1>
       {user && <p>Welcome {user.displayName}! You are now signed-in!</p>}
       <a onClick={signOut}>Sign-out</a>

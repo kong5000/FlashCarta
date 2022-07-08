@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 
 function NavbarButton(props) {
-    const { animation, onClick, category } = props
+    const { animation, onClick, label } = props
     let lottieAnimation = null
     switch (animation) {
         case "edit":
@@ -11,8 +11,17 @@ function NavbarButton(props) {
         case "shop":
             lottieAnimation = require("./animations/basket.json")
             break;
+        case "study":
+            lottieAnimation = require("./animations/blue-book.json")
+            break;
+        case "stats":
+            lottieAnimation = require("./animations/chart.json")
+            break;
+        case "settings":
+            lottieAnimation = require("./animations/tool.json")
+            break;
         default:
-            lottieAnimation = require("./animations/pencil.json")
+            lottieAnimation = require("./animations/blue-book.json")
     }
 
     const container = useRef(null);
@@ -21,7 +30,7 @@ function NavbarButton(props) {
             name: animation,
             container: container.current,
             renderer: "svg",
-            loop: true,
+            loop: false,
             autoplay: false,
             animationData: lottieAnimation
         });
@@ -33,14 +42,14 @@ function NavbarButton(props) {
     return (
         <div className="navbar-button"
             onMouseEnter={() => lottie.play(animation)}
-            onMouseLeave={() => lottie.stop()
-            }>
+            onMouseLeave={() => lottie.stop()}
+            onClick={() => onClick(label)}
+            >
             <div
                 className="navbar-button-icon animation"
                 ref={container}
-                onClick={() => onClick(category)}
             />
-            <div className="navbar-button-label">{category}</div>
+            <div className="navbar-button-label">{label}</div>
         </div>
     );
 }

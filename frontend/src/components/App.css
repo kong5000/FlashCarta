@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
 .App {
   text-align: center;
 }
@@ -61,7 +63,16 @@
   margin-right: 2%;
   cursor: pointer;
 }
-.navbar-button:hover .navbar-button-label{ color: red; }
+.navbar-button-label{
+  color: #8ea7f7;
+  /* color: #7f9dff; */
+  font-family: 'Varela Round', sans-serif;
+  font-size: 15px;
+  font-weight: bolder;
+}
+.navbar-button:hover .navbar-button-label{ 
+  color: #4772FF;
+ }
 
 .animation{
   display: block;
@@ -80,4 +91,28 @@
 .country-flag{
   height: 30px;
   border-radius: 7px;
+  margin-left: 10px;
+}
+.nav-bar-items{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 900px) {
+  .nav-bar-items{
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .nav-bar-menu-button{
+    display: none;
+  }
+}
+
+.language-flag{
+  position:absolute;
+  right: 10px;
 }
