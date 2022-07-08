@@ -45,9 +45,10 @@
 .icon {
   width: 110px;
   margin: 20px;
+}
+.animation{
   cursor: pointer;
 }
-
 .circle {
   background-color: rgb(45, 222, 45);
   border-radius: 50%;

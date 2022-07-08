@@ -4,8 +4,6 @@ import CircularProgress, {
     circularProgressClasses,
 } from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { getDeckByCategory } from './services/api'
-import firebase from 'firebase/compat/app';
 
 function Icon(props) {
     const { animation, progress, onClick, category } = props
@@ -58,12 +56,13 @@ function Icon(props) {
     }, [animation]);
 
     return (
-        <div className="icon" onClick={() => onClick(category)}>
+        <div className="icon">
             <div
                 className="animation"
                 ref={container}
                 onMouseEnter={() => lottie.play(animation)}
                 onMouseLeave={() => lottie.stop()}
+                onClick={() => onClick(category)}
             />
             <div className="circle">
             </div>

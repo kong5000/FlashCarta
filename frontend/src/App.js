@@ -5,15 +5,13 @@ import 'firebase/compat/auth';
 import 'firebase/compat/functions'
 import { useEffect, useState } from 'react';
 import { getDeck, upsertCard, getDeckByCategory } from './services/api';
-import FirebaseLogin from './firebase'
-import Card from './Card'
 import { loadStripe } from '@stripe/stripe-js';
-import Categories from './Categories';
-import Icon from './Icon'
+import SignIn from './SignIn';
+import Dashboard from './Dashboard';
 import {
   Routes,
   Route,
-  useNavigate
+  useNavigate,
 } from "react-router-dom";
 
 const firebaseConfig = {
@@ -28,7 +26,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const App = () => {
-  const [user, setUser] = useState(false); // Local signed-in state.
+  const [user, setUser] = useState(null); // Local signed-in state.
   const [cardOpen, setCardOpen] = useState(false)
   const [activeCardIndex, setActiveCardIndex] = useState(0)
   const [deck, setDeck] = useState(null)
@@ -106,48 +104,20 @@ const App = () => {
     window.location.assign(data.url)
   }
 
-  const categoryClickHandler = async (category) => {
-    const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-
-    const deck = await getDeckByCategory(idToken, 'pt', category)
-    console.log(deck)
-    navigate('/exercise')
-  }
-
-
-  // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
-    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-      setUser(user);
-    });
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-  }, []);
-  if (!user) {
-    return (
-      <div>
-        <h1>My App</h1>
-        <p>Please sign-in:</p>
-        <FirebaseLogin setUser={setUser} />
-      </div>
-    );
-  }
-  return (
-      <Routes>
-        <Route path="/" element={
-          <div id="main-div" onKeyDown={handleKeyDown}
-            tabIndex="0">
-            <Card setCardOpen={setCardOpen} cardOpen={cardOpen} activeCardIndex={activeCardIndex} deck={deck} />
-            <h1>My App</h1>
-            {cardOpen}
+    let userFromLocalStorage = localStorage.getItem('user')
+    if (userFromLocalStorage) {
+      setUser(JSON.parse(userFromLocalStorage))
+    }
+  }, [])
 
-            <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-            <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
-            <button onClick={sendToCheckout}>TEST HELLLO </button>
-            <button onClick={sendToCustomerPoral}>Customer Portal </button>
-            <Categories categoryClickHandler={categoryClickHandler} />
-          </div>} />
-        <Route path="/exercise" element={<div>This is the exercise page</div>} />
-      </Routes>
+  return (
+    <Routes>
+      <Route path="/sign-in" exact element={<SignIn setUser={setUser} />} />
+      {user && <Route path="/dashboard" element={<Dashboard user={user} />} />}
+      <Route path="/exercise" element={<div>This is the exercise page</div>} />
+      <Route path="/" exact element={<div>Home Page</div>} />
+    </Routes>
   );
 }
 
