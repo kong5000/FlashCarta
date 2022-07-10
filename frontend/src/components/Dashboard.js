@@ -7,6 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { getDeckByCategory } from '../services/api';
 import { useNavigate } from "react-router-dom"
 import NavBar from './NavBar'
+import ExerciseModal from './ExerciseModal';
 
 const Dashboard = ({ user }) => {
   const [activePage, setActivePage] = useState('study')
@@ -80,7 +81,7 @@ const Dashboard = ({ user }) => {
       {activePage === 'shop' && <div>Shop Page</div>}
       {activePage === 'settings' && <div>Settings Page</div>}
       {activePage === 'edit' && <div>Edit Page</div>}
-      {activePage === 'exercise' && <div>Exercise Page</div>}
+      {activePage === 'exercise' && <ExerciseModal/>}
     </div>
   )
 }
