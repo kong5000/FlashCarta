@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 
 function NavbarButton(props) {
-    const { animation, onClick, label } = props
+    const { animation, onClick, label, activePage } = props
     let lottieAnimation = null
     switch (animation) {
         case "edit":
@@ -35,21 +35,26 @@ function NavbarButton(props) {
             animationData: lottieAnimation
         });
         return () => {
-            lottie.destroy();
+            lottie.destroy(animation);
         };
     }, [animation]);
+
+    let buttonLabel = <div className="navbar-button-label">{label}</div>
+    if (activePage === animation) {
+        buttonLabel = <div className="navbar-button-label dark-label">{label}</div>
+    }
 
     return (
         <div className="navbar-button"
             onMouseEnter={() => lottie.play(animation)}
             onMouseLeave={() => lottie.stop()}
-            onClick={() => onClick(label)}
-            >
+            onClick={() => onClick(animation)}
+        >
             <div
                 className="navbar-button-icon animation"
                 ref={container}
             />
-            <div className="navbar-button-label">{label}</div>
+            {buttonLabel}
         </div>
     );
 }

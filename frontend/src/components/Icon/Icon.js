@@ -51,7 +51,7 @@ function Icon(props) {
             animationData: lottieAnimation
         });
         return () => {
-            lottie.destroy();
+            lottie.destroy(animation);
         };
     }, [animation]);
 

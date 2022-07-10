@@ -16,7 +16,7 @@ import NavbarButton from './NavbarButton/NavbarButton';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({ activePage, setActivePage }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -75,19 +75,19 @@ const ResponsiveAppBar = () => {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                         >
-                            <NavbarButton animation={"shop"} label={"SHOP"} onClick={() => { alert('button clicked') }} />
-                            <NavbarButton animation={"edit"} label={"EDIT"} onClick={() => { alert('button clicked') }} />
-                            <NavbarButton animation={"study"} label={"STUDY"} onClick={() => { alert('button clicked') }} />
-                            <NavbarButton animation={"settings"} label={"SETTINGS"} onClick={() => { alert('button clicked') }} />
-                            <NavbarButton animation={"stats"} label={"STATS"} onClick={() => { alert('button clicked') }} />
+                            <NavbarButton activePage={activePage} animation={"shop"} label={"SHOP"} onClick={setActivePage} />
+                            <NavbarButton activePage={activePage} animation={"edit"} label={"EDIT"} onClick={setActivePage} />
+                            <NavbarButton activePage={activePage} animation={"study"} label={"STUDY"} onClick={setActivePage} />
+                            <NavbarButton activePage={activePage} animation={"settings"} label={"SETTINGS"} onClick={setActivePage} />
+                            <NavbarButton activePage={activePage} animation={"stats"} label={"STATS"} onClick={setActivePage} />
                         </Menu>
                     </div>
                     <div className='nav-bar-items'>
-                        <NavbarButton animation={"shop"} label={"SHOP"} onClick={() => { alert('button clicked') }} />
-                        <NavbarButton animation={"edit"} label={"EDIT"} onClick={() => { alert('button clicked') }} />
-                        <NavbarButton animation={"study"} label={"STUDY"} onClick={() => { alert('button clicked') }} />
-                        <NavbarButton animation={"settings"} label={"SETTINGS"} onClick={() => { alert('button clicked') }} />
-                        <NavbarButton animation={"stats"} label={"STATS"} onClick={() => { alert('button clicked') }} />
+                        <NavbarButton activePage={activePage} animation={"shop"} label={"SHOP"} onClick={setActivePage} />
+                        <NavbarButton activePage={activePage} animation={"edit"} label={"EDIT"} onClick={setActivePage} />
+                        <NavbarButton activePage={activePage} animation={"study"} label={"STUDY"} onClick={setActivePage} />
+                        <NavbarButton activePage={activePage} animation={"settings"} label={"SETTINGS"} onClick={setActivePage } />
+                        <NavbarButton activePage={activePage} animation={"stats"} label={"STATS"} onClick={setActivePage } />
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"

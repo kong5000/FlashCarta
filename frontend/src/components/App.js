@@ -79,7 +79,6 @@ const App = () => {
     <Routes>
       <Route path="/sign-in" exact element={<SignIn setUser={setUser} />} />
       {user && <Route path="/dashboard" element={<Dashboard user={user} />} />}
-      <Route path="/exercise" element={<div>This is the exercise page</div>} />
       <Route path="/" exact element={<div>Home Page</div>} />
     </Routes>
   );
