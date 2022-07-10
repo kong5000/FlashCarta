@@ -11,6 +11,7 @@ import ExerciseModal from './ExerciseModal';
 
 const Dashboard = ({ user }) => {
   const [activePage, setActivePage] = useState('study')
+  const [exerciseActive, setExerciseActive] = useState(false)
 
   const navigate = useNavigate()
 
@@ -74,6 +75,7 @@ const Dashboard = ({ user }) => {
       {activePage === 'study' &&
         <Categories
           setActivePage={setActivePage}
+          setExerciseActive={setExerciseActive}
           categoryClickHandler={categoryClickHandler}
         />
       }
@@ -81,7 +83,7 @@ const Dashboard = ({ user }) => {
       {activePage === 'shop' && <div>Shop Page</div>}
       {activePage === 'settings' && <div>Settings Page</div>}
       {activePage === 'edit' && <div>Edit Page</div>}
-      {activePage === 'exercise' && <ExerciseModal/>}
+     <ExerciseModal exerciseActive={exerciseActive} setExerciseActive={setExerciseActive}/>
     </div>
   )
 }

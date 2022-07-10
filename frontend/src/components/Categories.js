@@ -1,6 +1,6 @@
 import Icon from './Icon/Icon'
 
-const Categories = ({ categoryClickHandler, setActivePage, progress }) => {
+const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, progress }) => {
     const categories = ['food', 'transport', 'clothing', 'body', 'animals']
     return (
         <div>
@@ -10,6 +10,7 @@ const Categories = ({ categoryClickHandler, setActivePage, progress }) => {
                     category={category}
                     onClick={categoryClickHandler}
                     setActivePage={setActivePage}
+                    setExerciseActive={setExerciseActive}
                     progress={progress} />
             )}
         </div>
