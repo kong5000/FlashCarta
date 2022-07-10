@@ -1,20 +1,18 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { BR } from 'country-flag-icons/react/3x2'
 import NavbarButton from './NavbarButton/NavbarButton';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const navButtons = ['shop', 'study', 'cards', 'stats', 'settings']
 
 const ResponsiveAppBar = ({ activePage, setActivePage }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -73,21 +71,24 @@ const ResponsiveAppBar = ({ activePage, setActivePage }) => {
                                 horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                        >
-                            <NavbarButton activePage={activePage} animation={"shop"} label={"SHOP"} onClick={setActivePage} />
-                            <NavbarButton activePage={activePage} animation={"edit"} label={"EDIT"} onClick={setActivePage} />
-                            <NavbarButton activePage={activePage} animation={"study"} label={"STUDY"} onClick={setActivePage} />
-                            <NavbarButton activePage={activePage} animation={"settings"} label={"SETTINGS"} onClick={setActivePage} />
-                            <NavbarButton activePage={activePage} animation={"stats"} label={"STATS"} onClick={setActivePage} />
+                            onClose={handleCloseNavMenu}>
+                            {navButtons.map((navButtonName) =>
+                                <NavbarButton
+                                    activePage={activePage}
+                                    animation={navButtonName}
+                                    label={navButtonName.toUpperCase()}
+                                    onClick={setActivePage}
+                                />)}
                         </Menu>
                     </div>
                     <div className='nav-bar-items'>
-                        <NavbarButton activePage={activePage} animation={"shop"} label={"SHOP"} onClick={setActivePage} />
-                        <NavbarButton activePage={activePage} animation={"edit"} label={"EDIT"} onClick={setActivePage} />
-                        <NavbarButton activePage={activePage} animation={"study"} label={"STUDY"} onClick={setActivePage} />
-                        <NavbarButton activePage={activePage} animation={"settings"} label={"SETTINGS"} onClick={setActivePage } />
-                        <NavbarButton activePage={activePage} animation={"stats"} label={"STATS"} onClick={setActivePage } />
+                        {navButtons.map((navButtonName) =>
+                            <NavbarButton
+                                activePage={activePage}
+                                animation={navButtonName}
+                                label={navButtonName.toUpperCase()}
+                                onClick={setActivePage}
+                            />)}
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
