@@ -2,26 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { getUserStatistics, getDeckByCategory, generateDeck } = require('./mongo')
+const { getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority } = require('./mongo')
 const app = express()
-const TEST_USER = {
-  name: 'Keith O',
-  picture: 'https://lh3.googleusercontent.com/a/AATXAJytsLjrInpkdDFcQhndxnypKJH8x3sRf72l9Q3p=s96-c',
-  iss: 'https://securetoken.google.com/flash-card-app-351417',
-  aud: 'flash-card-app-351417',
-  auth_time: 1657559685,
-  user_id: 'JCw61e6wnjgrjE7CetVKxHKVteq2',
-  sub: 'JCw61e6wnjgrjE7CetVKxHKVteq2',
-  iat: 1657572426,
-  exp: 1657576026,
-  email: 'keith.ong5000@gmail.com',
-  email_verified: true,
-  firebase: {
-    identities: { 'google.com': [Array], email: [Array] },
-    sign_in_provider: 'google.com'
-  },
-  uid: 'JCw61e6wnjgrjE7CetVKxHKVteq2'
-}
+const TEST_USER = 'JCw61e6wnjgrjE7CetVKxHKVteq2'
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -47,19 +30,28 @@ app.post('/add-custom-card', auth.isAuthorized, (req, res) => {
 
 app.get('/get-deck/:language/:userId', auth.isAuthorized, async (req, res) => {
   const { language, userId } = req.params
+  const user = res.locals.user
+
   //Get 15 of the lowest rank cards from userId
 })
 
 app.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async (req, res) => {
   const { language, category, size } = req.params
+
   // const user = res.locals.user
-  const user = TEST_USER
+  const user = res.locals.user
 
   let deck = await getDeckByCategory(user.uid, language, category, size)
   if (deck.length === 0) {
     console.log("generating deck")
     const deckRequest = { userId: user.uid, language, category }
     deck = await generateDeck(deckRequest)
+    deck.sort((a, b) => {
+      if (a.ranking < b.ranking) return -1
+      if (a.ranking > b.ranking) return 1
+      return 0
+    })
+    deck = deck.slice(0, size)
   }
 
   console.log("return deck")
@@ -76,6 +68,18 @@ app.get('/get-statistics', auth.isAuthorized, async (req, res) => {
     return res.status(400).send('Could not retrieve user statistics')
   }
 })
+
+app.post(`/rate-card`, auth.isAuthorized, async (req, res) => {
+  try {
+    const { card, rating } = req.body
+    const updatedCard = await updateCardPriority(card, rating)
+    return res.status(200).send(updatedCard)
+  } catch (err) {
+    console.log(err)
+    return res.status(400).send('Error updating card rating')
+  }
+})
+
 
 app.delete('/delete-card', (req, res) => {
 

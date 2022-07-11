@@ -13,98 +13,7 @@ const Dashboard = ({ user }) => {
   const [activePage, setActivePage] = useState('study')
   const [exerciseActive, setExerciseActive] = useState(false)
   const [loading, setLoading] = useState(true)
-  const TEST_DECK = [
-    {
-      "_id": "62c79135eff49970af80aec5",
-      "lastSeen": "2022-07-08T02:06:45.921Z",
-      "user": "JCw61e6wnjgrjE7CetVKxHKVteq2",
-      "priority": 0,
-      "ignored": false,
-      "language": "pt",
-      "ranking": 5524,
-      "word": "alho",
-      "definition": "garlic",
-      "type": "nm",
-      "creator": null,
-      "category": "food",
-      "__v": 0
-    },
-    {
-      "_id": "62c79135eff49970af80aec6",
-      "lastSeen": "2022-07-08T02:06:45.921Z",
-      "user": "JCw61e6wnjgrjE7CetVKxHKVteq2",
-      "priority": 0,
-      "ignored": false,
-      "language": "pt",
-      "ranking": 2417,
-      "word": "alimentação",
-      "definition": "food",
-      "type": "nf",
-      "creator": null,
-      "category": "food",
-      "__v": 0
-    },
-    {
-      "_id": "62c79135eff49970af80aec7",
-      "lastSeen": "2022-07-08T02:06:45.921Z",
-      "user": "JCw61e6wnjgrjE7CetVKxHKVteq2",
-      "priority": 0,
-      "ignored": false,
-      "language": "pt",
-      "ranking": 1509,
-      "word": "alimento",
-      "definition": "food",
-      "type": "nm",
-      "creator": null,
-      "category": "food",
-      "__v": 0
-    },
-    {
-      "_id": "62c79135eff49970af80aec8",
-      "lastSeen": "2022-07-08T02:06:45.921Z",
-      "user": "JCw61e6wnjgrjE7CetVKxHKVteq2",
-      "priority": 0,
-      "ignored": false,
-      "language": "pt",
-      "ranking": 2385,
-      "word": "almoço",
-      "definition": "lunch",
-      "type": "nm",
-      "creator": null,
-      "category": "food",
-      "__v": 0
-    },
-    {
-      "_id": "62c79135eff49970af80aec9",
-      "lastSeen": "2022-07-08T02:06:45.921Z",
-      "user": "JCw61e6wnjgrjE7CetVKxHKVteq2",
-      "priority": 0,
-      "ignored": false,
-      "language": "pt",
-      "ranking": 1990,
-      "word": "arroz",
-      "definition": "rice",
-      "type": "nm",
-      "creator": null,
-      "category": "food",
-      "__v": 0
-    },
-    {
-      "_id": "62c79135eff49970af80aeca",
-      "lastSeen": "2022-07-08T02:06:45.921Z",
-      "user": "JCw61e6wnjgrjE7CetVKxHKVteq2",
-      "priority": 0,
-      "ignored": false,
-      "language": "pt",
-      "ranking": 3174,
-      "word": "azeite",
-      "definition": "olive oil",
-      "type": "nm",
-      "creator": null,
-      "category": "food",
-      "__v": 0
-    }
-  ]
+
   const [deck, setDeck] = useState(null)
 
   const navigate = useNavigate()
@@ -145,10 +54,9 @@ const Dashboard = ({ user }) => {
   const categoryClickHandler = async (category) => {
     setLoading(true)
     const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-    const deck = await getDeckByCategory(idToken, 'pt', category)
+    const deck = await getDeckByCategory(idToken, 'pt', category, 15)
     console.log(deck)
-
-    setDeck(TEST_DECK)
+    setDeck(deck)
     /**@todo sort card (or do the sorting on the backend) */
     setLoading(false)
   }

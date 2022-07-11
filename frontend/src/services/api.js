@@ -14,9 +14,14 @@ export const getDeck = async (idToken, language, set) => {
     return res.data
 }
 
-export const getDeckByCategory = async (idToken, language, category) => {
+export const getDeckByCategory = async (idToken, language, category, size) => {
     console.log(category)
-    const res = await axios.get(BASE_URL + `/get-deck-category/${language}/${category}`, { headers: { "Authorization": `Bearer ${idToken}` } });
+    const res = await axios.get(BASE_URL + `/get-deck-category/${language}/${category}/${size}`, { headers: { "Authorization": `Bearer ${idToken}` } });
+    return res.data
+}
+export const updateCardRating = async (idToken, card, rating) => {
+    console.log("UPDATING CARD")
+    const res = await axios.post(BASE_URL + `/rate-card`, { card, rating }, {headers: { "Authorization": `Bearer ${idToken}`}})
     return res.data
 }
 

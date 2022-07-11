@@ -29,7 +29,7 @@ const userModel = mongoose.model('User', userSchema)
 const cardSchema = new mongoose.Schema({
     lastSeen: Date,
     user: { type: String, required: true },
-    priority: { type: Number, default: 0 },
+    priority: { type: Number, default: 1 },
     ignored: { type: Boolean, default: false },
     language: String,
     ranking: Number, //the most common word of a language would have ranking 1
@@ -84,15 +84,20 @@ const insertDefinitions = async (definitions) => {
         console.log(err)
     }
 }
-
-const updateCardPriority = async (user, comprehension) => {
-    const newPriority = comprehension * user.comprehensionScaling
-    const MAX_PRIORITY = 5 //move to constants files
-    if (newPriority > MAX_PRIORITY) {
+const MAX_PRIORITY = 5 //move to constants files
+const updateCardPriority = async (card, rating) => {
+    let newPriority = card.priority + parseInt(rating)
+    console.log(rating)
+    console.log(newPriority)
+    if (newPriority < 0) {
+        newPriority = 0
+    } else if (newPriority > MAX_PRIORITY) {
         newPriority = MAX_PRIORITY
     }
-    await cardModel.updateOne({ _id: existingCard._id }, { priority: newPriority, lastSeen: Date.now() })
+
+    const updatedCard = await cardModel.updateOne({ _id: card._id }, { priority: newPriority, lastSeen: Date.now() })
     console.log("card updated")
+    return updatedCard
 }
 
 const getNumberOfMasteredCards = async (user, language) => {
@@ -129,7 +134,7 @@ const generateDeck = async (deckRequest) => {
         const newCard = {
             lastSeen: Date.now(),
             user: userId,
-            priority: initializePriority(def, user),
+            // priority: initializePriority(def, user), //priority defaults to 1
             definition: def.definition,
             word: def.word,
             ranking: def.ranking,
@@ -156,9 +161,9 @@ const getDeckByCategory = async (userId, language, category, size) => {
     console.log(`SIZE ${size}`)
     const cards = await cardModel.find(
         { language, category, user: userId }
-    ) .sort({ priority: 1 }).limit(size)
+    ).sort({ priority: 1, ranking: 1 }).limit(size)
     console.log("GOT CARDS")
-   
+
     return cards
 }
 // generateDeck({ userId: "a", language:"pt", start:0, end:5, category: "clothing" })
@@ -189,5 +194,6 @@ module.exports = {
     getDeckByCategory,
     generateDeck,
     createNewUserInfo,
-    getUserStatistics
+    getUserStatistics,
+    updateCardPriority
 }

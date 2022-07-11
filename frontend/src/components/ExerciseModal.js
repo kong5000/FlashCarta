@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog({ exerciseActive, setExerciseActive, loading, deck }) {
+export default function ExerciseDialog({ exerciseActive, setExerciseActive, loading, deck }) {
     const handleClose = () => {
         setExerciseActive(false);
     };
