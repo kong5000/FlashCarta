@@ -123,3 +123,9 @@
 .spinner{
   width: 220px;
 }
+
+.exercise-page{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
