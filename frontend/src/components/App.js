@@ -31,22 +31,6 @@ const App = () => {
   const [deck, setDeck] = useState(null)
   const navigate = useNavigate()
 
-  const handleKeyDown = (e) => {
-    if (cardOpen) {
-      if (e.key === " " || e.key === "Enter") return //Space and enter seem to convert to numbers, reject them explicitly
-
-      if (Number.isInteger(Number(e.key)) && Number(e.key) <= 3) {
-        recordCardRating(Number(e.key))
-        setActiveCardIndex(activeCardIndex + 1)
-        setCardOpen(false)
-      }
-    } else {
-      if (e.key == " " || e.key == "Enter") {
-        setCardOpen(true)
-      }
-    }
-  }
-
   const recordCardRating = async (rating) => {
     try {
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
