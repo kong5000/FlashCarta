@@ -152,10 +152,13 @@ const generateDeck = async (deckRequest) => {
     return result
 }
 
-const getDeckByCategory = async (userId, language, category) => {
+const getDeckByCategory = async (userId, language, category, size) => {
+    console.log(`SIZE ${size}`)
     const cards = await cardModel.find(
         { language, category, user: userId }
-    )
+    ) .sort({ priority: 1 }).limit(size)
+    console.log("GOT CARDS")
+   
     return cards
 }
 // generateDeck({ userId: "a", language:"pt", start:0, end:5, category: "clothing" })
