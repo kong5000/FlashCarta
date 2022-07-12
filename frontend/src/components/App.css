@@ -133,3 +133,14 @@
   display: flex;
   justify-content: center;
 }
+
+
+.card-rating{
+  display: flex;
+}
+
+.card-rating-label{
+  min-width: 100px;
+  overflow: scroll;
+}
+

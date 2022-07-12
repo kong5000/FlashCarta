@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ExerciseDialog({ exerciseActive, setExerciseActive, loading, deck }) {
+export default function ExerciseDialog({ exerciseActive, setExerciseActive, setActivePage, loading, deck }) {
     const handleClose = () => {
         setExerciseActive(false);
     };
@@ -38,7 +38,7 @@ export default function ExerciseDialog({ exerciseActive, setExerciseActive, load
                     </Toolbar>
                 </AppBar>
                 {loading && <LoadingPage loading={loading} />}
-                {!loading && <ExercisePage deck={deck} setExerciseActive={setExerciseActive}/>}
+                {!loading && <ExercisePage deck={deck} setExerciseActive={setExerciseActive} setActivePage={setActivePage}/>}
             </Dialog>
         </div>
     );

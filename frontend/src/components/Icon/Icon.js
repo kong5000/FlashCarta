@@ -6,7 +6,7 @@ import CircularProgress, {
 import Box from '@mui/material/Box';
 
 function Icon(props) {
-    const { animation, progress, onClick, category, setActivePage, setExerciseActive } = props
+    const { animation, progress, onClick, category, setExerciseActive } = props
     let lottieAnimation = null
     switch (animation) {
         case "food":
@@ -64,7 +64,6 @@ function Icon(props) {
                 onMouseLeave={() => lottie.stop()}
                 onClick={() => {
                     onClick(category)
-                    setActivePage('exercise')
                     setExerciseActive(true)
                 }}
             />

@@ -26,22 +26,7 @@ firebase.initializeApp(firebaseConfig);
 
 const App = () => {
   const [user, setUser] = useState(null); // Local signed-in state.
-  const [cardOpen, setCardOpen] = useState(false)
-  const [activeCardIndex, setActiveCardIndex] = useState(0)
-  const [deck, setDeck] = useState(null)
   const navigate = useNavigate()
-
-  const recordCardRating = async (rating) => {
-    try {
-      const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-      await upsertCard(idToken, { ...deck[activeCardIndex], rating })
-    } catch (err) {
-      /**@todo trigger error message for user */
-      if (err.response) {
-        console.log(err.response.data)
-      }
-    }
-  }
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem('user')

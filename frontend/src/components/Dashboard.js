@@ -8,6 +8,7 @@ import { getDeckByCategory } from '../services/api';
 import { useNavigate } from "react-router-dom"
 import NavBar from './NavBar'
 import ExerciseModal from './ExerciseModal';
+const EXERCISE_SIZE = 5
 
 const Dashboard = ({ user }) => {
   const [activePage, setActivePage] = useState('study')
@@ -54,7 +55,7 @@ const Dashboard = ({ user }) => {
   const categoryClickHandler = async (category) => {
     setLoading(true)
     const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-    const deck = await getDeckByCategory(idToken, 'pt', category, 15)
+    const deck = await getDeckByCategory(idToken, 'pt', category, EXERCISE_SIZE)
     console.log(deck)
     setDeck(deck)
     /**@todo sort card (or do the sorting on the backend) */
@@ -81,7 +82,6 @@ const Dashboard = ({ user }) => {
       <button onClick={sendToCustomerPoral}>Customer Portal </button>
       {activePage === 'study' &&
         <Categories
-          setActivePage={setActivePage}
           setExerciseActive={setExerciseActive}
           categoryClickHandler={categoryClickHandler}
         />
@@ -95,6 +95,7 @@ const Dashboard = ({ user }) => {
         setLoading={setLoading}
         exerciseActive={exerciseActive}
         setExerciseActive={setExerciseActive}
+        setActivePage={setActivePage}
         deck={deck}
       />
     </div>

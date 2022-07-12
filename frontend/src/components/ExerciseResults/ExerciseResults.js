@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 import { Button } from "@mui/material";
-
-function ExerciseResults({results}) {
+import CardRating from "../CardRating";
+import './ExerciseResults.css'
+function ExerciseResults({ setExerciseActive, results }) {
     let lottieAnimation = require("./celebration.json")
 
     const container = useRef(null);
@@ -20,6 +21,23 @@ function ExerciseResults({results}) {
         };
     }, []);
 
+    useEffect(() => {
+        console.log(results)
+    },[])
+
+    const calculateResults = (results) => {
+        let totalStars = 0
+        Object.keys(results).forEach(key => {
+            if(results[key].newPriority - results[key].oldPriority > 0){
+                totalStars += results[key].newPriority - results[key].oldPriority
+            }
+        })
+        if(totalStars < 0){
+            totalStars = 0
+        }
+        return totalStars
+    }
+
     return (
         <div className="exercise-results">
             <div>Exercise Complete!</div>
@@ -27,10 +45,17 @@ function ExerciseResults({results}) {
                 className="animation spinner"
                 ref={container}
             />
-            <div>{results.good}</div>
-            <div>{results.neutral}</div>
-            <div>{results.bad}</div>
-            <Button>Next</Button>
+            You improved on {calculateResults(results)} words
+            {Object.keys(results).map(key => {
+                return (
+                    <div>
+                        <CardRating label={key} rating={results[key].newPriority}/>
+                    </div>
+                )
+            })}
+            <Button onClick={() => {
+                setExerciseActive(false)
+            }}>Next</Button>
         </div>
 
     );
