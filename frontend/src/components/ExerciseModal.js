@@ -38,7 +38,7 @@ export default function ExerciseDialog({ exerciseActive, setExerciseActive, load
                     </Toolbar>
                 </AppBar>
                 {loading && <LoadingPage loading={loading} />}
-                {!loading && <ExercisePage deck={deck}/>}
+                {!loading && <ExercisePage deck={deck} setExerciseActive={setExerciseActive}/>}
             </Dialog>
         </div>
     );
