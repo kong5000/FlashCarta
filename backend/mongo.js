@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 mongoose.connect(process.env.MONGO_CONNECTION)
+var fs = require('fs');
+
 
 const definitionSchema = new mongoose.Schema({
     language: { type: String, required: true },
@@ -180,12 +182,19 @@ const getUserStatistics = async (userId) => {
     const cards = await cardModel.find(
         { user: userId }
     )
-    const cardRatings = new Array(6).fill(0)
-    cards.forEach(card => {
-        cardRatings[card.priority] += 1
+    const categories = ['clothing', 'animals', 'body', 'transport', 'food']
+    const categoryStats = {}
+    categories.forEach(category => {
+        let singleCategoryDeck = cards.filter(card => card.category === category)
+        let cardsMasteredInCategory = singleCategoryDeck.filter(card => card.priority === MAX_PRIORITY)
+        categoryStats[category] = {}
+        categoryStats[category]['totalSize'] = singleCategoryDeck.length
+        categoryStats[category]['totalMastered'] = cardsMasteredInCategory.length
     })
-    return cardRatings
+    console.log(categoryStats)
+    
 }
+getUserStatistics('JCw61e6wnjgrjE7CetVKxHKVteq2')
 
 module.exports = {
     insertDefinitions,

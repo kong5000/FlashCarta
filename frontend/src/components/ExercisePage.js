@@ -42,7 +42,7 @@ const ExercisePage = ({ deck }) => {
 
             setAnswerRevealed(false)
             setActiveCard(deck[deckIndex + 1])
-            setDeckIndex(deckIndex + 1)
+            setDeckIndex(prevDeckIndex => prevDeckIndex + 1)
         }
         setAnswerRevealed(false)
     }
@@ -53,7 +53,7 @@ const ExercisePage = ({ deck }) => {
             {activeCard.word}
             {answerRevealed && activeCard.definition}
             {deckIndex}
-            <ProgressBar />
+            <ProgressBar index={deckIndex} lastIndex={deck.length}/>
             {!answerRevealed && <button onClick={() => {
                 setAnswerRevealed(true)
                 setInputFocus(inputRef)
