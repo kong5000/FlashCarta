@@ -18,6 +18,7 @@
     "firebase": "^9.8.2",
     "firebaseui": "^6.0.1",
     "lottie-web": "^5.9.5",
+    "moment": "^2.29.4",
     "react": "^17.0.2",
     "react-audio-player": "^0.17.0",
     "react-dom": "^17.0.2",

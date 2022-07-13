@@ -1,11 +1,13 @@
 import Spinner from "../Spinner/Spinner"
 import './LoadingPage.css'
-
-const LoadingPage = ({loading}) => {
+import Typography from '@mui/material/Typography';
+const LoadingPage = ({ loading }) => {
     return (
         <div className="loading-page">
-            <Spinner loading={loading}/>
-            <div className="loading-text">Your exercise is loading</div>
+            <Spinner loading={loading} />
+            <Typography variant="h5" >
+                Your exercise is loading
+            </Typography>
         </div>
     )
 }

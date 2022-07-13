@@ -5,6 +5,9 @@ import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
 import ExerciseResults from '../ExerciseResults/ExerciseResults'
 import ExerciseCard from './ExerciseCard'
+import CardRating from '../CardRating';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
 import './ExercisePage.css'
 const MAX_PRIORITY = 5
 
@@ -66,10 +69,30 @@ const ExercisePage = ({ deck, setExerciseActive, setActivePage }) => {
 
     return (
         <div className="exercise-page">
-            {!exerciseComplete && <ProgressBar index={deckIndex} lastIndex={deck.length} style={{color: "red"}} />}
+            {!exerciseComplete && <ProgressBar index={deckIndex} lastIndex={deck.length} style={{ color: "red" }} />}
             {!exerciseComplete && <div className='exercise-card'>
                 {!answerRevealed && <ExerciseCard word={activeCard} revealAnswer={setAnswerRevealed} rateCard={rateCard} />}
             </div>}
+            {activeCard && !exerciseComplete && <footer className='exercise-footer'>
+                <div>
+                    <Typography variant="h6" >
+                        Word Strength
+                    </Typography>
+                    <CardRating rating={activeCard.priority} />
+                </div>
+                <div>
+                    <Typography variant="h6" >
+                        Word Ranking
+                    </Typography>
+                    {moment.localeData().ordinal(activeCard.ranking)} most common word in Portuguese
+                </div>
+                <div>
+                    <Typography variant="h6" >
+                        Last Seen
+                    </Typography>
+                    {new Date(activeCard.lastSeen).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                </div>
+            </footer>}
             {exerciseComplete && <ExerciseResults setExerciseActive={setExerciseActive} results={results} setActivePage={setActivePage} />}
         </div>
     )
