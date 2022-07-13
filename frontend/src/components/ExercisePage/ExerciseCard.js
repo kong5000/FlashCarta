@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
-import { textAlign } from '@mui/system';
+import ReactAudioPlayer from 'react-audio-player';
+
 import './ExerciseCard.css'
 const bull = (
     <Box
@@ -21,7 +21,7 @@ const bull = (
 
 export default function BasicCard({ word, rateCard }) {
     const [answerRevealed, setAnswerRevealed] = useState(false)
-
+    const [showPlayer, setShowPlayer] = useState(true)
     const useFocus = () => {
         const htmlElRef = useRef(null)
         const setFocus = () => { htmlElRef.current && htmlElRef.current.focus() }
@@ -50,13 +50,22 @@ export default function BasicCard({ word, rateCard }) {
                 return 0
         }
     }
+    const onAudioPlayerError =(err) =>{
+        console.log(err)
+        setShowPlayer(false)
+    }
 
     const userInputHandler = (rating) => {
         rateCard(rating)
         setAnswerRevealed(false)
     }
+
+    const onAudioCanPlay = () =>{
+        setShowPlayer(true)
+    }
+
     return (
-        <Card sx={{ minWidth: 450 }} onKeyDown={handleKeyDown} tabIndex="0" ref={inputRef}>
+        <Card sx={{ minWidth: 450, marginTop: '30px' }} onKeyDown={handleKeyDown} tabIndex="0" ref={inputRef}>
             <CardContent>
                 <div className='exercise-card'>
                     <Typography variant="h5" >
@@ -65,6 +74,12 @@ export default function BasicCard({ word, rateCard }) {
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                         {word.type}
                     </Typography>
+                  {showPlayer && <ReactAudioPlayer
+                        src={word.audio}
+                        autoPlay
+                        controls
+                        onCanPlay={onAudioCanPlay}
+                        onError={onAudioPlayerError}/>}
                     {answerRevealed ?
                         <Typography variant="h5" component="div" gutterBottom>
                             {word.definition}

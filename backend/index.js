@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const auth = require('./auth')
 const { getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority } = require('./mongo')
 const app = express()
+const {getSignedAudioUrl} = require('./s3')
 const TEST_USER = 'JCw61e6wnjgrjE7CetVKxHKVteq2'
 
 app.use(cors())
@@ -53,7 +54,16 @@ app.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async
     })
     deck = deck.slice(0, size)
   }
+  //Attach audio to deck
+  // for(let i = 0; i < deck.length; i++){
+  //   i % 2 === 0 ? deck[i].audio='https://upload.wikimedia.org/wikipedia/commons/transcoded/6/67/Cinquillo.mid/Cinquillo.mid.mp3'
+  //   : deck[i].audio = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c6/Tresillo%2B_backbeat.mid/Tresillo%2B_backbeat.mid.mp3'
+  // }
+  for(let i = 0; i < deck.length; i++){
+    deck[i].audio= getSignedAudioUrl(`${deck[i].word}.mp3`)
+  }
 
+  console.log(deck[0])
   console.log("return deck")
   return res.status(200).send(deck)
 })

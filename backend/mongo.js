@@ -31,7 +31,7 @@ const userModel = mongoose.model('User', userSchema)
 const cardSchema = new mongoose.Schema({
     lastSeen: Date,
     user: { type: String, required: true },
-    priority: { type: Number, default: 1 },
+    priority: { type: Number, default: 0 },
     ignored: { type: Boolean, default: false },
     language: String,
     ranking: Number, //the most common word of a language would have ranking 1
@@ -153,7 +153,7 @@ const generateDeck = async (deckRequest) => {
                 resolve(docs)
             }
             reject(err)
-        })
+        }).lean()
     })
     result = await promise
     return result
@@ -163,7 +163,7 @@ const getDeckByCategory = async (userId, language, category, size) => {
     console.log(`SIZE ${size}`)
     const cards = await cardModel.find(
         { language, category, user: userId }
-    ).sort({ priority: 1, ranking: 1 }).limit(size)
+    ).sort({ priority: 1, ranking: 1 }).limit(size).lean()
     console.log("GOT CARDS")
 
     return cards

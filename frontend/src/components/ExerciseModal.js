@@ -25,15 +25,15 @@ export default function ExerciseDialog({ exerciseActive, setExerciseActive, setA
                 onClose={handleClose}
                 TransitionComponent={Transition}
             >
-                <AppBar sx={{ position: 'relative' }}>
-                    <Toolbar>
+                <AppBar sx={{ position: 'relative', border:'none', backgroundColor:'white', boxShadow:'none'  }}>
+                    <Toolbar  sx={{ color:'gray', marginLeft:'20px'}}>
                         <IconButton
                             edge="start"
                             color="inherit"
                             onClick={handleClose}
                             aria-label="close"
                         >
-                            <CloseIcon />
+                            <CloseIcon fontSize='large'/>
                         </IconButton>
                     </Toolbar>
                 </AppBar>

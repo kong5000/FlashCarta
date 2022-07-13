@@ -2,7 +2,7 @@
 const testFolder = './audio';
 const fs = require('fs');
 require('dotenv').config()
-const { uploadToAudioBucket } = require('../../s3')
+const { uploadToAudioBucket } = require('../s3')
 
 const Bottleneck = require('bottleneck')
 const limiter = new Bottleneck({
@@ -25,4 +25,4 @@ let uploadAudioFolderToBucket = async () => {
   });
 }
 
-// uploadAudioFolderToBucket()
+uploadAudioFolderToBucket()

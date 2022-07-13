@@ -14,6 +14,7 @@ function getSignedAudioUrl(key){
     let params = {Bucket: BUCKET_NAME, Key: key, Expires: EXPIRATION_TIME};
     let url = s3.getSignedUrl('getObject', params);
     console.log('The URL is', url);
+    return url
 }
 
 async function uploadToAudioBucket(BUCKET_NAME, filename, fileContent){
