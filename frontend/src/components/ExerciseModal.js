@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import LoadingPage from './LoadingPage/LoadingPage';
-import ExercisePage from './ExercisePage';
+import ExercisePage from './ExercisePage/ExercisePage';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
