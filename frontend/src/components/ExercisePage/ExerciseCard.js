@@ -34,7 +34,7 @@ export default function BasicCard({ word, rateCard }) {
     const handleKeyDown = (e) => {
         if (e.key === " " || e.key === "Enter") setAnswerRevealed(true)
         else if (Number.isInteger(Number(e.key)) && Number(e.key) <= 3) {
-            userInputHandler((e.key))
+            userInputHandler(convertKeyPressToRating(e.key))
         }
     }
 
@@ -50,7 +50,7 @@ export default function BasicCard({ word, rateCard }) {
                 return 0
         }
     }
-    const onAudioPlayerError =(err) =>{
+    const onAudioPlayerError = (err) => {
         console.log(err)
         setShowPlayer(false)
     }
@@ -60,7 +60,7 @@ export default function BasicCard({ word, rateCard }) {
         setAnswerRevealed(false)
     }
 
-    const onAudioCanPlay = () =>{
+    const onAudioCanPlay = () => {
         setShowPlayer(true)
     }
 
@@ -74,12 +74,15 @@ export default function BasicCard({ word, rateCard }) {
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                         {word.type}
                     </Typography>
-                  {showPlayer && <ReactAudioPlayer
-                        src={word.audio}
-                        autoPlay
-                        controls
-                        onCanPlay={onAudioCanPlay}
-                        onError={onAudioPlayerError}/>}
+                    {showPlayer &&
+                        <div className="audio-player">
+                            <ReactAudioPlayer
+                                src={word.audio}
+                                autoPlay
+                                controls
+                                onCanPlay={onAudioCanPlay}
+                                onError={onAudioPlayerError} />
+                        </div>}
                     {answerRevealed ?
                         <Typography variant="h5" component="div" gutterBottom>
                             {word.definition}

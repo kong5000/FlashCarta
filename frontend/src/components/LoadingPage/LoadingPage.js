@@ -1,10 +1,10 @@
 import Spinner from "../Spinner/Spinner"
 import './LoadingPage.css'
 
-const LoadingPage = () => {
+const LoadingPage = ({loading}) => {
     return (
         <div className="loading-page">
-            <Spinner />
+            <Spinner loading={loading}/>
             <div className="loading-text">Your exercise is loading</div>
         </div>
     )

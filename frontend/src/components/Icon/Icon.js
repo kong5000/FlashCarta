@@ -71,7 +71,7 @@ function Icon(props) {
             </div>
             <Box sx={{
                 position: 'relative',
-                top: -227,
+                top: -205,
                 left: -17,
                 zIndex: -2,
             }}>
@@ -82,7 +82,7 @@ function Icon(props) {
                         color: (theme) =>
                             theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
                     }}
-                    size={145}
+                    size={130}
                     thickness={3.5}
                     value={100}
                 />
@@ -99,7 +99,7 @@ function Icon(props) {
                             strokeLinecap: 'round',
                         },
                     }}
-                    size={145}
+                    size={130}
                     thickness={3.5}
                 />
             </Box>

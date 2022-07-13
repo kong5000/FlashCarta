@@ -3,3 +3,6 @@
     flex-direction: column;
     align-items: center;
 }
+.audio-player{
+    margin: 10px;
+}

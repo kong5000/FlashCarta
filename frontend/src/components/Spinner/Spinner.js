@@ -11,11 +11,17 @@ function Spinner() {
             container: container.current,
             renderer: "svg",
             loop: true,
-            autoplay: true,
+            autoplay: false,
             animationData: lottieAnimation
         });
+        //setting lottie autoplay true does not seem to work, this interval is a workaround
+        let intervalId = setInterval(function() {
+            lottie.play('spinner')
+          }, 700);
+
         return () => {
             lottie.destroy('spinner');
+            clearInterval(intervalId)
         };
     }, []);
 

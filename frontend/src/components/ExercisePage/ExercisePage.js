@@ -32,6 +32,7 @@ const ExercisePage = ({ deck, setExerciseActive, setActivePage }) => {
 
     const rateCard = async (rating) => {
         try {
+            console.log(rating)
             const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
             let newResults = { ...results }
             const oldPriority = activeCard.priority
@@ -46,6 +47,7 @@ const ExercisePage = ({ deck, setExerciseActive, setActivePage }) => {
             }
             newResults[activeCard.word].newPriority = newPriority
             setResults(newResults)
+            console.log(newResults)
             updateCardRating(idToken, activeCard, rating)
         } catch (err) {
             console.log(err)
