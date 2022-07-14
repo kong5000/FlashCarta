@@ -65,47 +65,57 @@ export default function BasicCard({ word, rateCard }) {
     }
 
     return (
-        <Card sx={{ minWidth: 450, marginTop: '30px' }} onKeyDown={handleKeyDown} tabIndex="0" ref={inputRef}>
+        <div className='exercise-card' sx={{ minWidth: 450, marginTop: '30px' }} onKeyDown={handleKeyDown} tabIndex="0" ref={inputRef}>
             <CardContent>
-                <div className='exercise-card'>
-                    <Typography variant="h5" >
-                        {word.word}
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {word.type}
-                    </Typography>
-                    {showPlayer &&
-                        <div className="audio-player">
-                            <ReactAudioPlayer
-                                src={word.audio}
-                                autoPlay
-                                controls
-                                onCanPlay={onAudioCanPlay}
-                                onError={onAudioPlayerError} />
-                        </div>}
-                    {answerRevealed ?
-                        <Typography variant="h5" component="div" gutterBottom>
+                <Typography variant="h4" >
+                    {word.word}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    {word.type}
+                </Typography>
+                {showPlayer &&
+                    <div className="audio-player">
+                        <ReactAudioPlayer
+                            src={word.audio}
+                            autoPlay
+                            controls
+                            onCanPlay={onAudioCanPlay}
+                            onError={onAudioPlayerError} />
+                    </div>}
+                {answerRevealed ?
+                    <div className='answer-text'>
+                        <Typography variant="h4" component="div" gutterBottom>
                             {word.definition}
                         </Typography>
-                        :
-                        <Skeleton variant="text" width={70} height={40} animation={false} />
-                    }
-
+                    </div>
+                    :
+                    <div></div>
+                }
+                <div className='exercise-button-container'>
                     {answerRevealed ?
-                        <div className='exercise-button-container'>
-                            <Stack spacing={2} direction="row">
-                                <Button variant="contained" onClick={() => userInputHandler(-1)}>1</Button>
-                                <Button variant="contained" onClick={() => userInputHandler(1)}>2</Button>
+                        <div>
+                            <div className='gradient-bar-container'>
+                                Hard
+                                <div className='gradient-bar'></div>
+                                Easy
+                            </div>
+                            <div className='button-group'>
+                                <Button size="small" variant="contained" onClick={() => userInputHandler(-1)}>1</Button>
+                                <Button size="small" variant="contained" onClick={() => userInputHandler(1)}>2</Button>
                                 <Button variant="contained" onClick={() => userInputHandler(2)}>3</Button>
-                            </Stack>
+                            </div>
                         </div>
-                        :
-                        <CardActions>
-                            <Button size="small" onClick={() => setAnswerRevealed(true)}>Reveal</Button>
-                        </CardActions>
+                        : <Button variant="contained" onClick={() => setAnswerRevealed(true)}>Reveal</Button>
                     }
                 </div>
+
+
+
+
+
+
+
             </CardContent>
-        </Card >
+        </div >
     );
 }

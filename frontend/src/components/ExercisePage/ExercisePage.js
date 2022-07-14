@@ -70,9 +70,8 @@ const ExercisePage = ({ deck, setExerciseActive, setActivePage }) => {
     return (
         <div className="exercise-page">
             {!exerciseComplete && <ProgressBar index={deckIndex} lastIndex={deck.length} style={{ color: "red" }} />}
-            {!exerciseComplete && <div className='exercise-card'>
-                {!answerRevealed && <ExerciseCard word={activeCard} revealAnswer={setAnswerRevealed} rateCard={rateCard} />}
-            </div>}
+            {!exerciseComplete && !answerRevealed && <ExerciseCard word={activeCard} revealAnswer={setAnswerRevealed} rateCard={rateCard} />}
+            
             {activeCard && !exerciseComplete && <footer className='exercise-footer'>
                 <div>
                     <Typography variant="h6" >

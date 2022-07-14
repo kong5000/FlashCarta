@@ -21,7 +21,6 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-
 export default function WordCard({setCardOpen, cardOpen, deck, activeCardIndex}) {
   const handleExpandClick = () => {
     if(!cardOpen) setCardOpen(!cardOpen)
@@ -31,13 +30,10 @@ export default function WordCard({setCardOpen, cardOpen, deck, activeCardIndex})
     setCardOpen(false)
   },[activeCardIndex])
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, boxShadow:'none', border:'2px black solid' ,color:'red' }}>
       <CardHeader
         title= {deck && deck[activeCardIndex].word}
       />
-
-      <CardContent>
-      </CardContent>
       <CardActions disableSpacing>
         <ExpandMore
           expand={cardOpen}
