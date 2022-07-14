@@ -4,3 +4,14 @@
     align-items: center;
     justify-content: center;
 }
+
+.results-table{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.finish-button{
+    margin: 10px;
+    margin-bottom: 20px;
+}

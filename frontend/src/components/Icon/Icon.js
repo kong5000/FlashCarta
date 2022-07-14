@@ -6,7 +6,7 @@ import CircularProgress, {
 import Box from '@mui/material/Box';
 
 function Icon(props) {
-    const { animation, progress, onClick, category, setExerciseActive } = props
+    const { animation, progress, onClick, category, setExerciseActive, label } = props
     let lottieAnimation = null
     switch (animation) {
         case "food":
@@ -72,7 +72,7 @@ function Icon(props) {
             <Box sx={{
                 position: 'relative',
                 top: -205,
-                left: -17,
+                left: -64,
                 zIndex: -2,
             }}>
                 <CircularProgress
@@ -103,6 +103,7 @@ function Icon(props) {
                     thickness={3.5}
                 />
             </Box>
+            <div className="icon-label">{label}</div>
         </div>
     );
 }

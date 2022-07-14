@@ -8,7 +8,6 @@ import { getDeckByCategory } from '../services/api';
 import { useNavigate } from "react-router-dom"
 import NavBar from './NavBar'
 import ExerciseModal from './ExerciseModal';
-import LoadingPage from './LoadingPage/LoadingPage';
 const EXERCISE_SIZE = 5
 
 const Dashboard = ({ user }) => {
@@ -84,11 +83,6 @@ const Dashboard = ({ user }) => {
     <div id="main-div"
       tabIndex="0">
       <NavBar activePage={activePage} setActivePage={setActivePage} />
-      <h1>My App</h1>
-      {user && <p>Welcome {user.displayName}! You are now signed-in!</p>}
-      <a onClick={signOut}>Sign-out</a>
-      <button onClick={sendToCheckout}>TEST HELLLO </button>
-      <button onClick={sendToCustomerPoral}>Customer Portal </button>
       {activePage === 'study' &&
         <Categories
           setExerciseActive={setExerciseActive}
@@ -107,7 +101,6 @@ const Dashboard = ({ user }) => {
         setActivePage={setActivePage}
         deck={deck}
       />
-      <LoadingPage loading={loading} />
     </div>
   )
 }
