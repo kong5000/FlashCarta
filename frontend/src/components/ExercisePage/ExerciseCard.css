@@ -8,6 +8,7 @@
     border-radius: 10px;
     min-width: 450px;
     margin-top: 30px;
+    outline: none;
 }
 
 .audio-player {
@@ -39,4 +40,9 @@
 }
 .answer-text{
     margin-top: 40px;
+}
+
+.exercise-word{
+    margin-top: 10px;
+    margin-bottom: 25px;
 }

@@ -22,6 +22,8 @@ const bull = (
 export default function BasicCard({ word, rateCard }) {
     const [answerRevealed, setAnswerRevealed] = useState(false)
     const [showPlayer, setShowPlayer] = useState(true)
+    
+    //Set focus to the ExerciseCard to handle keyboard inputs immediately
     const useFocus = () => {
         const htmlElRef = useRef(null)
         const setFocus = () => { htmlElRef.current && htmlElRef.current.focus() }
@@ -31,10 +33,14 @@ export default function BasicCard({ word, rateCard }) {
 
     const [inputRef, setInputFocus] = useFocus()
 
+    useEffect(() => {
+        setInputFocus()
+      }, []);
+
     const handleKeyDown = (e) => {
         if (e.key === " " || e.key === "Enter") setAnswerRevealed(true)
         else if (Number.isInteger(Number(e.key)) && Number(e.key) <= 3) {
-            userInputHandler(convertKeyPressToRating(e.key))
+            if (answerRevealed) { userInputHandler(convertKeyPressToRating(e.key)) }
         }
     }
 
@@ -67,12 +73,13 @@ export default function BasicCard({ word, rateCard }) {
     return (
         <div className='exercise-card' sx={{ minWidth: 450, marginTop: '30px' }} onKeyDown={handleKeyDown} tabIndex="0" ref={inputRef}>
             <CardContent>
-                <Typography variant="h4" >
-                    {word.word}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                <div className='exercise-word'>
+                    <Typography className='exercise-word' variant="h4" >
+                        {word.word}
+                    </Typography></div>
+                {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
                     {word.type}
-                </Typography>
+                </Typography> */}
                 {showPlayer &&
                     <div className="audio-player">
                         <ReactAudioPlayer
