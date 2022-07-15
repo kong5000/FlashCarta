@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 import NavBar from './NavBar'
 import ExerciseModal from './ExerciseModal';
 import StudyPage from './StudyPage/StudyPage';
+import NewCardModal from './NewCardModal/NewCardModal'
 
 const EXERCISE_SIZE = 5
 
@@ -15,9 +16,10 @@ const Dashboard = ({ user }) => {
   const [userStats, setUserStats] = useState(null)
   const [activePage, setActivePage] = useState('study')
   const [exerciseActive, setExerciseActive] = useState(false)
+  const [newCardActive, setNewCardActive] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const setExerciseState =(state) => {
+  const setExerciseState = (state) => {
     setExerciseActive(state)
     updateStats()
   }
@@ -126,6 +128,7 @@ const Dashboard = ({ user }) => {
         setActivePage={setActivePage}
         deck={deck}
       />
+      <NewCardModal/>
     </div>
   )
 }
