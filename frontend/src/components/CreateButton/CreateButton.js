@@ -32,7 +32,7 @@ function CreateButton({ setActivePage }) {
                 }}
             />
             <div>
-                Create Card
+                Make Card
             </div>
         </div>
 

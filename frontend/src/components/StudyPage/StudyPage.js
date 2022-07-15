@@ -4,7 +4,7 @@ import './StudyPage.css'
 import Icon from '../Icon/Icon';
 import CreateButton from '../CreateButton/CreateButton';
 import StatsWindow from '../StatsWindow/StatsWindow';
-
+import { Typography } from '@mui/material';
 const StudyPage = ({ setExerciseActive, categoryClickHandler, setActivePage, userStats }) => {
     return (
         <div className='study-page'>
@@ -13,15 +13,20 @@ const StudyPage = ({ setExerciseActive, categoryClickHandler, setActivePage, use
                 setExerciseActive={setExerciseActive}
                 categoryClickHandler={categoryClickHandler} />
             <div className='study-page-right-side'>
-                <div className='custom-study-icon-container study-page-container'>
-                    <CreateButton setActivePage={setActivePage} />
-                    <Icon
-                        label={'Custom Deck'}
-                        animation={'notes'}
-                        category={'notes'}
-                        onClick={categoryClickHandler}
-                        setExerciseActive={setExerciseActive}
-                    />
+                <div className=' study-page-container'>
+                    <Typography className='exercise-word' variant="h5" >
+                        Custom Deck
+                    </Typography>
+                    <div className='custom-study-icon-container'>
+                        <CreateButton setActivePage={setActivePage} />
+                        <Icon
+                            label={'Practice'}
+                            animation={'notes'}
+                            category={'notes'}
+                            onClick={categoryClickHandler}
+                            setExerciseActive={setExerciseActive}
+                        />
+                    </div>
                 </div>
                 <StatsWindow />
             </div>
