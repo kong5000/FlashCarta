@@ -38,9 +38,13 @@ app.get('/get-deck/:language/:userId', auth.isAuthorized, async (req, res) => {
 
 app.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async (req, res) => {
   const { language, category, size } = req.params
-
-  // const user = res.locals.user
   const user = res.locals.user
+
+  //Simulate delay, just to test front end loading screens
+  const now = new Date().valueOf()
+  const waitTime = Math.max(0, -(new Date().valueOf() - now) + 1000)
+  await new Promise(resolve => setTimeout(resolve, waitTime))
+
 
   let deck = await getDeckByCategory(user.uid, language, category, size)
   if (deck.length === 0) {
@@ -54,17 +58,11 @@ app.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async
     })
     deck = deck.slice(0, size)
   }
-  //Attach audio to deck
-  // for(let i = 0; i < deck.length; i++){
-  //   i % 2 === 0 ? deck[i].audio='https://upload.wikimedia.org/wikipedia/commons/transcoded/6/67/Cinquillo.mid/Cinquillo.mid.mp3'
-  //   : deck[i].audio = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c6/Tresillo%2B_backbeat.mid/Tresillo%2B_backbeat.mid.mp3'
-  // }
+
   for(let i = 0; i < deck.length; i++){
     deck[i].audio= getSignedAudioUrl(`${deck[i].word}.mp3`)
   }
 
-  console.log(deck[0])
-  console.log("return deck")
   return res.status(200).send(deck)
 })
 

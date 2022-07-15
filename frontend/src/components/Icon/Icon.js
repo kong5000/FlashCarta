@@ -36,6 +36,9 @@ function Icon(props) {
         case "black-book":
             lottieAnimation = require("./animations/black-book.json")
             break;
+        case "notes":
+            lottieAnimation = require("./animations/notes.json")
+            break;
         default:
             lottieAnimation = require("./animations/lock.json")
     }

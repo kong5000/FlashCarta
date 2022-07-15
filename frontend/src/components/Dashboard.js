@@ -8,6 +8,8 @@ import { getDeckByCategory } from '../services/api';
 import { useNavigate } from "react-router-dom"
 import NavBar from './NavBar'
 import ExerciseModal from './ExerciseModal';
+import StudyPage from './StudyPage/StudyPage';
+
 const EXERCISE_SIZE = 5
 
 const Dashboard = ({ user }) => {
@@ -59,7 +61,7 @@ const Dashboard = ({ user }) => {
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
       const deck = await getDeckByCategory(idToken, 'pt', category, EXERCISE_SIZE)
 
-     
+
       console.log(deck)
       setDeck(deck)
     } catch (err) {
@@ -84,7 +86,8 @@ const Dashboard = ({ user }) => {
       tabIndex="0">
       <NavBar activePage={activePage} setActivePage={setActivePage} />
       {activePage === 'study' &&
-        <Categories
+        <StudyPage
+          setActivePage={setActivePage}
           setExerciseActive={setExerciseActive}
           categoryClickHandler={categoryClickHandler}
         />

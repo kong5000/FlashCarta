@@ -7,7 +7,7 @@ const Bottleneck = require('bottleneck')
 
 const limiter = new Bottleneck({
     maxConcurrent: 1,
-    minTime: 100
+    minTime: 200
   });
   
 let wordlist = []

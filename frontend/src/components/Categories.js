@@ -1,7 +1,6 @@
 import Icon from './Icon/Icon'
 
 const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, progress }) => {
-    const categories = ['food', 'transport', 'clothing', 'body', 'animals']
     return (
         <div className='category-selection'>
             <Icon

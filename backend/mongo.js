@@ -192,7 +192,6 @@ const getUserStatistics = async (userId) => {
         categoryStats[category]['totalMastered'] = cardsMasteredInCategory.length
     })
     console.log(categoryStats)
-    
 }
 getUserStatistics('JCw61e6wnjgrjE7CetVKxHKVteq2')
 
