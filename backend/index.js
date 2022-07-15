@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const auth = require('./auth')
 const { getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
 const app = express()
-const { getSignedAudioUrl } = require('./s3')
 const TEST_USER = 'JCw61e6wnjgrjE7CetVKxHKVteq2'
 
 app.use(cors())
@@ -45,15 +44,6 @@ app.get('/get-deck-ranking/:language/:start/:end/:size', auth.isAuthorized, asyn
     const deckRequest = { userId: user.uid, language, start, end }
     await generateDeck(deckRequest)
     deck = await getDeckByRanking(user.uid, language, start, end, size)
-    deck.sort((a, b) => {
-      if (a.ranking < b.ranking) return -1
-      if (a.ranking > b.ranking) return 1
-      return 0
-    })
-  }
-  deck = deck.slice(0, size)
-  for (let i = 0; i < deck.length; i++) {
-    deck[i].audio = getSignedAudioUrl(`${deck[i].word}.mp3`)
   }
   return res.status(200).send(deck)
 })
@@ -62,31 +52,13 @@ app.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async
   const { language, category, size } = req.params
   const user = res.locals.user
 
-  //Simulate delay, just to test front end loading screens
-  const now = new Date().valueOf()
-  const waitTime = Math.max(0, -(new Date().valueOf() - now) + 1000)
-  await new Promise(resolve => setTimeout(resolve, waitTime))
-
-
   let deck = await getDeckByCategory(user.uid, language, category, size)
   if (deck.length === 0) {
     console.log("generating deck")
     const deckRequest = { userId: user.uid, language, category }
     await generateDeck(deckRequest)
     deck = await getDeckByCategory(user.uid, language, category, size)
-
-    deck.sort((a, b) => {
-      if (a.ranking < b.ranking) return -1
-      if (a.ranking > b.ranking) return 1
-      return 0
-    })
-    deck = deck.slice(0, size)
   }
-
-  for (let i = 0; i < deck.length; i++) {
-    deck[i].audio = getSignedAudioUrl(`${deck[i].word}.mp3`)
-  }
-
   return res.status(200).send(deck)
 })
 

@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 mongoose.connect(process.env.MONGO_CONNECTION)
 var fs = require('fs');
+const { getSignedAudioUrl } = require('./s3')
 
 
 const definitionSchema = new mongoose.Schema({
@@ -56,20 +57,6 @@ const getDefinitionsByRanking = async (language, startRank, endRank) => {
         }
     )
     return definitions
-}
-
-const getDeckByRanking = async (user, language, startRank, endRank, size) => {
-    const deck = await cardModel.find(
-        {
-            user,
-            language,
-            ranking: {
-                $lte: endRank,
-                $gte: startRank
-            }
-        }
-    ).sort({ priority: 1, ranking: 1 }).limit(size).lean()
-    return deck
 }
 
 const getDefinitionsByCategory = async (language, category) => {
@@ -167,13 +154,40 @@ const generateDeck = async (deckRequest) => {
 }
 
 const getDeckByCategory = async (userId, language, category, size) => {
-    console.log(`SIZE ${size}`)
-    const cards = await cardModel.find(
+    let deck = await cardModel.find(
         { language, category, user: userId }
     ).sort({ priority: 1, ranking: 1 }).limit(size).lean()
-    console.log("GOT CARDS")
+    deck = formatDeck(deck, size)
 
-    return cards
+    return deck
+}
+
+const getDeckByRanking = async (user, language, startRank, endRank, size) => {
+    let deck = await cardModel.find(
+        {
+            user,
+            language,
+            ranking: {
+                $lte: endRank,
+                $gte: startRank
+            }
+        }
+    ).sort({ priority: 1, ranking: 1 }).limit(size).lean()
+    deck = formatDeck(deck, size)
+    return deck
+}
+
+const formatDeck = (deck, size) => {
+    deck.sort((a, b) => {
+        if (a.ranking < b.ranking) return -1
+        if (a.ranking > b.ranking) return 1
+        return 0
+    })
+    deck = deck.slice(0, size)
+    for (let i = 0; i < deck.length; i++) {
+        deck[i].audio = getSignedAudioUrl(`${deck[i].word}.mp3`)
+    }
+    return deck
 }
 // generateDeck({ userId: "a", language:"pt", start:0, end:5, category: "clothing" })
 const createNewUserInfo = async (userId) => {
@@ -193,12 +207,30 @@ const getUserStatistics = async (userId) => {
     const categoryStats = {}
     categories.forEach(category => {
         let singleCategoryDeck = cards.filter(card => card.category === category)
-        let cardsMasteredInCategory = singleCategoryDeck.filter(card => card.priority === MAX_PRIORITY)
+        let userStarsInCategory = 0
+        singleCategoryDeck.forEach(card => {
+            userStarsInCategory += card.priority
+        })
         categoryStats[category] = {}
-        categoryStats[category]['totalSize'] = singleCategoryDeck.length
-        categoryStats[category]['totalMastered'] = cardsMasteredInCategory.length
+        categoryStats[category]['totalStars'] = singleCategoryDeck.length * 5
+        categoryStats[category]['userStars'] = userStarsInCategory
     })
-    console.log(categoryStats)
+    /**@todo lot of repeated code here, need to clean */
+    const wordRankingCategoriers = ['50', '100', '150', '200']
+    let index = 1
+    wordRankingCategoriers.forEach(category => {
+        let singleCategoryDeck = cards.filter(card => 
+            (card.ranking >= index && card.ranking <= parseInt(category)))
+        index += 50
+        let userStarsInCategory = 0
+        singleCategoryDeck.forEach(card => {
+            userStarsInCategory += card.priority
+        })
+        categoryStats[category] = {}
+        categoryStats[category]['totalStars'] = singleCategoryDeck.length * 5
+        categoryStats[category]['userStars'] = userStarsInCategory
+    })
+    return categoryStats
 }
 // getUserStatistics('JCw61e6wnjgrjE7CetVKxHKVteq2')
 

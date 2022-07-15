@@ -27,3 +27,14 @@
     border: 1px rgb(219, 216, 216) solid;
     border-radius: 10px;
 }
+.stats-window{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    text-align: center;
+}
+.stats-title{
+    margin-bottom: 20px;
+}

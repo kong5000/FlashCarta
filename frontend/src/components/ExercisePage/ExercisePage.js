@@ -11,7 +11,7 @@ import moment from 'moment';
 import './ExercisePage.css'
 const MAX_PRIORITY = 5
 
-const ExercisePage = ({ deck, setExerciseActive, setActivePage }) => {
+const ExercisePage = ({ deck, setExerciseActive, setActivePage, updateStats }) => {
     const [answerRevealed, setAnswerRevealed] = useState(false)
     const [deckIndex, setDeckIndex] = useState(0)
     const [activeCard, setActiveCard] = useState(deck[deckIndex])
@@ -71,7 +71,7 @@ const ExercisePage = ({ deck, setExerciseActive, setActivePage }) => {
         <div className="exercise-page">
             {!exerciseComplete && <ProgressBar index={deckIndex} lastIndex={deck.length} style={{ color: "red" }} />}
             {!exerciseComplete && !answerRevealed && <ExerciseCard word={activeCard} revealAnswer={setAnswerRevealed} rateCard={rateCard} />}
-            
+
             {activeCard && !exerciseComplete && <footer className='exercise-footer'>
                 <div>
                     <Typography variant="h6" >
@@ -92,7 +92,7 @@ const ExercisePage = ({ deck, setExerciseActive, setActivePage }) => {
                     {new Date(activeCard.lastSeen).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                 </div>
             </footer>}
-            {exerciseComplete && <ExerciseResults setExerciseActive={setExerciseActive} results={results} setActivePage={setActivePage} />}
+            {exerciseComplete && <ExerciseResults updateStats={updateStats} setExerciseActive={setExerciseActive} results={results} setActivePage={setActivePage} />}
         </div>
     )
 }

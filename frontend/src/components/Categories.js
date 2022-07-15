@@ -1,6 +1,6 @@
 import Icon from './Icon/Icon'
 
-const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, progress }) => {
+const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, progress, userStats }) => {
     return (
         <div className='category-selection'>
             <Icon
@@ -10,7 +10,8 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                 onClick={categoryClickHandler}
                 setActivePage={setActivePage}
                 setExerciseActive={setExerciseActive}
-                progress={progress} />
+                userStats={userStats}
+            />
             <div className='icon-row-container'>
                 <Icon
                     label={'food'}
@@ -19,7 +20,8 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                     onClick={categoryClickHandler}
                     setActivePage={setActivePage}
                     setExerciseActive={setExerciseActive}
-                    progress={progress} />
+                    userStats={userStats}
+                />
                 <Icon
                     label={'clothing'}
                     animation={'clothing'}
@@ -27,7 +29,8 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                     onClick={categoryClickHandler}
                     setActivePage={setActivePage}
                     setExerciseActive={setExerciseActive}
-                    progress={progress} />
+                    userStats={userStats}
+                />
             </div>
             <Icon
                 label={'51 - 100'}
@@ -36,7 +39,8 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                 onClick={categoryClickHandler}
                 setActivePage={setActivePage}
                 setExerciseActive={setExerciseActive}
-                progress={progress} />
+                userStats={userStats}
+            />
             <div className='icon-row-container'>
                 <Icon
                     label={'body'}
@@ -45,7 +49,8 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                     onClick={categoryClickHandler}
                     setActivePage={setActivePage}
                     setExerciseActive={setExerciseActive}
-                    progress={progress} />
+                    userStats={userStats}
+                />
                 <Icon
                     label={'transport'}
                     animation={'transport'}
@@ -53,7 +58,8 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                     onClick={categoryClickHandler}
                     setActivePage={setActivePage}
                     setExerciseActive={setExerciseActive}
-                    progress={progress} />
+                    userStats={userStats}
+                />
             </div>
             <Icon
                 label={'101 - 151'}
@@ -62,7 +68,8 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                 onClick={categoryClickHandler}
                 setActivePage={setActivePage}
                 setExerciseActive={setExerciseActive}
-                progress={progress} />
+                userStats={userStats}
+            />
             <Icon
                 label={'animals'}
                 animation={'animals'}
@@ -70,15 +77,17 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                 onClick={categoryClickHandler}
                 setActivePage={setActivePage}
                 setExerciseActive={setExerciseActive}
-                progress={progress} />
+                userStats={userStats}
+            />
             <Icon
                 label={'151 - 200'}
-                animation={'brown-book'}
+                animation={'black-book'}
                 category={'200'}
                 onClick={categoryClickHandler}
                 setActivePage={setActivePage}
                 setExerciseActive={setExerciseActive}
-                progress={progress} />
+                userStats={userStats}
+            />
         </div>
     );
 }

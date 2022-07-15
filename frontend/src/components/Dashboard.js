@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Categories from './Categories'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 import { loadStripe } from '@stripe/stripe-js';
-import { getDeckByCategory } from '../services/api';
+import { getDeckByCategory, getDeckByRanking, getUserStats } from '../services/api';
 import { useNavigate } from "react-router-dom"
 import NavBar from './NavBar'
 import ExerciseModal from './ExerciseModal';
@@ -13,9 +12,15 @@ import StudyPage from './StudyPage/StudyPage';
 const EXERCISE_SIZE = 5
 
 const Dashboard = ({ user }) => {
+  const [userStats, setUserStats] = useState(null)
   const [activePage, setActivePage] = useState('study')
   const [exerciseActive, setExerciseActive] = useState(false)
   const [loading, setLoading] = useState(true)
+
+  const setExerciseState =(state) => {
+    setExerciseActive(state)
+    updateStats()
+  }
 
   const [deck, setDeck] = useState(null)
 
@@ -54,14 +59,20 @@ const Dashboard = ({ user }) => {
     window.location.assign(data.url)
   }
 
+  const isRankingCategory = (category) => {
+    return (category === '50' || category === '100' || category === '150' || category === '200')
+  }
+
   const categoryClickHandler = async (category) => {
     setLoading(true)
     try {
-
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-      const deck = await getDeckByCategory(idToken, 'pt', category, EXERCISE_SIZE)
-
-
+      let deck = null
+      if (isRankingCategory(category)) {
+        deck = await getDeckByRanking(idToken, 'pt', category, EXERCISE_SIZE)
+      } else {
+        deck = await getDeckByCategory(idToken, 'pt', category, EXERCISE_SIZE)
+      }
       console.log(deck)
       setDeck(deck)
     } catch (err) {
@@ -77,9 +88,18 @@ const Dashboard = ({ user }) => {
     localStorage.removeItem("user")
     navigate('/')
   }
+  const updateStats = async () => {
+    const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+    let userStats = await getUserStats(idToken)
+    setUserStats(userStats)
+  }
   useEffect(() => {
-
-  }, [activePage])
+    try {
+      updateStats()
+    } catch (err) {
+      console.log(err)
+    }
+  }, [user])
 
   return (
     <div id="main-div"
@@ -87,8 +107,9 @@ const Dashboard = ({ user }) => {
       <NavBar activePage={activePage} setActivePage={setActivePage} />
       {activePage === 'study' &&
         <StudyPage
+          userStats={userStats}
           setActivePage={setActivePage}
-          setExerciseActive={setExerciseActive}
+          setExerciseActive={setExerciseState}
           categoryClickHandler={categoryClickHandler}
         />
       }
@@ -97,6 +118,7 @@ const Dashboard = ({ user }) => {
       {activePage === 'settings' && <div>Settings Page</div>}
       {activePage === 'edit' && <div>Edit Page</div>}
       <ExerciseModal
+        updateStats={updateStats}
         loading={loading}
         setLoading={setLoading}
         exerciseActive={exerciseActive}

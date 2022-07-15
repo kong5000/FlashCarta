@@ -5,7 +5,7 @@ import CardRating from "../CardRating";
 import Typography from '@mui/material/Typography';
 
 import './ExerciseResults.css'
-function ExerciseResults({ setExerciseActive, results }) {
+function ExerciseResults({ setExerciseActive, results, updateStats }) {
     let lottieAnimation = require("./celebration.json")
 
     const container = useRef(null);
@@ -51,6 +51,7 @@ function ExerciseResults({ setExerciseActive, results }) {
             />
             <div className="finish-button">
                 <Button variant="contained" size='large' onClick={() => {
+                    updateStats()
                     setExerciseActive(false)
                 }}>Finish</Button>
             </div>

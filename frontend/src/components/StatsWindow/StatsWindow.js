@@ -5,54 +5,88 @@ import Typography from '@mui/material/Typography';
 function StatsWindow(props) {
     return (
         <div className='study-page-container'>
-            <Typography className='exercise-word' variant="h5" >
-                Word Mastery
-            </Typography>
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    Mastered: 10
+            <div className='stats-window'>
+                <Typography className='stats-title' variant="h5"  style={{marginBottom: '20px'}}>
+                    Your Words
+                </Typography>
+                <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                        <Typography className='exercise-word' variant="h6" >
+                            Level
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Typography className='exercise-word' variant="h6" >
+                            Count
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                    <Typography className='exercise-word' variant="h6" >
+                            Rating
+                        </Typography>
+                    </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                    <CardRating rating={5} />
+                <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                        Mastered
+                    </Grid>
+                    <Grid item xs={2}>
+                        10
+                    </Grid>
+                    <Grid item xs={4}>
+                        <CardRating rating={5} />
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    Easy: 5
+                <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                        Easy
+                    </Grid>
+                    <Grid item xs={2}>
+                        10
+                    </Grid>
+                    <Grid item xs={4}>
+                        <CardRating rating={4} />
+                    </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                    <CardRating rating={4} />
+                <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                        Medium
+                    </Grid>
+                    <Grid item xs={2}>
+                        10
+                    </Grid>
+                    <Grid item xs={4}>
+                        <CardRating rating={3} />
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    Medium Words: 10
+                <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                        Difficult
+                    </Grid>
+                    <Grid item xs={2}>
+                        10
+                    </Grid>
+                    <Grid item xs={4}>
+                        <CardRating rating={2} />
+                    </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                    <CardRating rating={3} />
+                <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                        New
+                    </Grid>
+                    <Grid item xs={2}>
+                        10
+                    </Grid>
+                    <Grid item xs={4}>
+                        <CardRating rating={1} />
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    Difficult Words: 10
-                </Grid>
-                <Grid item xs={8}>
-                    <CardRating rating={2} />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    New Words: 10
-                </Grid>
-                <Grid item xs={8}>
-                    <CardRating rating={1} />
-                </Grid>
-            </Grid>
-            {/* <CardRating rating={5} />
+                {/* <CardRating rating={5} />
             <CardRating rating={4} />
             <CardRating rating={3} />
             <CardRating rating={2} />
             <CardRating rating={1} /> */}
+            </div>
         </div>
     );
 }

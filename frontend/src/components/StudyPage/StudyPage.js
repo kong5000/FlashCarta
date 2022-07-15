@@ -5,10 +5,12 @@ import Icon from '../Icon/Icon';
 import CreateButton from '../CreateButton/CreateButton';
 import StatsWindow from '../StatsWindow/StatsWindow';
 
-const StudyPage = ({ setExerciseActive, categoryClickHandler, setActivePage }) => {
+const StudyPage = ({ setExerciseActive, categoryClickHandler, setActivePage, userStats }) => {
     return (
         <div className='study-page'>
-            <Categories setExerciseActive={setExerciseActive}
+            <Categories
+                userStats={userStats}
+                setExerciseActive={setExerciseActive}
                 categoryClickHandler={categoryClickHandler} />
             <div className='study-page-right-side'>
                 <div className='custom-study-icon-container study-page-container'>
@@ -21,7 +23,7 @@ const StudyPage = ({ setExerciseActive, categoryClickHandler, setActivePage }) =
                         setExerciseActive={setExerciseActive}
                     />
                 </div>
-                <StatsWindow/>
+                <StatsWindow />
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import lottie from "lottie-web";
 import CircularProgress, {
     circularProgressClasses,
@@ -6,7 +6,8 @@ import CircularProgress, {
 import Box from '@mui/material/Box';
 
 function Icon(props) {
-    const { animation, progress, onClick, category, setExerciseActive, label } = props
+    const [progress, setProgress] = useState(null)
+    const { animation, userStats, onClick, category, setExerciseActive, label } = props
     let lottieAnimation = null
     switch (animation) {
         case "food":
@@ -53,10 +54,19 @@ function Icon(props) {
             autoplay: false,
             animationData: lottieAnimation
         });
+
         return () => {
             lottie.destroy(animation);
         };
     }, [animation]);
+
+    useEffect(() => {
+        if(userStats && userStats[category]){
+            if(userStats[category].totalStars > 0){
+                setProgress(100 * userStats[category].userStars/ userStats[category].totalStars)
+            }
+        }
+    },[userStats])
 
     return (
         <div className="icon">
@@ -97,7 +107,6 @@ function Icon(props) {
                         color: (theme) => (theme.palette.mode === 'light' ? '#ffd700' : '#ffd700'),
                         animationDuration: '550ms',
                         position: 'absolute',
-                        left: 0,
                         [`& .${circularProgressClasses.circle}`]: {
                             strokeLinecap: 'round',
                         },
