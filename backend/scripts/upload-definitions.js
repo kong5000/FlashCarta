@@ -5,7 +5,7 @@ const csv = require('fast-csv');
 const { insertDefinitions } = require('../mongo')
 
 let wordlist = []
-fs.createReadStream(path.resolve('Portuguese Frequency Dictionary.csv'))
+fs.createReadStream(path.resolve('./definitions/Portuguese Frequency Dictionary.csv'))
     .pipe(csv.parse({ headers: true }))
     .on('error', error => console.error(error))
     .on('data', row => {

@@ -13,7 +13,6 @@ s3 = new AWS.S3({apiVersion: '2006-03-01'});
 function getSignedAudioUrl(key){
     let params = {Bucket: BUCKET_NAME, Key: key, Expires: EXPIRATION_TIME};
     let url = s3.getSignedUrl('getObject', params);
-    console.log('The URL is', url);
     return url
 }
 

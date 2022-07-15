@@ -57,6 +57,21 @@ const getDefinitionsByRanking = async (language, startRank, endRank) => {
     )
     return definitions
 }
+
+const getDeckByRanking = async (user, language, startRank, endRank, size) => {
+    const deck = await cardModel.find(
+        {
+            user,
+            language,
+            ranking: {
+                $lte: endRank,
+                $gte: startRank
+            }
+        }
+    ).sort({ priority: 1, ranking: 1 }).limit(size).lean()
+    return deck
+}
+
 const getDefinitionsByCategory = async (language, category) => {
     const definitions = await definitionModel.find(
         { language, category }
@@ -114,11 +129,6 @@ const getNumberOfMasteredCards = async (user, language) => {
     )
 }
 
-const initializePriority = (card, user) => {
-    //Return 0 for now, maybe use user settings to set priority of card.
-    return 0
-}
-
 const generateDeck = async (deckRequest) => {
     const { userId, language, start, end, category } = deckRequest
     let definitions = null
@@ -128,10 +138,7 @@ const generateDeck = async (deckRequest) => {
         definitions = await getDefinitionsByRanking(language, start, end)
     }
     let cards = []
-    // let user = getUser(userId)
-    let user = {
-        rankingScaling: 1
-    }
+
     definitions.forEach(def => {
         const newCard = {
             lastSeen: Date.now(),
@@ -153,7 +160,7 @@ const generateDeck = async (deckRequest) => {
                 resolve(docs)
             }
             reject(err)
-        }).lean()
+        })
     })
     result = await promise
     return result
@@ -193,7 +200,7 @@ const getUserStatistics = async (userId) => {
     })
     console.log(categoryStats)
 }
-getUserStatistics('JCw61e6wnjgrjE7CetVKxHKVteq2')
+// getUserStatistics('JCw61e6wnjgrjE7CetVKxHKVteq2')
 
 module.exports = {
     insertDefinitions,
@@ -203,5 +210,6 @@ module.exports = {
     generateDeck,
     createNewUserInfo,
     getUserStatistics,
-    updateCardPriority
+    updateCardPriority,
+    getDeckByRanking
 }

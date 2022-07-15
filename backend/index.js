@@ -2,9 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority } = require('./mongo')
+const { getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
 const app = express()
-const {getSignedAudioUrl} = require('./s3')
+const { getSignedAudioUrl } = require('./s3')
 const TEST_USER = 'JCw61e6wnjgrjE7CetVKxHKVteq2'
 
 app.use(cors())
@@ -36,6 +36,28 @@ app.get('/get-deck/:language/:userId', auth.isAuthorized, async (req, res) => {
   //Get 15 of the lowest rank cards from userId
 })
 
+app.get('/get-deck-ranking/:language/:start/:end/:size', auth.isAuthorized, async (req, res) => {
+  const { language, start, end, size } = req.params
+  const user = res.locals.user
+  let deck = await getDeckByRanking(user.uid, language, start, end, size)
+  if (deck.length === 0) {
+    console.log("generating deck")
+    const deckRequest = { userId: user.uid, language, start, end }
+    await generateDeck(deckRequest)
+    deck = await getDeckByRanking(user.uid, language, start, end, size)
+    deck.sort((a, b) => {
+      if (a.ranking < b.ranking) return -1
+      if (a.ranking > b.ranking) return 1
+      return 0
+    })
+  }
+  deck = deck.slice(0, size)
+  for (let i = 0; i < deck.length; i++) {
+    deck[i].audio = getSignedAudioUrl(`${deck[i].word}.mp3`)
+  }
+  return res.status(200).send(deck)
+})
+
 app.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async (req, res) => {
   const { language, category, size } = req.params
   const user = res.locals.user
@@ -50,7 +72,9 @@ app.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async
   if (deck.length === 0) {
     console.log("generating deck")
     const deckRequest = { userId: user.uid, language, category }
-    deck = await generateDeck(deckRequest)
+    await generateDeck(deckRequest)
+    deck = await getDeckByCategory(user.uid, language, category, size)
+
     deck.sort((a, b) => {
       if (a.ranking < b.ranking) return -1
       if (a.ranking > b.ranking) return 1
@@ -59,8 +83,8 @@ app.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async
     deck = deck.slice(0, size)
   }
 
-  for(let i = 0; i < deck.length; i++){
-    deck[i].audio= getSignedAudioUrl(`${deck[i].word}.mp3`)
+  for (let i = 0; i < deck.length; i++) {
+    deck[i].audio = getSignedAudioUrl(`${deck[i].word}.mp3`)
   }
 
   return res.status(200).send(deck)
