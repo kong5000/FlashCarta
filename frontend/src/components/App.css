@@ -134,6 +134,7 @@
 
 .card-rating{
   display: flex;
+  align-items: center;
 }
 
 .card-rating-label{

@@ -12,7 +12,7 @@ import { BR } from 'country-flag-icons/react/3x2'
 import NavbarButton from './NavbarButton/NavbarButton';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const navButtons = ['shop', 'study', 'cards', 'stats', 'settings']
+const navButtons = ['shop', 'study', 'stats', 'settings']
 
 const ResponsiveAppBar = ({ activePage, setActivePage }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);

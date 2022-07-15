@@ -9,13 +9,17 @@
 }
 
 .custom-study-icon-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.study-page-container{
     min-height: 200px;
     min-width: 400px;
     border: 1px rgb(219, 216, 216) solid;
     border-radius: 10px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 .statistics{
     min-height: 200px;

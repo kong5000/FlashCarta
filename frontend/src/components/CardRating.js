@@ -6,7 +6,7 @@ const CardRating = ({ label, rating }) => {
     {
         return (<div className='card-rating'>
             <div className='card-rating-label'>{label}</div>
-            <Rating name="read-only" value={rating} readOnly />
+            <Rating size="large" name="read-only" value={rating} readOnly />
         </div>)
     }
 }
