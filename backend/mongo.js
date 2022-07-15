@@ -219,7 +219,7 @@ const getUserStatistics = async (userId) => {
     const wordRankingCategoriers = ['50', '100', '150', '200']
     let index = 1
     wordRankingCategoriers.forEach(category => {
-        let singleCategoryDeck = cards.filter(card => 
+        let singleCategoryDeck = cards.filter(card =>
             (card.ranking >= index && card.ranking <= parseInt(category)))
         index += 50
         let userStarsInCategory = 0
@@ -232,7 +232,21 @@ const getUserStatistics = async (userId) => {
     })
     return categoryStats
 }
-// getUserStatistics('JCw61e6wnjgrjE7CetVKxHKVteq2')
+const insertNewCard = async (uid, language, word, definition) => {
+    const newCard = new cardModel({
+        lastSeen: Date.now(),
+        user: uid,
+        definition,
+        word: word,
+        ranking: null,
+        language: 'pt',
+        type: null,
+        creator: uid,
+        category: 'custom'
+    })
+    await newCard.save()
+    return newCard
+}
 
 module.exports = {
     insertDefinitions,
@@ -243,5 +257,6 @@ module.exports = {
     createNewUserInfo,
     getUserStatistics,
     updateCardPriority,
-    getDeckByRanking
+    getDeckByRanking,
+    insertNewCard
 }

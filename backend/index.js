@@ -2,7 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
+const { insertNewCard, getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
+const { textToSpeech } = require('./polly')
+
 const app = express()
 const TEST_USER = 'JCw61e6wnjgrjE7CetVKxHKVteq2'
 
@@ -22,10 +24,18 @@ app.post('/signup', (req, res) => {
   //Create User doc (statistics, settings, progress)
 })
 
-app.post('/add-custom-card', auth.isAuthorized, (req, res) => {
-  //Create new definition object upload to mongo
-  //Attach new definition id to card object and upload card to mongo
-  console.log(res.locals.user)
+app.post('/add-custom-card', auth.isAuthorized, async (req, res) => {
+  const { language, word, definition } = req.body
+  const user = res.locals.user
+  try {
+    const newCard = await insertNewCard(user.uid, 'pt', word, definition)
+
+    await textToSpeech(word, word, './audio', "Camila")
+    return res.status(200).send('Successfully inserted card')
+  } catch (err) {
+    console.log(err)
+    return res.status(400).send('Error inserting card')
+  }
 })
 
 app.get('/get-deck/:language/:userId', auth.isAuthorized, async (req, res) => {
