@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const auth = require('./auth')
 const { insertNewCard, getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
 const { textToSpeech } = require('./polly')
+const { uploadAudioFolderToBucket } = require('./s3')
+
 
 const app = express()
 const TEST_USER = 'JCw61e6wnjgrjE7CetVKxHKVteq2'
@@ -31,6 +33,8 @@ app.post('/add-custom-card', auth.isAuthorized, async (req, res) => {
     const newCard = await insertNewCard(user.uid, 'pt', word, definition)
 
     await textToSpeech(word, word, './audio', "Camila")
+    await uploadAudioFolderToBucket(`${word}.mp3`)
+    console.log("FINISHED")
     return res.status(200).send('Successfully inserted card')
   } catch (err) {
     console.log(err)
