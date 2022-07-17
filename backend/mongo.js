@@ -21,11 +21,12 @@ definitionSchema.index({ "language": 1, "word": 1, "ranking": 1 }, { "unique": t
 
 const userSchema = new mongoose.Schema({
     _id: String, //same as firebase uuid
-    languages: Array,
+    languages: { type: Array, default: ['pt'] },
     comprehensionScaling: { type: Number, default: 1 },
     rankingScaling: { type: Number, default: 1 },
     subscription: String,
-    cardsPerSession: { type: Number, default: 15 }
+    cardsPerSession: { type: Number, default: 5 },
+    customCards: {type: Number, default: 10}
 })
 const userModel = mongoose.model('User', userSchema)
 

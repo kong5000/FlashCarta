@@ -17,7 +17,7 @@ function Spinner() {
         //setting lottie autoplay true does not seem to work, this interval is a workaround
         let intervalId = setInterval(function() {
             lottie.play('spinner')
-          }, 700);
+          }, 300);
 
         return () => {
             lottie.destroy('spinner');

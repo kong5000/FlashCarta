@@ -22,7 +22,7 @@ const StudyPage = ({ setExerciseActive, categoryClickHandler, setNewCardActive, 
                         <Icon
                             label={'Practice'}
                             animation={'notes'}
-                            category={'notes'}
+                            category={'custom'}
                             onClick={categoryClickHandler}
                             setExerciseActive={setExerciseActive}
                         />

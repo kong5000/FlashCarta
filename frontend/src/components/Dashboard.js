@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
-import { loadStripe } from '@stripe/stripe-js';
 import { getDeckByCategory, getDeckByRanking, getUserStats } from '../services/api';
 import { useNavigate } from "react-router-dom"
 import NavBar from './NavBar'
 import ExerciseModal from './ExerciseModal';
 import StudyPage from './StudyPage/StudyPage';
 import NewCardModal from './NewCardModal/NewCardModal'
+import StorePage from './StorePage/StorePage';
 
 const EXERCISE_SIZE = 5
 
@@ -28,31 +28,6 @@ const Dashboard = ({ user }) => {
 
   const navigate = useNavigate()
 
-  const sendToCheckout = async () => {
-    let doc = await firebase.default
-      .firestore()
-      .collection('users')
-      .doc(user.uid)
-      .collection('checkout_sessions')
-      .add({
-        price: 'price_1LG1teHLjVvtqNCUyiUuVc0u',
-        success_url: window.location.origin,
-        cancel_url: window.location.origin
-      })
-      .then((docRef) => {
-        docRef.onSnapshot(async (snap) => {
-          const { error, sessionId } = snap.data()
-          if (error) {
-            alert(`Error with firebase ${error.message}`)
-          }
-          if (sessionId) {
-            const stripe = await loadStripe('pk_test_51HbtriHLjVvtqNCUdeNqD2LmQKxykYCZDPyA6U2iP8lWacRyJcF42XV9p8OtqHh5eiCykijbKaVTcKefoTEM3lOO00dGsZRblp');
-            await stripe.redirectToCheckout({ sessionId })
-          }
-        })
-      })
-    console.log(doc)
-  }
   const sendToCustomerPoral = async () => {
     const functionRef = firebase
       .functions()
@@ -117,7 +92,7 @@ const Dashboard = ({ user }) => {
         />
       }
       {activePage === 'stats' && <div>Stats Page</div>}
-      {activePage === 'shop' && <div>Shop Page</div>}
+      {activePage === 'shop' && <StorePage user={user}/>}
       {activePage === 'settings' && <div>Settings Page</div>}
       {activePage === 'edit' && <div>Edit Page</div>}
       <ExerciseModal
