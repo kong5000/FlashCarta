@@ -112,6 +112,7 @@ const Dashboard = ({ user }) => {
           userStats={userStats}
           setActivePage={setActivePage}
           setExerciseActive={setExerciseState}
+          setNewCardActive={setNewCardActive}
           categoryClickHandler={categoryClickHandler}
         />
       }
@@ -128,7 +129,7 @@ const Dashboard = ({ user }) => {
         setActivePage={setActivePage}
         deck={deck}
       />
-      <NewCardModal/>
+      <NewCardModal setNewCardActive={setNewCardActive} newCardActive={newCardActive}/>
     </div>
   )
 }

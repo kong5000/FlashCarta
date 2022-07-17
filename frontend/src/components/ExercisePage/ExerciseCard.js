@@ -22,7 +22,7 @@ const bull = (
 export default function BasicCard({ word, rateCard }) {
     const [answerRevealed, setAnswerRevealed] = useState(false)
     const [showPlayer, setShowPlayer] = useState(true)
-    
+
     //Set focus to the ExerciseCard to handle keyboard inputs immediately
     const useFocus = () => {
         const htmlElRef = useRef(null)
@@ -107,8 +107,8 @@ export default function BasicCard({ word, rateCard }) {
                                 Easy
                             </div>
                             <div className='button-group'>
-                                <Button size="small" variant="contained" onClick={() => userInputHandler(-1)}>1</Button>
-                                <Button size="small" variant="contained" onClick={() => userInputHandler(1)}>2</Button>
+                                <Button variant="contained" onClick={() => userInputHandler(-1)}>1</Button>
+                                <Button variant="contained" onClick={() => userInputHandler(1)}>2</Button>
                                 <Button variant="contained" onClick={() => userInputHandler(2)}>3</Button>
                             </div>
                         </div>

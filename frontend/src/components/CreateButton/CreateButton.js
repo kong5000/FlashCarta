@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 import './CreateButton.css'
-function CreateButton({ setActivePage }) {
+function CreateButton({ setNewCardActive }) {
     let lottieAnimation = require("./pencil.json")
 
     const container = useRef(null);
@@ -28,7 +28,7 @@ function CreateButton({ setActivePage }) {
                 onMouseEnter={() => lottie.play('create')}
                 onMouseLeave={() => lottie.stop()}
                 onClick={() => {
-                    setActivePage('create')
+                    setNewCardActive('true')
                 }}
             />
             <div>

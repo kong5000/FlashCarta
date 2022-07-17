@@ -5,7 +5,7 @@ import Icon from '../Icon/Icon';
 import CreateButton from '../CreateButton/CreateButton';
 import StatsWindow from '../StatsWindow/StatsWindow';
 import { Typography } from '@mui/material';
-const StudyPage = ({ setExerciseActive, categoryClickHandler, setActivePage, userStats }) => {
+const StudyPage = ({ setExerciseActive, categoryClickHandler, setNewCardActive, userStats }) => {
     return (
         <div className='study-page'>
             <Categories
@@ -18,7 +18,7 @@ const StudyPage = ({ setExerciseActive, categoryClickHandler, setActivePage, use
                         Custom Deck
                     </Typography>
                     <div className='custom-study-icon-container'>
-                        <CreateButton setActivePage={setActivePage} />
+                        <CreateButton setNewCardActive={setNewCardActive} />
                         <Icon
                             label={'Practice'}
                             animation={'notes'}

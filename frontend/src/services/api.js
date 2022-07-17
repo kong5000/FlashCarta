@@ -36,7 +36,7 @@ export const getUserStats = async (idToken) => {
     return res.data
 }
 
-export const upsertCard = async (idToken, card) => {
-    await axios.post(BASE_URL + "/add-card", card, { headers: { "Authorization": `Bearer ${idToken}` } })
+export const createCustomCard = async (idToken, card) => {
+    await axios.post(BASE_URL + "/add-custom-card", card, { headers: { "Authorization": `Bearer ${idToken}` } })
 }
 
