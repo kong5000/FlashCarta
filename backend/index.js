@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { getUser, createUser, insertNewCard, getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
+const { updateUserSettings, getUser, createUser, insertNewCard, getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
 const { textToSpeech } = require('./polly')
 const { uploadAudioFolderToBucket } = require('./s3')
 const stripe = require('stripe')(process.env.STRIPE_KEY);
@@ -17,19 +17,19 @@ app.use(bodyParser.json())
 const SET_SIZE = 15
 const port = 5001
 
-app.post('/stripe', async (req, res)  => {
+app.post('/stripe', async (req, res) => {
   // const customer = await stripe.customers.retrieve(
   //   'cus_LxyROGlhG4S005'
   // );
   // const uid = customer.metadata.firebaseUID
 })
 
-app.get('/checkout', auth.isAuthorized, async(req, res) => {
+app.get('/checkout', auth.isAuthorized, async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     success_url: 'http://localhost:3000/dashboard',
     cancel_url: 'http://localhost:3000/dashboard',
-    line_items:[
-      {    price: 'price_1LMMYOHLjVvtqNCUQ4ItfAjS', quantity: 1}
+    line_items: [
+      { price: 'price_1LMMYOHLjVvtqNCUQ4ItfAjS', quantity: 1 }
     ],
     mode: 'subscription',
     discounts: [{
@@ -40,11 +40,11 @@ app.get('/checkout', auth.isAuthorized, async(req, res) => {
   return res.status(200).send(session)
 })
 
-app.get('/user-data', auth.isAuthorized, async (req, res)  => {
+app.get('/user-data', auth.isAuthorized, async (req, res) => {
   //Return Settings, Stats, and Card Stack
   const user = res.locals.user
   let userInfo = await getUser(user.uid)
-  if(!userInfo.length){
+  if (!userInfo.length) {
     await createUser(user.uid)
   }
   console.log("USER INFO HERE")
@@ -128,6 +128,15 @@ app.post(`/rate-card`, auth.isAuthorized, async (req, res) => {
   }
 })
 
+app.post(`/update-settings`, auth.isAuthorized, async (req, res) => {
+  const user = res.locals.user
+  try{
+    await updateUserSettings(user.uid)
+    return res.status(200).send()
+  }catch(err){
+    return res.status(400).send('Could not update user settings')
+  }
+})
 
 app.delete('/delete-card', (req, res) => {
 

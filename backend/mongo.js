@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
     cardsPerSession: { type: Number, default: 5 },
     customCards: { type: Number, default: 10 }
 })
+
 const userModel = mongoose.model('User', userSchema)
 
 const cardSchema = new mongoose.Schema({
@@ -264,7 +265,13 @@ const createUser = async (userId) => {
     return newUser
 }
 
+const updateUserSettings = async(userId, settings) => {
+    const updatedUser = await userModel.updateOne({ _id: userId }, { cardsPerSession: settings.cardsPerSession })
+    return updatedUser
+}
+
 module.exports = {
+    updateUserSettings,
     getUser,
     createUser,
     insertDefinitions,

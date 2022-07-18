@@ -24,7 +24,6 @@ const StorePage = ({ user }) => {
         }
     }
 
-
     return (
         <div className='store-page'>
             {redirecting ? <div>

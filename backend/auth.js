@@ -6,9 +6,9 @@ admin.initializeApp({
 });
 
 exports.isAuthorized = async function (req, res, next) {
-    const authHeader = req.headers.authorization;
-    const idToken = authHeader.split(' ')[1];
     try {
+        const authHeader = req.headers.authorization;
+        const idToken = authHeader.split(' ')[1];
         const decodedToken = await admin.auth().verifyIdToken(idToken)
         res.locals.user = decodedToken
         return next()
