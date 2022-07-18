@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
-import { getDeckByCategory, getDeckByRanking, getUserStats } from '../services/api';
+import { getDeckByCategory, getDeckByRanking, getUserStats, getUserInfo } from '../services/api';
 import { useNavigate } from "react-router-dom"
 import NavBar from './NavBar'
 import ExerciseModal from './ExerciseModal';
 import StudyPage from './StudyPage/StudyPage';
 import NewCardModal from './NewCardModal/NewCardModal'
 import StorePage from './StorePage/StorePage';
+import LockedPage from './LockedPage';
 
 const EXERCISE_SIZE = 5
 
@@ -18,6 +19,7 @@ const Dashboard = ({ user }) => {
   const [exerciseActive, setExerciseActive] = useState(false)
   const [newCardActive, setNewCardActive] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [userInfo, setUserInfo] = useState({})
 
   const setExerciseState = (state) => {
     setExerciseActive(state)
@@ -67,6 +69,8 @@ const Dashboard = ({ user }) => {
   }
   const updateStats = async () => {
     const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+    const userInfo = await getUserInfo(idToken)
+    setUserInfo(userInfo)
     let userStats = await getUserStats(idToken)
     setUserStats(userStats)
   }
@@ -77,7 +81,12 @@ const Dashboard = ({ user }) => {
       console.log(err)
     }
   }, [user])
-
+  const hasSubscription = (userInfo) => {
+    console.log('hasSubscription')
+    console.log(userInfo)
+    if(userInfo && userInfo.subscription) return true
+    return false
+  }
   return (
     <div id="main-div"
       tabIndex="0">
@@ -92,9 +101,15 @@ const Dashboard = ({ user }) => {
         />
       }
       {activePage === 'stats' && <div>Stats Page</div>}
-      {activePage === 'shop' && <StorePage user={user}/>}
-      {activePage === 'settings' && <div>Settings Page</div>}
-      {activePage === 'edit' && <div>Edit Page</div>}
+      {activePage === 'shop' && <StorePage user={user} />}
+      {activePage === 'settings' && userInfo.subscription &&         <StudyPage
+          userStats={userStats}
+          setActivePage={setActivePage}
+          setExerciseActive={setExerciseState}
+          setNewCardActive={setNewCardActive}
+          categoryClickHandler={categoryClickHandler}
+        />}
+      {activePage === 'settings' && !userInfo.subscription &&  <LockedPage locked={true}/>}
       <ExerciseModal
         updateStats={updateStats}
         loading={loading}
@@ -104,7 +119,7 @@ const Dashboard = ({ user }) => {
         setActivePage={setActivePage}
         deck={deck}
       />
-      <NewCardModal setNewCardActive={setNewCardActive} newCardActive={newCardActive}/>
+      <NewCardModal setNewCardActive={setNewCardActive} newCardActive={newCardActive} />
     </div>
   )
 }

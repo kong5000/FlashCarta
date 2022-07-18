@@ -24,9 +24,9 @@ const userSchema = new mongoose.Schema({
     languages: { type: Array, default: ['pt'] },
     comprehensionScaling: { type: Number, default: 1 },
     rankingScaling: { type: Number, default: 1 },
-    subscription: String,
+    subscription: { type: String, default: null },
     cardsPerSession: { type: Number, default: 5 },
-    customCards: {type: Number, default: 10}
+    customCards: { type: Number, default: 10 }
 })
 const userModel = mongoose.model('User', userSchema)
 
@@ -249,7 +249,24 @@ const insertNewCard = async (uid, language, word, definition) => {
     return newCard
 }
 
+const getUser = async (userId) => {
+    const user = await userModel.find(
+        { _id: userId }
+    )
+    return user
+}
+
+const createUser = async (userId) => {
+    const newUser = new userModel({
+        _id: userId,
+    })
+    await newUser.save()
+    return newUser
+}
+
 module.exports = {
+    getUser,
+    createUser,
     insertDefinitions,
     getDefinitionsByRanking,
     getDefinitionsByCategory,

@@ -27,12 +27,12 @@ export const getDeckByRanking = async (idToken, language, ranking, size) => {
 
 export const updateCardRating = async (idToken, card, rating) => {
     console.log("UPDATING CARD")
-    const res = await axios.post(BASE_URL + `/rate-card`, { card, rating }, {headers: { "Authorization": `Bearer ${idToken}`}})
+    const res = await axios.post(BASE_URL + `/rate-card`, { card, rating }, { headers: { "Authorization": `Bearer ${idToken}` } })
     return res.data
 }
 
 export const getUserStats = async (idToken) => {
-    const res = await axios.get(BASE_URL + `/get-statistics`, {headers: { "Authorization": `Bearer ${idToken}`}})
+    const res = await axios.get(BASE_URL + `/get-statistics`, { headers: { "Authorization": `Bearer ${idToken}` } })
     return res.data
 }
 
@@ -40,3 +40,9 @@ export const createCustomCard = async (idToken, card) => {
     await axios.post(BASE_URL + "/add-custom-card", card, { headers: { "Authorization": `Bearer ${idToken}` } })
 }
 
+export const getUserInfo = async (idToken) => {
+    let userInfo = await axios.get(BASE_URL + "/user-data", { headers: { "Authorization": `Bearer ${idToken}` } });
+    console.log('userInfo')
+    console.log(userInfo.data)
+    return userInfo.data
+}

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 
-function Spinner() {
+function Spinner({locked}) {
     let lottieAnimation = require("./animations/pencil-spinner.json")
-
+    if(locked) lottieAnimation = require("./animations/lock.json")
     const container = useRef(null);
     useEffect(() => {
         lottie.loadAnimation({

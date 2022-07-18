@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const auth = require('./auth')
-const { insertNewCard, getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
+const { getUser, createUser, insertNewCard, getUserStatistics, getDeckByCategory, generateDeck, updateCardPriority, getDeckByRanking } = require('./mongo')
 const { textToSpeech } = require('./polly')
 const { uploadAudioFolderToBucket } = require('./s3')
 
@@ -16,9 +16,15 @@ app.use(bodyParser.json())
 const SET_SIZE = 15
 const port = 5001
 
-app.post('/login', (req, res) => {
+app.get('/user-data', auth.isAuthorized, async (req, res)  => {
   //Return Settings, Stats, and Card Stack
-  res.send('Hello World!')
+  const user = res.locals.user
+  let userInfo = await getUser(user.uid)
+  if(!userInfo.length){
+    await createUser(user.uid)
+  }
+  console.log("USER INFO HERE")
+  res.status(200).send(userInfo[0])
 })
 
 app.post('/signup', (req, res) => {
