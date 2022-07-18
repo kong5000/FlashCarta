@@ -7,37 +7,17 @@ import { loadStripe } from '@stripe/stripe-js';
 import BuyPremium from './BuyPremium';
 import Spinner from '../Spinner/Spinner';
 import { Typography } from '@mui/material';
+import { getCheckoutSession } from '../../services/api'
 const StorePage = ({ user }) => {
     const [redirecting, setRedirecting] = useState(false)
 
     const sendToCheckout = async () => {
         setRedirecting(true)
         try {
-
-            let doc = await firebase.default
-                .firestore()
-                .collection('users')
-                .doc(user.uid)
-                .collection('checkout_sessions')
-                .add({
-                    price: 'price_1LMMYOHLjVvtqNCUQ4ItfAjS',
-                    success_url: window.location.origin,
-                    cancel_url: window.location.origin
-                })
-                .then((docRef) => {
-                    docRef.onSnapshot(async (snap) => {
-                        const { error, sessionId } = snap.data()
-                        if (error) {
-                            alert(`Error with firebase ${error.message}`)
-                        }
-                        if (sessionId) {
-                            const stripe = await loadStripe('pk_test_51HbtriHLjVvtqNCUdeNqD2LmQKxykYCZDPyA6U2iP8lWacRyJcF42XV9p8OtqHh5eiCykijbKaVTcKefoTEM3lOO00dGsZRblp');
-                            await stripe.redirectToCheckout({ sessionId })
-                        }
-                    })
-                })
-            console.log(doc)
-
+            const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+            const session = await getCheckoutSession(idToken)
+            const stripe = await loadStripe('pk_test_51HbtriHLjVvtqNCUdeNqD2LmQKxykYCZDPyA6U2iP8lWacRyJcF42XV9p8OtqHh5eiCykijbKaVTcKefoTEM3lOO00dGsZRblp')
+            await stripe.redirectToCheckout({ sessionId: session.id })
         } catch (err) {
             console.log(err)
             setRedirecting(false)

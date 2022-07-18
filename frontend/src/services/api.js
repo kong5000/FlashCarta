@@ -46,3 +46,8 @@ export const getUserInfo = async (idToken) => {
     console.log(userInfo.data)
     return userInfo.data
 }
+
+export const getCheckoutSession = async (idToken) => {
+    let session = await axios.get(BASE_URL + "/checkout", { headers: { "Authorization": `Bearer ${idToken}` } });
+    return session.data
+}
