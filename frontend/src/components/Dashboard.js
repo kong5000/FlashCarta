@@ -10,10 +10,12 @@ import StudyPage from './StudyPage/StudyPage';
 import NewCardModal from './NewCardModal/NewCardModal'
 import StorePage from './StorePage/StorePage';
 import LockedPage from './LockedPage';
+import SettingsPage from './SettingsPage/SettingsPage';
+import UnderConstructionPage from './LoadingPage/UnderConstructionPage';
 
 const EXERCISE_SIZE = 5
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user, logout }) => {
   const [userStats, setUserStats] = useState(null)
   const [activePage, setActivePage] = useState('study')
   const [exerciseActive, setExerciseActive] = useState(false)
@@ -48,9 +50,9 @@ const Dashboard = ({ user }) => {
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
       let deck = null
       if (isRankingCategory(category)) {
-        deck = await getDeckByRanking(idToken, 'pt', category, EXERCISE_SIZE)
+        deck = await getDeckByRanking(idToken, 'pt', category, userInfo.cardsPerSession)
       } else {
-        deck = await getDeckByCategory(idToken, 'pt', category, EXERCISE_SIZE)
+        deck = await getDeckByCategory(idToken, 'pt', category, userInfo.cardsPerSession)
       }
       console.log(deck)
       setDeck(deck)
@@ -84,13 +86,13 @@ const Dashboard = ({ user }) => {
   const hasSubscription = (userInfo) => {
     console.log('hasSubscription')
     console.log(userInfo)
-    if(userInfo && userInfo.subscription) return true
+    if (userInfo && userInfo.subscription) return true
     return false
   }
   return (
     <div id="main-div"
       tabIndex="0">
-      <NavBar activePage={activePage} setActivePage={setActivePage} />
+      <NavBar activePage={activePage} setActivePage={setActivePage} logout={logout}/>
       {activePage === 'study' &&
         <StudyPage
           userStats={userStats}
@@ -100,16 +102,11 @@ const Dashboard = ({ user }) => {
           categoryClickHandler={categoryClickHandler}
         />
       }
-      {activePage === 'stats' && <div>Stats Page</div>}
+      {activePage === 'stats' && <UnderConstructionPage/>}
       {activePage === 'shop' && <StorePage user={user} />}
-      {activePage === 'settings' && userInfo.subscription &&         <StudyPage
-          userStats={userStats}
-          setActivePage={setActivePage}
-          setExerciseActive={setExerciseState}
-          setNewCardActive={setNewCardActive}
-          categoryClickHandler={categoryClickHandler}
-        />}
-      {activePage === 'settings' && !userInfo.subscription &&  <LockedPage locked={true}/>}
+      {activePage === 'settings' && userInfo.subscription && <SettingsPage />}
+      {activePage === 'settings' && <SettingsPage userSettings={userInfo} updateUserInfo={updateStats} />}
+      {/* {activePage === 'settings' && !userInfo.subscription && <LockedPage locked={true} />} */}
       <ExerciseModal
         updateStats={updateStats}
         loading={loading}

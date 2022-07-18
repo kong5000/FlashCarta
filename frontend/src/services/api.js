@@ -51,3 +51,8 @@ export const getCheckoutSession = async (idToken) => {
     let session = await axios.get(BASE_URL + "/checkout", { headers: { "Authorization": `Bearer ${idToken}` } });
     return session.data
 }
+
+export const updateSettings = async (idToken, settings) => {
+    let updatedSettings = await axios.post(BASE_URL + "/update-settings", settings, { headers: { "Authorization": `Bearer ${idToken}` } });
+    return updatedSettings.data
+}

@@ -130,10 +130,12 @@ app.post(`/rate-card`, auth.isAuthorized, async (req, res) => {
 
 app.post(`/update-settings`, auth.isAuthorized, async (req, res) => {
   const user = res.locals.user
+  const settings = req.body
   try{
-    await updateUserSettings(user.uid)
+    await updateUserSettings(user.uid, settings)
     return res.status(200).send()
   }catch(err){
+    console.log(err)
     return res.status(400).send('Could not update user settings')
   }
 })

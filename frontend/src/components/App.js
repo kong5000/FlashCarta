@@ -43,11 +43,17 @@ const App = () => {
     return () => unregisterAuthObserver(); //remove Firebase observers when the component unmounts.
   }, []);
 
+  const logout = () => {
+    firebase.auth().signOut().then(function() {
+      navigate('/')
+    }).catch(function(error) {
+    });
+  }
 
   return (
     <Routes>
       <Route path="/sign-in" exact element={<SignIn setUser={setUser} />} />
-      {user && <Route path="/dashboard" element={<Dashboard user={user} />} />}
+      {user && <Route path="/dashboard" element={<Dashboard user={user} logout={logout}/>} />}
       <Route path="/" exact element={<div>Home Page</div>} />
     </Routes>
   );

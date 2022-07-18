@@ -11,10 +11,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { BR } from 'country-flag-icons/react/3x2'
 import NavbarButton from './NavbarButton/NavbarButton';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Logout'];
 const navButtons = ['shop', 'study', 'stats', 'settings']
 
-const ResponsiveAppBar = ({ activePage, setActivePage }) => {
+const ResponsiveAppBar = ({ activePage, setActivePage, logout }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -105,14 +105,12 @@ const ResponsiveAppBar = ({ activePage, setActivePage }) => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={logout}>
+                                <Typography textAlign="center">Logout</Typography>
+                            </MenuItem>
                         </Menu>
                     </div>
-                    <Tooltip title="Change language">
+                    <Tooltip title="">
                         <div className='language-flag'>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <BR title="Brazil" className="country-flag" />
