@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 const UnderConstructionPage = ({ loading }) => {
     return (
         <div className="loading-page">
-            <Spinner loading={loading} construction={true} />
+            <Spinner loading={loading} alternateAnimation={true} />
             <Typography variant="h5" >
                 Sorry! The stats page is still under construction!
             </Typography>

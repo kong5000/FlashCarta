@@ -43,12 +43,19 @@ app.get('/checkout', auth.isAuthorized, async (req, res) => {
 app.get('/user-data', auth.isAuthorized, async (req, res) => {
   //Return Settings, Stats, and Card Stack
   const user = res.locals.user
-  let userInfo = await getUser(user.uid)
-  if (!userInfo.length) {
-    await createUser(user.uid)
+  try{
+    let userInfo = await getUser(user.uid)
+    if (!userInfo.length) {
+      await createUser(user.uid)
+      userInfo = await getUser(user.uid)
+    }
+    console.log("USER INFO HERE")
+    console.log(userInfo)
+    res.status(200).send(userInfo[0])
+  }catch(err){
+    console.log(err)
+    return res.status(400).send(err)
   }
-  console.log("USER INFO HERE")
-  res.status(200).send(userInfo[0])
 })
 
 app.post('/signup', (req, res) => {
@@ -72,12 +79,6 @@ app.post('/add-custom-card', auth.isAuthorized, async (req, res) => {
   }
 })
 
-app.get('/get-deck/:language/:userId', auth.isAuthorized, async (req, res) => {
-  const { language, userId } = req.params
-  const user = res.locals.user
-
-  //Get 15 of the lowest rank cards from userId
-})
 
 app.get('/get-deck-ranking/:language/:start/:end/:size', auth.isAuthorized, async (req, res) => {
   const { language, start, end, size } = req.params

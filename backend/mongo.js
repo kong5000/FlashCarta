@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 mongoose.connect(process.env.MONGO_CONNECTION)
 var fs = require('fs');
-const { getSignedAudioUrl } = require('./s3')
+const { getSignedAudioUrl } = require('./s3');
+const { resolve } = require('path');
 
 
 const definitionSchema = new mongoose.Schema({
@@ -174,8 +175,9 @@ const getDeckByRanking = async (user, language, startRank, endRank, size) => {
                 $gte: startRank
             }
         }
-    ).sort({ priority: 1, ranking: 1 }).limit(size).lean()
-    deck = formatDeck(deck, size)
+    ).sort({ priority: 1, ranking: 1 }).limit(size ? size : 10).lean()
+    //Need to findout why size is sometimes not set, in the meantime added ternary operator
+    deck = formatDeck(deck, size ? size : 10)
     return deck
 }
 
@@ -258,14 +260,23 @@ const getUser = async (userId) => {
 }
 
 const createUser = async (userId) => {
-    const newUser = new userModel({
-        _id: userId,
+    return new Promise((resolve, reject) => {
+        const newUser = new userModel({
+            _id: userId,
+        })
+        newUser.save(function (err, obj) {
+            if (err) {
+                reject(err)
+            }
+            else {
+                console.log(obj)
+                resolve(obj)
+            }
+        });
     })
-    await newUser.save()
-    return newUser
 }
 
-const updateUserSettings = async(userId, settings) => {
+const updateUserSettings = async (userId, settings) => {
     const updatedUser = await userModel.updateOne({ _id: userId }, { cardsPerSession: settings.cardsPerSession })
     return updatedUser
 }

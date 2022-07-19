@@ -42,8 +42,6 @@ export const createCustomCard = async (idToken, card) => {
 
 export const getUserInfo = async (idToken) => {
     let userInfo = await axios.get(BASE_URL + "/user-data", { headers: { "Authorization": `Bearer ${idToken}` } });
-    console.log('userInfo')
-    console.log(userInfo.data)
     return userInfo.data
 }
 

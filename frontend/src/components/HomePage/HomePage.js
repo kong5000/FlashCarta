@@ -20,7 +20,7 @@ const HomePage = ({setUser}) => {
                     : <div className='home-page-content'>
                         <HomePageIcon animation='pencil' />
                         <div className='welcome-text'>Learn Portuguese with Cartão</div>
-                        <div className='sub-heading'>Frequency dictionary guided flashcards teach you the most important words first</div>
+                        <div className='sub-heading'>Frequency dictionary flashcards teach you the most important words first</div>
                         <button className='start-button' onClick={() => setSignInVisible(true)}>Start Learning</button>
                     </div>} 
             </div>

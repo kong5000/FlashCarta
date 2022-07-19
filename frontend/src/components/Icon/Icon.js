@@ -77,7 +77,6 @@ function Icon(props) {
                 onMouseLeave={() => lottie.stop()}
                 onClick={() => {
                     onClick(category)
-                    setExerciseActive(true)
                 }}
             />
             <div className="circle">

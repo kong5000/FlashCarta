@@ -12,6 +12,12 @@ import StorePage from './StorePage/StorePage';
 import LockedPage from './LockedPage';
 import SettingsPage from './SettingsPage/SettingsPage';
 import UnderConstructionPage from './LoadingPage/UnderConstructionPage';
+import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const EXERCISE_SIZE = 5
 
@@ -22,7 +28,8 @@ const Dashboard = ({ user, logout }) => {
   const [newCardActive, setNewCardActive] = useState(false)
   const [loading, setLoading] = useState(true)
   const [userInfo, setUserInfo] = useState({})
-
+  const [errorOpen, setErrorOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('Sorry there was an error')
   const setExerciseState = (state) => {
     setExerciseActive(state)
     updateStats()
@@ -32,14 +39,13 @@ const Dashboard = ({ user, logout }) => {
 
   const navigate = useNavigate()
 
-  const sendToCustomerPoral = async () => {
-    const functionRef = firebase
-      .functions()
-      .httpsCallable('ext-firestore-stripe-payments-createPortalLink')
-    const { data } = await functionRef({ returnUrl: window.location.origin })
-    window.location.assign(data.url)
-  }
-
+  const handleCloseSnack = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorOpen(false)
+    setExerciseActive(false)
+  };
   const isRankingCategory = (category) => {
     return (category === '50' || category === '100' || category === '150' || category === '200')
   }
@@ -54,21 +60,23 @@ const Dashboard = ({ user, logout }) => {
       } else {
         deck = await getDeckByCategory(idToken, 'pt', category, userInfo.cardsPerSession)
       }
-      console.log(deck)
-      setDeck(deck)
+      if (deck.length > 0) {
+        setDeck(deck)
+        setExerciseActive(true)
+      }else if(category === 'custom'){
+        setErrorMessage('Your custom deck is empty, try adding cards first')
+        setErrorOpen(true)
+      }
     } catch (err) {
       console.log(err)
+      setErrorMessage('Sorry, something went wrong, try again later')
+      setErrorOpen(true)
     } finally {
       setLoading(false)
     }
     /**@todo sort card (or do the sorting on the backend) */
   }
 
-  const signOut = () => {
-    firebase.auth().signOut()
-    localStorage.removeItem("user")
-    navigate('/')
-  }
   const updateStats = async () => {
     const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
     const userInfo = await getUserInfo(idToken)
@@ -92,7 +100,7 @@ const Dashboard = ({ user, logout }) => {
   return (
     <div id="main-div dashboard"
       tabIndex="0">
-      <NavBar activePage={activePage} setActivePage={setActivePage} logout={logout}/>
+      <NavBar activePage={activePage} setActivePage={setActivePage} logout={logout} />
       {activePage === 'study' &&
         <StudyPage
           userStats={userStats}
@@ -102,7 +110,7 @@ const Dashboard = ({ user, logout }) => {
           categoryClickHandler={categoryClickHandler}
         />
       }
-      {activePage === 'stats' && <UnderConstructionPage/>}
+      {activePage === 'stats' && <UnderConstructionPage />}
       {activePage === 'shop' && <StorePage user={user} />}
       {activePage === 'settings' && userInfo.subscription && <SettingsPage />}
       {activePage === 'settings' && <SettingsPage userSettings={userInfo} updateUserInfo={updateStats} />}
@@ -117,6 +125,11 @@ const Dashboard = ({ user, logout }) => {
         deck={deck}
       />
       <NewCardModal setNewCardActive={setNewCardActive} newCardActive={newCardActive} />
+      <Snackbar open={errorOpen} autoHideDuration={6000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
