@@ -34,7 +34,7 @@ async function uploadToAudioBucket(BUCKET_NAME, filename, fileContent) {
   }
 }
 
-let uploadAudioFolderToBucket = async (filename) => {
+const uploadAudioFolderToBucket = async (filename) => {
   const fileContent = fs.readFileSync(`./audio/${filename}`)
   await uploadToAudioBucket(
     process.env.PORTUGUESE_BUCKET_NAME,
@@ -42,17 +42,16 @@ let uploadAudioFolderToBucket = async (filename) => {
     fileContent
   )
 
-  fs.unlink(`./audio/${filename}`, function(err) {
-    if(err && err.code == 'ENOENT') {
-        // file doens't exist
-        console.info("File not found, nothing to delete");
+  fs.unlink(`./audio/${filename}`, function (err) {
+    if (err && err.code == 'ENOENT') {
+      // file doens't exist
+      console.info("File not found, nothing to delete");
     } else if (err) {
-        console.error(err);
+      console.error(err);
     } else {
-        console.info(`removed`);
+      console.info(`removed`);
     }
-});
-  //delete audio folder
+  });
 }
 
 

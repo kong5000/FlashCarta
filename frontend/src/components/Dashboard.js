@@ -74,7 +74,6 @@ const Dashboard = ({ user, logout }) => {
     } finally {
       setLoading(false)
     }
-    /**@todo sort card (or do the sorting on the backend) */
   }
 
   const updateStats = async () => {
@@ -112,9 +111,7 @@ const Dashboard = ({ user, logout }) => {
       }
       {activePage === 'stats' && <UnderConstructionPage />}
       {activePage === 'shop' && <StorePage user={user} />}
-      {activePage === 'settings' && userInfo.subscription && <SettingsPage />}
       {activePage === 'settings' && <SettingsPage userSettings={userInfo} updateUserInfo={updateStats} />}
-      {/* {activePage === 'settings' && !userInfo.subscription && <LockedPage locked={true} />} */}
       <ExerciseModal
         updateStats={updateStats}
         loading={loading}

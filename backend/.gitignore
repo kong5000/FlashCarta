@@ -1,5 +1,8 @@
 /node_modules
 /audio
+/uploaded-audio
+/scripts
+/defintions
 config.json
 keyfile.json
 .env

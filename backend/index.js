@@ -6,15 +6,11 @@ const { updateUserSettings, getUser, createUser, insertNewCard, getUserStatistic
 const { textToSpeech } = require('./polly')
 const { uploadAudioFolderToBucket } = require('./s3')
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-
-
 const app = express()
-const TEST_USER = 'JCw61e6wnjgrjE7CetVKxHKVteq2'
 
 app.use(cors())
 app.use(bodyParser.json())
 // app.use(auth.isAuthorized) 
-const SET_SIZE = 15
 const port = 5001
 
 app.post('/stripe', async (req, res) => {
@@ -56,11 +52,6 @@ app.get('/user-data', auth.isAuthorized, async (req, res) => {
     console.log(err)
     return res.status(400).send(err)
   }
-})
-
-app.post('/signup', (req, res) => {
-  //For now initialize to Portuguese beginning settings
-  //Create User doc (statistics, settings, progress)
 })
 
 app.post('/add-custom-card', auth.isAuthorized, async (req, res) => {
@@ -141,9 +132,6 @@ app.post(`/update-settings`, auth.isAuthorized, async (req, res) => {
   }
 })
 
-app.delete('/delete-card', (req, res) => {
-
-})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

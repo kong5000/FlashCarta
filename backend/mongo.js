@@ -1,10 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 mongoose.connect(process.env.MONGO_CONNECTION)
-var fs = require('fs');
 const { getSignedAudioUrl } = require('./s3');
-const { resolve } = require('path');
-
 
 const definitionSchema = new mongoose.Schema({
     language: { type: String, required: true },
