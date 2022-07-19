@@ -3,9 +3,8 @@ import FirebaseLogin from './FirebaseLogin'
 
 const SignIn = ({ setUser }) => {
     return (
-        <div>
-            <h1>My App</h1>
-            <p>Please sign-in:</p>
+        <div className='sign-in-container'>
+            <h1 className='welcome-text'>Sign up or Sign in</h1>
             <FirebaseLogin setUser={setUser} />
         </div>
     )
