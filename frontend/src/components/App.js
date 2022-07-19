@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { upsertCard } from '../services/api';
 import SignIn from './SignIn';
 import Dashboard from './Dashboard';
+import HomePage from './HomePage/HomePage';
 import {
   Routes,
   Route,
@@ -54,7 +55,7 @@ const App = () => {
     <Routes>
       <Route path="/sign-in" exact element={<SignIn setUser={setUser} />} />
       {user && <Route path="/dashboard" element={<Dashboard user={user} logout={logout}/>} />}
-      <Route path="/" exact element={<div>Home Page</div>} />
+      <Route path="/" exact element={<HomePage/>} />
     </Routes>
   );
 }

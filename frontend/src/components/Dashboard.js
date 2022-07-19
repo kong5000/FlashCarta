@@ -90,7 +90,7 @@ const Dashboard = ({ user, logout }) => {
     return false
   }
   return (
-    <div id="main-div"
+    <div id="main-div dashboard"
       tabIndex="0">
       <NavBar activePage={activePage} setActivePage={setActivePage} logout={logout}/>
       {activePage === 'study' &&

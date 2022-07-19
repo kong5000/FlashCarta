@@ -1,0 +1,89 @@
+.home-page {
+    /* background-image: linear-gradient(80deg,  #fedf00 45.3%, #019b39 45%); */
+    background-image: linear-gradient(0deg,  #331da0dd 20%, #05298560 40%);
+
+    display: flex;
+    
+}
+
+.home-page-left {
+    width: 55%;
+    height: 100vh;
+}
+
+.home-page-right {
+    width: 45%;
+    height: 100vh;
+}
+
+.flag-background {
+    width: 100vw;
+}
+
+.home-page-bar {
+    position: fixed;
+    height: 70px;
+    padding-bottom: 0;
+    z-index: 1000;
+    width: 100vw;
+    background-color: #fedf00;
+}
+
+.home-page-bar-bottom {
+    bottom: 0;
+    position: absolute;
+
+    height: 70px;
+    padding-bottom: 0;
+    z-index: 1000;
+    width: 100vw;
+    background-color: #019b39;
+}
+
+
+.offset{
+    margin-left: 40px;
+}
+
+.info-container{
+    display: flex;
+    align-items: center;
+}
+@keyframes shine-pattern-movement {
+    from {background-position:0 0;}
+    to {background-position:-10000px 5000px;}
+}
+
+@keyframes move-clouds-back {
+    from {background-position:0 0;}
+    to {background-position:10000px 0;}
+}
+
+.stars, .shine-pattern {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.stars {
+  /* background:#052985 url(stars2.png) repeat top center; */
+  background:#052985 url(stars2.png) repeat top center;
+  z-index:-2;
+}
+
+.shine-pattern{
+  background:transparent url(twinkling_blue.png) repeat top center;
+  z-index:-1;
+  animation:shine-pattern-movement 300s linear infinite;
+}
+
+.flag{
+    width: 200px;
+    border-radius: 15px;
+    border: 3px gold solid;
+}

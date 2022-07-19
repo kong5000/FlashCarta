@@ -118,6 +118,7 @@
 }
 .spinner{
   width: 220px;
+  z-index: 3;
 }
 
 .exercise-page{
