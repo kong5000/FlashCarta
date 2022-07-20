@@ -1,0 +1,4 @@
+This folder temporarily stores audio generated from Amazon polly before it's uploaded to an s3 bucket
+The audio file is then deleted upon succesful upload to s3 bucket
+
+Needed a README so this empty folder gets pushed to heroku.
