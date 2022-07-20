@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = "http://localhost:5001"
+const BASE_URL = "https://polar-dawn-24721.herokuapp.com"
 
 // export const getDeck = async (idToken, requestInfo) => {
 //     const generateUrl = (requestInfo) => {
