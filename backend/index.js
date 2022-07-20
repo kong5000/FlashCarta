@@ -11,7 +11,6 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 // app.use(auth.isAuthorized) 
-const port = 5001
 
 app.post('/stripe', async (req, res) => {
   // const customer = await stripe.customers.retrieve(
@@ -132,7 +131,8 @@ app.post(`/update-settings`, auth.isAuthorized, async (req, res) => {
   }
 })
 
+const PORT = process.env.PORT || 5001
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`)
 })
