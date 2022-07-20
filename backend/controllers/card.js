@@ -1,5 +1,6 @@
 const cardModel = require('../models/Card')
 const { getSignedAudioUrl } = require('../services/s3');
+const { getDefinitionsByCategory, getDefinitionsByRanking } = require('./definition')
 
 const getDeckByCategory = async (userId, language, category, size) => {
     let deck = await cardModel.find(
@@ -122,8 +123,14 @@ const updateCardPriority = async (card, rating) => {
     return updatedCard
 }
 
-
+const getAllUserCards = async (userId) => {
+    const cards = await cardModel.find(
+        { user: userId }
+    )
+    return cards
+}
 module.exports = {
+    getAllUserCards,
     getDeckByCategory,
     generateDeck,
     updateCardPriority,

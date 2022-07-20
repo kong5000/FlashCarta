@@ -8,6 +8,8 @@ const {
     updateCardPriority,
     getDeckByRanking
 } = require('../controllers/card')
+const { textToSpeech } = require('../services/polly')
+const { uploadAudioFolderToBucket } = require('../services/s3')
 
 router.post('/add-custom-card', auth.isAuthorized, async (req, res) => {
     const { language, word, definition } = req.body

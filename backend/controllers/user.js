@@ -1,5 +1,5 @@
-const userModel = require('../models/User'
-)
+const userModel = require('../models/User')
+const { getAllUserCards } = require('./card')
 const getUser = async (userId) => {
     const user = await userModel.find(
         { _id: userId }
@@ -25,11 +25,11 @@ const createUser = async (userId) => {
 }
 
 const getUserStatistics = async (userId) => {
-    const cards = await cardModel.find(
-        { user: userId }
-    )
+    const cards = await getAllUserCards(userId)
+
     const categories = ['clothing', 'animals', 'body', 'transport', 'food']
     const categoryStats = {}
+
     categories.forEach(category => {
         let singleCategoryDeck = cards.filter(card => card.category === category)
         let userStarsInCategory = 0
@@ -40,6 +40,7 @@ const getUserStatistics = async (userId) => {
         categoryStats[category]['totalStars'] = singleCategoryDeck.length * 5
         categoryStats[category]['userStars'] = userStarsInCategory
     })
+    
     /**@todo lot of repeated code here, need to clean */
     const wordRankingCategoriers = ['50', '100', '150', '200']
     let index = 1
