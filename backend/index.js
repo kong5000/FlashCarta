@@ -131,6 +131,11 @@ app.post(`/update-settings`, auth.isAuthorized, async (req, res) => {
   }
 })
 
+app.get('/', async(req,res) => {
+  console.log("Test")
+  return res.status(200).send('Hello World')
+})
+
 const PORT = process.env.PORT || 5001
 
 app.listen(PORT, () => {
