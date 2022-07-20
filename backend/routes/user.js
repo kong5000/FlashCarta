@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../auth')
+const auth = require('./auth')
 const { updateUserSettings, getUser, createUser, getUserStatistics } = require('../controllers/user')
 
 router.get('/user-data', auth.isAuthorized, async (req, res) => {
