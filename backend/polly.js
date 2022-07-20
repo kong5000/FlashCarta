@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
-AWS.config.loadFromPath('./config.json');
+
+// AWS.config.loadFromPath('./config.json');
 // Create an Polly client
 const Polly = new AWS.Polly({
     signatureVersion: 'v4',

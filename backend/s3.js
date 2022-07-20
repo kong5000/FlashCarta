@@ -1,7 +1,7 @@
 var AWS = require('aws-sdk');
 const fs = require('fs');
 
-AWS.config.loadFromPath('./config.json');
+// AWS.config.loadFromPath('./config.json');
 
 AWS.config.update({ region: 'us-west-1' });
 const BUCKET_NAME = "flashcard-audio"
