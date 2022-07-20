@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
-import { getDeckByCategory, getDeckByRanking, getUserStats, getUserInfo } from '../services/api';
+import { getDeckByCategory, getDeckByRanking, getUserStats, getUserInfo } from '../../services/api';
 import { useNavigate } from "react-router-dom"
-import NavBar from './NavBar'
-import ExerciseModal from './ExerciseModal';
+import NavBar from './navigation/NavBar'
+import ExerciseModal from '../ExercisePage/ExerciseModal';
 import StudyPage from './StudyPage/StudyPage';
-import NewCardModal from './NewCardModal/NewCardModal'
+import NewCardModal from './CardModal/NewCardModal'
 import StorePage from './StorePage/StorePage';
-import LockedPage from './LockedPage';
 import SettingsPage from './SettingsPage/SettingsPage';
-import UnderConstructionPage from './LoadingPage/UnderConstructionPage';
+import UnderConstructionPage from '../ExercisePage/LoadingPage/LoadingPage'
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -81,11 +80,15 @@ const Dashboard = ({ user, logout }) => {
   }
 
   const updateStats = async () => {
-    const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-    const userInfo = await getUserInfo(idToken)
-    setUserInfo(userInfo)
-    let userStats = await getUserStats(idToken)
-    setUserStats(userStats)
+    try{
+      const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+      const userInfo = await getUserInfo(idToken)
+      setUserInfo(userInfo)
+      let userStats = await getUserStats(idToken)
+      setUserStats(userStats)
+    }catch(err){
+      console.log(err)
+    }
   }
   useEffect(() => {
     try {

@@ -132,25 +132,6 @@
   margin-right: 10px;
 }
 
-.icon {
-  width: 95px;
-  margin: 35px;
-  margin-bottom: 40px;
-  max-height: 110px;
-  text-align: center;
-}
-
-
-.icon-label{
-  position: relative;
-  top: -70px;
-}
-
-.icon-row-container{
-  display: flex;
-  justify-content: space-around;
-}
-
 .category-selection{
   max-width: 33%;
   display: flex;

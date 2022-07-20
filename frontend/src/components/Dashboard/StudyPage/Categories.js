@@ -1,4 +1,4 @@
-import Icon from './Icon/Icon'
+import Icon from '../../Icon/Icon'
 
 const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, progress, userStats }) => {
     return (

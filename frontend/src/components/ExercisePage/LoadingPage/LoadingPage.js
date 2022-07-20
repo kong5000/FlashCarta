@@ -1,4 +1,4 @@
-import Spinner from "../Spinner/Spinner"
+import Spinner from "../../Spinner/Spinner"
 import './LoadingPage.css'
 import Typography from '@mui/material/Typography';
 const LoadingPage = ({ loading }) => {

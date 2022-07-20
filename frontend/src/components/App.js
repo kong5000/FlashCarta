@@ -4,9 +4,8 @@ import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 import 'firebase/compat/functions'
 import { useEffect, useState } from 'react';
-import { upsertCard } from '../services/api';
-import SignIn from './SignIn';
-import Dashboard from './Dashboard';
+import SignIn from './HomePage/SignIn';
+import Dashboard from './Dashboard/Dashboard';
 import HomePage from './HomePage/HomePage';
 import {
   Routes,

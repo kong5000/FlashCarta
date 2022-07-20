@@ -1,5 +1,5 @@
 import React from 'react';
-import CardRating from '../CardRating';
+import CardRating from '../../ExercisePage/CardRating';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 function StatsWindow(props) {

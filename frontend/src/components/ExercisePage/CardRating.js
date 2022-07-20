@@ -1,6 +1,4 @@
 import Rating from '@mui/material/Rating';
-import { styled } from '@mui/material/styles';
-
 
 const CardRating = ({ label, rating }) => {
     {

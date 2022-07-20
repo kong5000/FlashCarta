@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import ProgressBar from '../ProgressBar'
-import { updateCardRating } from '../../services/api';
+import { updateCardRating } from '../../../services/api';
 import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
 import ExerciseResults from '../ExerciseResults/ExerciseResults'

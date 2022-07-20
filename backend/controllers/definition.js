@@ -43,7 +43,6 @@ const insertDefinitions = async (definitions) => {
     }
 }
 
-
 module.exports = {
     insertDefinitions,
     getDefinitionsByRanking,

@@ -1,16 +1,10 @@
 import React from 'react';
 import './HomePage.css'
-import { BR } from 'country-flag-icons/react/3x2'
 import HomePageIcon from './HomePageIcon';
-import SignIn from '../SignIn';
+import SignIn from './SignIn';
 import { useState } from 'react'
-import {
-    useNavigate
-} from "react-router-dom";
 const HomePage = ({setUser}) => {
     const [signInVisible, setSignInVisible] = useState(false)
-    const navigate = useNavigate()
-
     return (
         <div className='home-page'>
             <div className='stars'></div>

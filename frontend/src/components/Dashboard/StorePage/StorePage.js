@@ -5,9 +5,9 @@ import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 import { loadStripe } from '@stripe/stripe-js';
 import BuyPremium from './BuyPremium';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../../Spinner/Spinner';
 import { Typography } from '@mui/material';
-import { getCheckoutSession } from '../../services/api'
+import { getCheckoutSession } from '../../../services/api'
 const StorePage = ({ user }) => {
     const [redirecting, setRedirecting] = useState(false)
 

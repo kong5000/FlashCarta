@@ -8,11 +8,8 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 import CircularProgress from '@mui/material/CircularProgress';
-import Slide from '@mui/material/Slide';
-import { updateSettings } from '../../services/api'
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+import { updateSettings } from '../../../services/api'
+
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });

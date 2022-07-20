@@ -4,7 +4,7 @@ import CircularProgress, {
     circularProgressClasses,
 } from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-
+import './Icon.css'
 function Icon(props) {
     const [progress, setProgress] = useState(null)
     const { animation, userStats, onClick, category, setExerciseActive, label } = props
@@ -101,7 +101,6 @@ function Icon(props) {
                 <CircularProgress
                     variant="determinate"
                     value={progress}
-                    disableShrink
                     sx={{
                         color: (theme) => (theme.palette.mode === 'light' ? '#ffd700' : '#ffd700'),
                         animationDuration: '550ms',

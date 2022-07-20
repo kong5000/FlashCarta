@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem';
 import { BR } from 'country-flag-icons/react/3x2'
 import NavbarButton from './NavbarButton/NavbarButton';
 
-const settings = ['Logout'];
 const navButtons = ['shop', 'study', 'stats', 'settings']
 
 const ResponsiveAppBar = ({ activePage, setActivePage, logout }) => {
@@ -74,6 +73,7 @@ const ResponsiveAppBar = ({ activePage, setActivePage, logout }) => {
                             onClose={handleCloseNavMenu}>
                             {navButtons.map((navButtonName) =>
                                 <NavbarButton
+                                    key={navButtonName}
                                     activePage={activePage}
                                     animation={navButtonName}
                                     label={navButtonName.toUpperCase()}
@@ -84,6 +84,7 @@ const ResponsiveAppBar = ({ activePage, setActivePage, logout }) => {
                     <div className='nav-bar-items'>
                         {navButtons.map((navButtonName) =>
                             <NavbarButton
+                                key={navButtonName}
                                 activePage={activePage}
                                 animation={navButtonName}
                                 label={navButtonName.toUpperCase()}

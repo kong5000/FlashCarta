@@ -1,8 +1,8 @@
 import React from 'react';
-import Categories from '../Categories';
+import Categories from './Categories';
 import './StudyPage.css'
-import Icon from '../Icon/Icon';
-import CreateButton from '../CreateButton/CreateButton';
+import Icon from '../../Icon/Icon';
+import CreateButton from '../../Dashboard/CardModal/CreateButton';
 import StatsWindow from '../StatsWindow/StatsWindow';
 import { Typography } from '@mui/material';
 const StudyPage = ({ setExerciseActive, categoryClickHandler, setNewCardActive, userStats }) => {

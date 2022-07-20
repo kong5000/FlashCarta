@@ -41,7 +41,6 @@ const formatDeck = (deck, size) => {
 }
 // generateDeck({ userId: "a", language:"pt", start:0, end:5, category: "clothing" })
 
-
 const insertNewCard = async (uid, language, word, definition) => {
     const newCard = new cardModel({
         lastSeen: Date.now(),

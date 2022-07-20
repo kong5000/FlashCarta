@@ -1,4 +1,4 @@
-import Spinner from "./Spinner/Spinner"
+import Spinner from "../Spinner/Spinner"
 import Typography from '@mui/material/Typography';
 const LockedPage = ({ loading, locked }) => {
     return (
