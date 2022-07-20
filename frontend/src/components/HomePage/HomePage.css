@@ -11,6 +11,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 5%;
+    text-align: center;
 }
 
 .sub-heading {
@@ -22,16 +23,6 @@
 .welcome-text {
     font-size: 50px;
     color: white;
-}
-
-.home-page-left {
-    width: 55%;
-    height: 100vh;
-}
-
-.home-page-right {
-    width: 45%;
-    height: 100vh;
 }
 
 .flag-background {

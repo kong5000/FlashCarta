@@ -28,7 +28,7 @@ function CreateButton({ setNewCardActive }) {
                 onMouseEnter={() => lottie.play('create')}
                 onMouseLeave={() => lottie.stop()}
                 onClick={() => {
-                    setNewCardActive('true')
+                    setNewCardActive(true)
                 }}
             />
             <div>

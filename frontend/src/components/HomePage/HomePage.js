@@ -13,7 +13,7 @@ const HomePage = ({setUser}) => {
                 {signInVisible ? <SignIn setUser={setUser}/>
                     : <div className='home-page-content'>
                         <HomePageIcon animation='pencil' />
-                        <div className='welcome-text'>Learn Portuguese with Cartão</div>
+                        <div className='welcome-text'>Learn Portuguese with FlashCarta</div>
                         <div className='sub-heading'>Frequency dictionary flashcards teach you the most important words first</div>
                         <button className='start-button' onClick={() => setSignInVisible(true)}>Start Learning</button>
                     </div>} 

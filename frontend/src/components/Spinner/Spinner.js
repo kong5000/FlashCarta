@@ -25,7 +25,7 @@ function Spinner({alternateAnimation}) {
             lottie.destroy('spinner');
             clearInterval(intervalId)
         };
-    }, []);
+    }, [lottieAnimation]);
 
     return (
         <div

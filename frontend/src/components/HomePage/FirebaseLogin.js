@@ -27,9 +27,9 @@ const FirebaseLogin = ({ setUser }) => {
     useEffect(() => {
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
             setUser(user);
-            console.log(user)
         })
-    });
+        return () => unregisterAuthObserver()
+    }, [setUser]);
 
     // const signInAnonymously = () => {
     //     firebase.auth().signInAnonymously().catch(alert);

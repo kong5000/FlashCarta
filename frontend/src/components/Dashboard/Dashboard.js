@@ -3,22 +3,19 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 import { getDeckByCategory, getDeckByRanking, getUserStats, getUserInfo } from '../../services/api';
-import { useNavigate } from "react-router-dom"
 import NavBar from './navigation/NavBar'
 import ExerciseModal from '../ExercisePage/ExerciseModal';
 import StudyPage from './StudyPage/StudyPage';
 import NewCardModal from './CardModal/NewCardModal'
 import StorePage from './StorePage/StorePage';
 import SettingsPage from './SettingsPage/SettingsPage';
-import UnderConstructionPage from '../ExercisePage/LoadingPage/LoadingPage'
+import UnderConstructionPage from '../ExercisePage/LoadingPage/UnderConstructionPage'
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
-const EXERCISE_SIZE = 5
 
 const Dashboard = ({ user, logout }) => {
   const [userStats, setUserStats] = useState(null)
@@ -35,8 +32,6 @@ const Dashboard = ({ user, logout }) => {
   }
 
   const [deck, setDeck] = useState(null)
-
-  const navigate = useNavigate()
 
   const handleCloseSnack = (event, reason) => {
     if (reason === 'clickaway') {
