@@ -1,1 +1,0 @@
-const DEFAULT_SET_SIZE = 15

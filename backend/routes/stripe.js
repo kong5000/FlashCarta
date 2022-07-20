@@ -1,5 +1,5 @@
 const express = require('express');
-const auth = require('../auth')
+const auth = require('./auth')
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const router = express.Router();
 

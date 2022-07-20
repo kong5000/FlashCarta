@@ -48,7 +48,6 @@ const uploadAudioFolderToBucket = async (filename) => {
   });
 }
 
-
 module.exports = {
   uploadToAudioBucket,
   getSignedAudioUrl,
