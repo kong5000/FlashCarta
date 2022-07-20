@@ -75,12 +75,12 @@ export default function BasicCard({ word, rateCard }) {
             <CardContent>
                 <div className='exercise-word'>
                     <Typography className='exercise-word' variant="h4" >
-                        {word.word}
+                        {word && word.word}
                     </Typography></div>
                 {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
                     {word.type}
                 </Typography> */}
-                {showPlayer &&
+                {showPlayer && word &&
                     <div className="audio-player">
                         <ReactAudioPlayer
                             src={word.audio}

@@ -14,7 +14,7 @@ const MAX_PRIORITY = 5
 const ExercisePage = ({ deck, setExerciseActive, setActivePage, updateStats }) => {
     const [answerRevealed, setAnswerRevealed] = useState(false)
     const [deckIndex, setDeckIndex] = useState(0)
-    const [activeCard, setActiveCard] = useState(deck[deckIndex])
+    const [activeCard, setActiveCard] = useState(null)
     const [exerciseComplete, setExerciseComplete] = useState(false)
     const [results, setResults] = useState({})
 
@@ -28,9 +28,11 @@ const ExercisePage = ({ deck, setExerciseActive, setActivePage, updateStats }) =
                 newResults[card.word]['oldPriority'] = card.priority
                 newResults[card.word]['newPriority'] = null
             })
+            setActiveCard(deck[deckIndex])
             console.log(newResults)
             setResults(newResults)
         }
+        
     }, [deck])
 
     const rateCard = async (rating) => {
@@ -69,7 +71,7 @@ const ExercisePage = ({ deck, setExerciseActive, setActivePage, updateStats }) =
 
     return (
         <div className="exercise-page">
-            {!exerciseComplete && <ProgressBar index={deckIndex} lastIndex={deck.length} style={{ color: "red" }} />}
+            {!exerciseComplete && deck && <ProgressBar index={deckIndex} lastIndex={deck.length} style={{ color: "red" }} />}
             {!exerciseComplete && !answerRevealed && <ExerciseCard word={activeCard} revealAnswer={setAnswerRevealed} rateCard={rateCard} />}
 
             {activeCard && !exerciseComplete && <footer className='exercise-footer'>

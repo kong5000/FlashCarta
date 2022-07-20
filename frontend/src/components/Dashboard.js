@@ -52,6 +52,8 @@ const Dashboard = ({ user, logout }) => {
 
   const categoryClickHandler = async (category) => {
     setLoading(true)
+    setExerciseActive(true)
+
     try {
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
       let deck = null
@@ -62,7 +64,6 @@ const Dashboard = ({ user, logout }) => {
       }
       if (deck.length > 0) {
         setDeck(deck)
-        setExerciseActive(true)
       }else if(category === 'custom'){
         setErrorMessage('Your custom deck is empty, try adding cards first')
         setErrorOpen(true)
