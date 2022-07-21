@@ -7,10 +7,11 @@ const getUser = async (userId) => {
     return user
 }
 
-const createUser = async (userId) => {
+const createUser = async (userId, email) => {
     return new Promise((resolve, reject) => {
         const newUser = new userModel({
             _id: userId,
+            email: email
         })
         newUser.save(function (err, obj) {
             if (err) {
@@ -64,7 +65,14 @@ const updateUserSettings = async (userId, settings) => {
     return updatedUser
 }
 
+const addSubscription = async (email) => {
+    console.log(`Adding sub for ${email}`)
+    const updatedUser = await userModel.updateOne({ email: email }, { subscription: 'premium' })
+    return updatedUser
+}
+
 module.exports = {
+    addSubscription,
     updateUserSettings,
     getUser,
     createUser,

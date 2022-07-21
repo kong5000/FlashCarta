@@ -10,7 +10,7 @@ router.get('/user-data', auth.isAuthorized, async (req, res) => {
         let userInfoResult = await getUser(user.uid)
         let isNewUser = false
         if (!userInfoResult.length) {
-            await createUser(user.uid)
+            await createUser(user.uid, user.email)
             userInfo = await getUser(user.uid)
             isNewUser = true
         }
