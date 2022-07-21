@@ -27,12 +27,14 @@ router.post('/stripe', express.raw({ type: 'application/json' }), async (request
         const customerInfo = await stripe.customers.retrieve(
             subscription.customer
         );
+        console.log(`subcription`)
+        console.log(subscription.customer)
+        console.log(`customer info`)
+        console.log(customerInfo)
+        console.log(`customer meta data`)
+        console.log(customerInfo.metadata)
         const uid = customerInfo.metadata.firebaseUID
-        console.log("SUBSCRIPTION")
-        console.log("SUBSCRIPTION")
-        console.log("SUBSCRIPTION")
-        console.log("SUBSCRIPTION")
-        console.log("SUBSCRIPTION")
+
         console.log(uid)
     }
 
