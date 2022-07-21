@@ -42,8 +42,8 @@ router.post('/stripe', express.raw({ type: 'application/json' }), async (request
 
 router.get('/checkout', auth.isAuthorized, async (req, res) => {
     const session = await stripe.checkout.sessions.create({
-        success_url: 'http://localhost:3000/dashboard',
-        cancel_url: 'http://localhost:3000/dashboard',
+        success_url: 'https://flashcarta.com/dashboard',
+        cancel_url: 'https://flashcarta.com/dashboard',
         line_items: [
             { price: 'price_1LMMYOHLjVvtqNCUQ4ItfAjS', quantity: 1 }
         ],
