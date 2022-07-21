@@ -15,9 +15,7 @@ router.post('/stripe', express.raw({ type: 'application/json' }), async (request
             console.log("CHECKOUT SESSION COMPLETED")
             console.log(event.data.object)
             const checkoutSession = event.data.object
-            console.log('Customer Details')
             const customerDetails = checkoutSession.customer_details
-            console.log(customerDetails)
             await addSubscription(customerDetails.email)
         }
     } catch (err) {
@@ -44,7 +42,6 @@ router.get('/checkout', auth.isAuthorized, async (req, res) => {
                 coupon: 'Id4ga1cR',
             }],
         })
-        console.log(session)
         return res.status(200).send(session)
     } catch (err) {
         return res.status(400).send('Could not generate checkout session')
