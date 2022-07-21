@@ -34,12 +34,12 @@ const StorePage = ({ user }) => {
             </div>
                 :
                 <div className='subscription-container'>
-                    <div>
-                        <Typography variant="h6" >
+                    <div className='shop-item-description'>
+                        <div className='shop-item-label' >
                             Premium Subscription (Free)
-                        </Typography>
+                        </div>
                         <div>
-                            A premium subscription gives you access to the user settings page. Choose how many cards per exercise, and learning rate! Follow the instructions after hitting subscribe on how to sign up for free with Stripe
+                            A premium subscription unlocks the word tracker on the study page, with more premium features to be added in the future. Subscribe for free with Stripe.
                         </div>
                     </div>
                     <BuyPremium onClick={sendToCheckout} />

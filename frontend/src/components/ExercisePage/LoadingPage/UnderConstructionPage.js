@@ -6,7 +6,7 @@ const UnderConstructionPage = ({ loading }) => {
         <div className="loading-page">
             <Spinner loading={loading} alternateAnimation={true} />
             <Typography variant="h5" >
-                Sorry! The stats page is still under construction!
+                Sorry, I'm still working on this page! Please check back later.
             </Typography>
         </div>
     )

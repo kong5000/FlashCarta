@@ -7,14 +7,17 @@ router.get('/user-data', auth.isAuthorized, async (req, res) => {
     //Return Settings, Stats, and Card Stack
     const user = res.locals.user
     try {
-        let userInfo = await getUser(user.uid)
-        if (!userInfo.length) {
+        let userInfoResult = await getUser(user.uid)
+        let isNewUser = false
+        if (!userInfoResult.length) {
             await createUser(user.uid)
             userInfo = await getUser(user.uid)
+            isNewUser = true
         }
-        console.log("USER INFO HERE")
+        let userInfo = userInfoResult[0]
+        userInfo.isNewUser = isNewUser
         console.log(userInfo)
-        res.status(200).send(userInfo[0])
+        res.status(200).send(userInfo)
     } catch (err) {
         console.log(err)
         return res.status(400).send(err)

@@ -78,6 +78,7 @@ const Dashboard = ({ user, logout }) => {
     try{
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
       const userInfo = await getUserInfo(idToken)
+      console.log(userInfo)
       setUserInfo(userInfo)
       let userStats = await getUserStats(idToken)
       setUserStats(userStats)

@@ -14,7 +14,7 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
             />
             <div className='icon-row-container'>
                 <Icon
-                    label={'food'}
+                    label={'Food'}
                     animation={'food'}
                     category={'food'}
                     onClick={categoryClickHandler}
@@ -23,7 +23,7 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                     userStats={userStats}
                 />
                 <Icon
-                    label={'clothing'}
+                    label={'Clothing'}
                     animation={'clothing'}
                     category={'clothing'}
                     onClick={categoryClickHandler}
@@ -43,7 +43,7 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
             />
             <div className='icon-row-container'>
                 <Icon
-                    label={'body'}
+                    label={'Body'}
                     animation={'body'}
                     category={'body'}
                     onClick={categoryClickHandler}
@@ -52,7 +52,7 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                     userStats={userStats}
                 />
                 <Icon
-                    label={'transport'}
+                    label={'Transport'}
                     animation={'transport'}
                     category={'transport'}
                     onClick={categoryClickHandler}
@@ -71,7 +71,7 @@ const Categories = ({ categoryClickHandler, setActivePage, setExerciseActive, pr
                 userStats={userStats}
             />
             <Icon
-                label={'animals'}
+                label={'Animals'}
                 animation={'animals'}
                 category={'animals'}
                 onClick={categoryClickHandler}

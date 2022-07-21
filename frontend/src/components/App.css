@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+body, html{
+  font-family: 'Roboto', sans-serif;
+}
 .App {
   text-align: center;
 }
@@ -52,7 +55,7 @@
 .navbar-button-label{
   color: #8ea7f7;
   /* color: #7f9dff; */
-  font-family: 'Varela Round', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 15px;
   font-weight: bolder;
 }

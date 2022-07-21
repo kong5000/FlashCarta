@@ -1,6 +1,6 @@
 import axios from 'axios';
-const BASE_URL = "https://polar-dawn-24721.herokuapp.com"
-// const BASE_URL = "http://localhost:5001"
+// const BASE_URL = "https://polar-dawn-24721.herokuapp.com"
+const BASE_URL = "http://localhost:5001"
 
 export const getDeck = async (idToken, language, set) => {
     const res = await axios.get(BASE_URL + `/get-deck/${language}/${set}`, { headers: { "Authorization": `Bearer ${idToken}` } });

@@ -31,7 +31,7 @@ function CreateButton({ setNewCardActive }) {
                     setNewCardActive(true)
                 }}
             />
-            <div>
+            <div className="label">
                 Make Card
             </div>
         </div>

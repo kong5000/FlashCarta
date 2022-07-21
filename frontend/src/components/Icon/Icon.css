@@ -9,6 +9,8 @@
 
 .icon-label {
     position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
     top: -70px;
 }
 

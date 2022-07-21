@@ -3,7 +3,7 @@ const { getAllUserCards } = require('./card')
 const getUser = async (userId) => {
     const user = await userModel.find(
         { _id: userId }
-    )
+    ).lean()
     return user
 }
 
@@ -40,7 +40,7 @@ const getUserStatistics = async (userId) => {
         categoryStats[category]['totalStars'] = singleCategoryDeck.length * 5
         categoryStats[category]['userStars'] = userStarsInCategory
     })
-    
+
     /**@todo lot of repeated code here, need to clean */
     const wordRankingCategoriers = ['50', '100', '150', '200']
     let index = 1
