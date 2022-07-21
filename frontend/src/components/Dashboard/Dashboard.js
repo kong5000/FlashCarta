@@ -106,6 +106,7 @@ const Dashboard = ({ user, logout }) => {
       {activePage === 'study' &&
         <StudyPage
           userStats={userStats}
+          userInfo={userInfo}
           setActivePage={setActivePage}
           setExerciseActive={setExerciseState}
           setNewCardActive={setNewCardActive}

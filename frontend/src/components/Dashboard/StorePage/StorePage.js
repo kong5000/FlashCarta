@@ -39,7 +39,7 @@ const StorePage = ({ user }) => {
                             Premium Subscription (Free)
                         </div>
                         <div>
-                            A premium subscription unlocks the word tracker on the study page, with more premium features to be added in the future. Subscribe for free with Stripe.
+                            Unlock the word stat tracker, and more features to come.
                         </div>
                     </div>
                     <BuyPremium onClick={sendToCheckout} />

@@ -3,12 +3,42 @@ const auth = require('./auth')
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const router = express.Router();
 
-router.post('/stripe', async (req, res) => {
+router.post('/stripe', express.raw({ type: 'application/json' }), async (request, response) => {
+    const sig = request.headers['stripe-signature'];
+
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_ENDPOINT_SECRET);
+    } catch (err) {
+        response.status(400).send(`Webhook Error: ${err.message}`);
+        return;
+    }
+    console.log(event.type)
+    // Handle the event
     // const customer = await stripe.customers.retrieve(
     //   'cus_LxyROGlhG4S005'
     // );
     // const uid = customer.metadata.firebaseUID
-})
+    if (event.type === 'customer.subscription.created') {
+        console.log("SUBSCRIPTION CREATED")
+
+        const subscription = event.data.object;
+        const customerInfo = await stripe.customers.retrieve(
+            subscription.customer
+        );
+        const uid = customerInfo.metadata.firebaseUID
+        console.log("SUBSCRIPTION")
+        console.log("SUBSCRIPTION")
+        console.log("SUBSCRIPTION")
+        console.log("SUBSCRIPTION")
+        console.log("SUBSCRIPTION")
+        console.log(uid)
+    }
+
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
+});
 
 router.get('/checkout', auth.isAuthorized, async (req, res) => {
     const session = await stripe.checkout.sessions.create({

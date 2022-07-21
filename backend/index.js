@@ -12,10 +12,10 @@ const cardRouter = require('./routes/card')
 
 const app = express()
 app.use(cors())
+app.use(stripeRouter) //Stripe webhook requires raw request, must come before bodyParse
 app.use(bodyParser.json())
 app.use(userRouter)
 app.use(cardRouter)
-app.use(stripeRouter)
 
 app.get('/', async (req, res) => {
   console.log("Test")

@@ -1,0 +1,9 @@
+.lock-container{
+    min-height: 200px;
+    width: 200px;
+    border: 1px rgb(219, 216, 216) solid;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}

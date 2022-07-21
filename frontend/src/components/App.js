@@ -29,6 +29,7 @@ const App = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    document.title = "Flash Carta";
     let userFromLocalStorage = localStorage.getItem('user')
     if (userFromLocalStorage) {
       setUser(JSON.parse(userFromLocalStorage))

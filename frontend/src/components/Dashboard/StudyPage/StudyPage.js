@@ -4,8 +4,9 @@ import './StudyPage.css'
 import Icon from '../../Icon/Icon';
 import CreateButton from '../../Dashboard/CardModal/CreateButton';
 import StatsWindow from '../StatsWindow/StatsWindow';
+import LockedWindow from '../StatsWindow/LockedWindow';
 import { Typography } from '@mui/material';
-const StudyPage = ({ setExerciseActive, categoryClickHandler, setNewCardActive, userStats }) => {
+const StudyPage = ({ userInfo, setExerciseActive, categoryClickHandler, setNewCardActive, userStats }) => {
     return (
         <div className='study-page'>
             <Categories
@@ -13,10 +14,10 @@ const StudyPage = ({ setExerciseActive, categoryClickHandler, setNewCardActive, 
                 setExerciseActive={setExerciseActive}
                 categoryClickHandler={categoryClickHandler} />
             <div className='study-page-right-side'>
-                <div className=' study-page-container'>
-                    <Typography className='exercise-word' variant="h5" >
+                <div className='study-page-container'>
+                    <h2 className='exercise-word' variant="h5" >
                         Custom Deck
-                    </Typography>
+                    </h2>
                     <div className='custom-study-icon-container'>
                         <CreateButton setNewCardActive={setNewCardActive} />
                         <Icon
@@ -28,7 +29,7 @@ const StudyPage = ({ setExerciseActive, categoryClickHandler, setNewCardActive, 
                         />
                     </div>
                 </div>
-                <StatsWindow />
+                {userInfo && userInfo.subscription ? <StatsWindow /> : <LockedWindow/>}
             </div>
         </div>
     );
