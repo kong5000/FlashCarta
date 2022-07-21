@@ -43,19 +43,26 @@ router.post('/stripe', express.raw({ type: 'application/json' }), async (request
 });
 
 router.get('/checkout', auth.isAuthorized, async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-        success_url: 'https://flashcarta.com/dashboard',
-        cancel_url: 'https://flashcarta.com/dashboard',
-        line_items: [
-            { price: 'price_1LMMYOHLjVvtqNCUQ4ItfAjS', quantity: 1 }
-        ],
-        mode: 'subscription',
-        discounts: [{
-            coupon: 'Id4ga1cR',
-        }],
-    })
-    console.log(session)
-    return res.status(200).send(session)
+    try {
+        const user = res.locals.user
+        const email = user.email
+        const session = await stripe.checkout.sessions.create({
+            customer_email: email,
+            success_url: 'https://flashcarta.com/dashboard',
+            cancel_url: 'https://flashcarta.com/dashboard',
+            line_items: [
+                { price: 'price_1LMMYOHLjVvtqNCUQ4ItfAjS', quantity: 1 }
+            ],
+            mode: 'subscription',
+            discounts: [{
+                coupon: 'Id4ga1cR',
+            }],
+        })
+        console.log(session)
+        return res.status(200).send(session)
+    } catch (err) {
+        return res.status(400).send('Could not generate checkout session')
+    }
 })
 
 module.exports = router;
