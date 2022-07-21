@@ -14,10 +14,11 @@ router.post('/stripe', express.raw({ type: 'application/json' }), async (request
         if (event.type === 'checkout.session.completed') {
             console.log(event.data.object)
             const checkoutSession = event.data.object
-            const customerDetails = checkoutSession.customerDetails
+            const customerDetails = checkoutSession.customer_details
             await addSubscription(customerDetails.email)
         }
     } catch (err) {
+        console.log(err)
         return response.status(400).send(`Webhook Error: ${err.message}`);
     }
     return response.status(200).send('Event Ack');
