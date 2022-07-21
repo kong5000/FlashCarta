@@ -27,6 +27,16 @@
     text-align: center;
 }
 
+.stats-window-container {
+    min-height: 200px;
+    min-width: 400px;
+    border: 1px rgb(219, 216, 216) solid;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center; 
+}
+
 @media only screen and (max-width: 900px) {
     .study-page{
         flex-direction: column;
@@ -51,7 +61,6 @@
 
 .stats-window {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 20px;
@@ -60,4 +69,22 @@
 
 .stats-title {
     margin-bottom: 20px;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.flex-column >div{
+    font-size: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.stat-header{
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 10px;
 }

@@ -57,7 +57,19 @@ const getUserStatistics = async (userId) => {
         categoryStats[category]['totalStars'] = singleCategoryDeck.length * 5
         categoryStats[category]['userStars'] = userStarsInCategory
     })
-    return categoryStats
+    let starRatings = {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+    }
+    cards.forEach(card => {
+        starRatings[card.priority] += 1
+    })
+
+    return {...categoryStats, starRatings}
 }
 
 const updateUserSettings = async (userId, settings) => {

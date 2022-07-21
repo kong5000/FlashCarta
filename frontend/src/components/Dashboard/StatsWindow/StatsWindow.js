@@ -1,91 +1,67 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CardRating from '../../ExercisePage/CardRating';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-function StatsWindow(props) {
+import './StatsWindow.css'
+function StatsWindow({ userStats }) {
+    useEffect(() => {
+        console.log(userStats)
+    }, [userStats])
     return (
         <div className='study-page-container'>
+            <Typography className='stats-title' variant="h5" style={{ marginBottom: '20px' }}>
+                Your Words
+            </Typography>
             <div className='stats-window'>
-                <Typography className='stats-title' variant="h5"  style={{marginBottom: '20px'}}>
-                    Your Words
-                </Typography>
-                <Grid container spacing={1}>
-                    <Grid item xs={4}>
-                        <Typography className='exercise-word' variant="h6" >
-                            Level
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Typography className='exercise-word' variant="h6" >
-                            Count
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                    <Typography className='exercise-word' variant="h6" >
-                            Rating
-                        </Typography>
-                    </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={4}>
+                <div className='flex-column'>
+                    <div className='stat-header'>
+                        Level
+                    </div>
+                    <div>
                         Mastered
-                    </Grid>
-                    <Grid item xs={2}>
-                        10
-                    </Grid>
-                    <Grid item xs={4}>
-                        <CardRating rating={5} />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={4}>
+                    </div>
+                    <div>
                         Easy
-                    </Grid>
-                    <Grid item xs={2}>
-                        10
-                    </Grid>
-                    <Grid item xs={4}>
-                        <CardRating rating={4} />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={4}>
+                    </div>
+                    <div>
                         Medium
-                    </Grid>
-                    <Grid item xs={2}>
-                        10
-                    </Grid>
-                    <Grid item xs={4}>
-                        <CardRating rating={3} />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={4}>
+                    </div>
+                    <div>
                         Difficult
-                    </Grid>
-                    <Grid item xs={2}>
-                        10
-                    </Grid>
-                    <Grid item xs={4}>
-                        <CardRating rating={2} />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={4}>
+                    </div>
+                    <div>
                         New
-                    </Grid>
-                    <Grid item xs={2}>
-                        10
-                    </Grid>
-                    <Grid item xs={4}>
-                        <CardRating rating={1} />
-                    </Grid>
-                </Grid>
-                {/* <CardRating rating={5} />
-            <CardRating rating={4} />
-            <CardRating rating={3} />
-            <CardRating rating={2} />
-            <CardRating rating={1} /> */}
+                    </div>
+                </div>
+                <div className='flex-column'>
+                    <div className='stat-header'>
+                        #
+                    </div>
+                    <div>
+                        {userStats && userStats.starRatings[5]}
+                    </div>
+                    <div>
+                        {userStats && userStats.starRatings[4]}
+                    </div>
+                    <div>
+                        {userStats && userStats.starRatings[3]}
+                    </div>
+                    <div>
+                        {userStats && userStats.starRatings[2]}
+                    </div>
+                    <div>
+                        {userStats && userStats.starRatings[1]}
+                    </div>
+                </div>
+                <div className='flex-column'>
+                    <div className='stat-header'>
+                        Rating
+                    </div>
+                    <CardRating rating={5} />
+                    <CardRating rating={4} />
+                    <CardRating rating={3} />
+                    <CardRating rating={2} />
+                    <CardRating rating={1} />
+                </div>
             </div>
         </div>
     );

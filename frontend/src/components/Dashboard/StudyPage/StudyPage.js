@@ -29,7 +29,7 @@ const StudyPage = ({ userInfo, setExerciseActive, categoryClickHandler, setNewCa
                         />
                     </div>
                 </div>
-                {userInfo && userInfo.subscription ? <StatsWindow /> : <LockedWindow/>}
+                {userInfo && userInfo.subscription ? <StatsWindow userStats={userStats}/> : <LockedWindow/>}
             </div>
         </div>
     );
