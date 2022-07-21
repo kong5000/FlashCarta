@@ -14,7 +14,9 @@ router.post('/stripe', express.raw({ type: 'application/json' }), async (request
         if (event.type === 'checkout.session.completed') {
             console.log(event.data.object)
             const checkoutSession = event.data.object
+            console.log('Customer Details')
             const customerDetails = checkoutSession.customer_details
+            console.log(customerDetails)
             await addSubscription(customerDetails.email)
         }
     } catch (err) {
