@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import './Icon.css'
 function Icon(props) {
     const [progress, setProgress] = useState(null)
-    const { animation, userStats, onClick, category, setExerciseActive, label } = props
+    const { animation, userStats, onClick, category, label } = props
     let lottieAnimation = null
     switch (animation) {
         case "food":
@@ -45,6 +45,7 @@ function Icon(props) {
     }
 
     const container = useRef(null);
+
     useEffect(() => {
         lottie.loadAnimation({
             name: animation,
@@ -58,7 +59,7 @@ function Icon(props) {
         return () => {
             lottie.destroy(animation);
         };
-    }, [animation]);
+    }, [lottieAnimation, animation]);
 
     useEffect(() => {
         if(userStats && userStats[category]){
@@ -66,7 +67,7 @@ function Icon(props) {
                 setProgress(100 * userStats[category].userStars/ userStats[category].totalStars)
             }
         }
-    },[userStats])
+    },[userStats, category])
 
     return (
         <div className="icon">

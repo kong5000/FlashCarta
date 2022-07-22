@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 
-function Spinner({ animation, delay }) {
+function Spinner({ animation }) {
     let lottieAnimation = null
     switch (animation) {
         case "pencil":
@@ -21,21 +21,20 @@ function Spinner({ animation, delay }) {
             autoplay: false,
             animationData: lottieAnimation
         });
-        setTimeout(() => {
-            animation.goToAndPlay(0)
-        }, delay)
+
+        animation.goToAndPlay(0)
+
         //setting lottie autoplay true does not seem to work, this interval is a workaround
         animation.addEventListener('complete', function () {
             setTimeout(function () {
                 animation.goToAndPlay(0);
-            }, 4000);
-        })
+            }, 3000);
+        }, [lottieAnimation])
 
         return () => {
             lottie.destroy('spinner');
-            // clearInterval(intervalId)
         };
-    }, []);
+    }, [lottieAnimation]);
 
     return (
         <div

@@ -6,12 +6,10 @@ function LockedWindow(props) {
             <h2>
                 Word Ratings
             </h2>
-
             <LockIcon />
             <div>
                 Unlock this feature in the shop
             </div>
-
         </div>
     );
 }
