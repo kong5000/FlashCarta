@@ -4,7 +4,7 @@ import './StudyPage.css'
 import Icon from '../../Icon/Icon';
 import CreateButton from '../../Dashboard/CardModal/CreateButton';
 
-const StudyPage = ({ userInfo, setExerciseActive, categoryClickHandler, setNewCardActive, userStats }) => {
+const StudyPage = ({ setExerciseActive, categoryClickHandler, setNewCardActive, userStats }) => {
     return (
         <div className='study-page'>
             <Categories
