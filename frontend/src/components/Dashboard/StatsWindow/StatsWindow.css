@@ -6,6 +6,14 @@
     text-align: center;
 }
 
+.locked-window{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    text-align: center;
+}
+
 .flex-column{
     display: flex;
     flex-direction: column;
