@@ -2,6 +2,7 @@
     width: 120px;
 }
 .create-button-container{
+    padding-top: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;

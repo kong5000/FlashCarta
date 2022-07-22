@@ -8,9 +8,6 @@ function StatsWindow({ userStats }) {
     }, [userStats])
     return (
         <div className='study-page-container'>
-            <Typography className='stats-title' variant="h5" style={{ marginBottom: '20px' }}>
-                Your Words
-            </Typography>
             <div className='stats-window'>
                 <div className='flex-column'>
                     <div className='stat-header'>
@@ -34,7 +31,7 @@ function StatsWindow({ userStats }) {
                 </div>
                 <div className='flex-column'>
                     <div className='stat-header'>
-                        #
+                        Words
                     </div>
                     <div>
                         {userStats && userStats.starRatings[5]}

@@ -142,3 +142,9 @@ body, html{
   align-items: center;
 }
 
+.menu-container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 130px;
+}

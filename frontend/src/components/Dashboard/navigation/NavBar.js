@@ -71,14 +71,17 @@ const ResponsiveAppBar = ({ activePage, setActivePage, logout }) => {
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}>
-                            {navButtons.map((navButtonName) =>
-                                <NavbarButton
-                                    key={navButtonName}
-                                    activePage={activePage}
-                                    animation={navButtonName}
-                                    label={navButtonName.toUpperCase()}
-                                    onClick={setActivePage}
-                                />)}
+                            <div className='menu-container'>
+                                {navButtons.map((navButtonName) =>
+                                    <NavbarButton
+                                        className='nav-menu-button'
+                                        key={navButtonName}
+                                        activePage={activePage}
+                                        animation={navButtonName}
+                                        label={navButtonName.toUpperCase()}
+                                        onClick={setActivePage}
+                                    />)}
+                            </div>
                         </Menu>
                     </div>
                     <div className='nav-bar-items'>

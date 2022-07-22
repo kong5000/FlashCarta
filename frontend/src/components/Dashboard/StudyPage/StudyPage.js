@@ -15,13 +15,10 @@ const StudyPage = ({ userInfo, setExerciseActive, categoryClickHandler, setNewCa
                 categoryClickHandler={categoryClickHandler} />
             <div className='study-page-right-side'>
                 <div className='study-page-container'>
-                    <h2 className='exercise-word' variant="h5" >
-                        Custom Deck
-                    </h2>
                     <div className='custom-study-icon-container'>
                         <CreateButton setNewCardActive={setNewCardActive} />
                         <Icon
-                            label={'Practice'}
+                            label={'Custom'}
                             animation={'notes'}
                             category={'custom'}
                             onClick={categoryClickHandler}
