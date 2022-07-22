@@ -23,7 +23,7 @@ function CreateButton({ setNewCardActive }) {
     return (
         <div className="create-button-container">
             <div
-                className="animation create-icon"
+                className="animation create-icon clickable"
                 ref={container}
                 onMouseEnter={() => lottie.play('create')}
                 onMouseLeave={() => lottie.stop()}

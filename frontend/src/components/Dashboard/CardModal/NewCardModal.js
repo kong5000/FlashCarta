@@ -106,7 +106,7 @@ export default function NewCardDialog({ newCardActive, setNewCardActive }) {
                 </AppBar>
                 <div className='new-word-form'>
                     <TextField className='form-text-input'
-                        label={"New Word"}
+                        label={"Word in Portuguese"}
                         variant="standard"
                         value={foreignWord}
                         onChange={(event) => {
