@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 
 function NavbarButton(props) {
-    const { animation, onClick, label, activePage } = props
+    const { animation, onClick, label, activePage, setMenuOpen } = props
     let lottieAnimation = null
     switch (animation) {
         case "edit":
@@ -48,7 +48,10 @@ function NavbarButton(props) {
         <div className="navbar-button"
             onMouseEnter={() => lottie.play(animation)}
             onMouseLeave={() => lottie.stop()}
-            onClick={() => onClick(animation)}
+            onClick={() => {
+                onClick(animation)
+                setMenuOpen(null)
+            }}
         >
             <div
                 className="navbar-button-icon animation"

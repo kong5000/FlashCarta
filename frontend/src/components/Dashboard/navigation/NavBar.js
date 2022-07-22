@@ -80,6 +80,7 @@ const ResponsiveAppBar = ({ activePage, setActivePage, logout }) => {
                                         animation={navButtonName}
                                         label={navButtonName.toUpperCase()}
                                         onClick={setActivePage}
+                                        setMenuOpen={setAnchorElNav}
                                     />)}
                             </div>
                         </Menu>
