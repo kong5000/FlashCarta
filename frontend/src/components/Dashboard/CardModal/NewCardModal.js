@@ -17,6 +17,9 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 import './NewCardModal.css'
+
+const DEFAULT_ERROR_MESSAGE = 'Sorry, there was an error when adding your card. Please try again later.'
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -36,9 +39,21 @@ export default function NewCardDialog({ newCardActive, setNewCardActive }) {
     const [waiting, setWaiting] = useState(false)
     const [open, setOpen] = useState(false);
     const [errorOpen, setErrorOpen] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(DEFAULT_ERROR_MESSAGE)
 
     const handleClick = async () => {
         try{
+            if(!definition || !foreignWord){
+                setErrorMessage('New Word and Definition inputs are required')
+                setErrorOpen(true)
+                return
+            }
+            if(foreignWord.length > 30){
+                setErrorMessage('Sorry, the max word length is 30')
+                setErrorOpen(true)
+                return
+            }
+
             setWaiting(true)
             let newCard = {
                 word: foreignWord,
@@ -53,6 +68,7 @@ export default function NewCardDialog({ newCardActive, setNewCardActive }) {
             setForeignWord('')
             setDefinition('')
         }catch(err){
+            setErrorMessage(DEFAULT_ERROR_MESSAGE)
             setWaiting(false)
             setErrorOpen(true)
             console.log(err)
@@ -117,7 +133,7 @@ export default function NewCardDialog({ newCardActive, setNewCardActive }) {
                     </Snackbar>
                     <Snackbar open={errorOpen} autoHideDuration={6000} onClose={handleCloseSnack}>
                         <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
-                            Sorry, there was an error when adding your card. Please try again later.
+                            {errorMessage}
                         </Alert>
                     </Snackbar>
                 </div>
