@@ -27,13 +27,13 @@ router.post('/add-custom-card', auth.isAuthorized, async (req, res) => {
     }
 })
 
-router.get('/get-deck-ranking/:language/:start/:end/:size', auth.isAuthorized, async (req, res) => {
+router.get('/get-deck-ranking/:language/:start/:end/', auth.isAuthorized, async (req, res) => {
     try {
-        const { language, start, end, size } = req.params
+        const { language, start, end } = req.params
         const userId = res.locals.user.uid
         let userInfoResult = await getUser(userId)
         let userInfo = userInfoResult[0]
-        
+
         let deck = await getDeckByRanking(userId, language, start, end, userInfo.cardsPerSession)
         if (deck.length === 0) {
             console.log("generating deck")
@@ -48,7 +48,7 @@ router.get('/get-deck-ranking/:language/:start/:end/:size', auth.isAuthorized, a
     }
 })
 
-router.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async (req, res) => {
+router.get('/get-deck-category/:language/:category/', auth.isAuthorized, async (req, res) => {
     try {
         const { language, category } = req.params
 
@@ -60,7 +60,7 @@ router.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, as
         if (deck.length === 0) {
             const deckRequest = { userId, language, category }
             await generateDeck(deckRequest)
-            deck = await getDeckByCategory(userId, language, category,  userInfo.cardsPerSession)
+            deck = await getDeckByCategory(userId, language, category, userInfo.cardsPerSession)
         }
         return res.status(200).send(deck)
     } catch (err) {

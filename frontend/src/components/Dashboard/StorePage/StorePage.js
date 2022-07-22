@@ -39,7 +39,7 @@ const StorePage = ({ user }) => {
                             Premium Subscription (Free)
                         </div>
                         <div>
-                            Unlock the word stat tracker, and more features to come.
+                            Unlock the word rating tracker, and more features to come.
                         </div>
                     </div>
                     <BuyPremium onClick={sendToCheckout} />

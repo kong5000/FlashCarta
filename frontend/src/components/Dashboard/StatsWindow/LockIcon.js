@@ -22,7 +22,7 @@ function Icon() {
     }, []);
 
     return (
-        <div className="icon">
+        <div className="icon" id="lock-icon">
             <div
                 className="animation"
                 ref={container}

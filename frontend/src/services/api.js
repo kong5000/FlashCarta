@@ -7,14 +7,13 @@ export const getDeck = async (idToken, language, set) => {
     return res.data
 }
 
-export const getDeckByCategory = async (idToken, language, category, size) => {
-    console.log(category)
-    const res = await axios.get(BASE_URL + `/get-deck-category/${language}/${category}/${size}`, { headers: { "Authorization": `Bearer ${idToken}` } });
+export const getDeckByCategory = async (idToken, language, category) => {
+    const res = await axios.get(BASE_URL + `/get-deck-category/${language}/${category}`, { headers: { "Authorization": `Bearer ${idToken}` } });
     return res.data
 }
 
-export const getDeckByRanking = async (idToken, language, ranking, size) => {
-    const res = await axios.get(BASE_URL + `/get-deck-ranking/${language}/${ranking - 49}/${ranking}/${size}`, { headers: { "Authorization": `Bearer ${idToken}` } });
+export const getDeckByRanking = async (idToken, language, ranking) => {
+    const res = await axios.get(BASE_URL + `/get-deck-ranking/${language}/${ranking - 49}/${ranking}`, { headers: { "Authorization": `Bearer ${idToken}` } });
     return res.data
 }
 

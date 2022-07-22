@@ -54,9 +54,9 @@ const Dashboard = ({ user, logout }) => {
       const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
       let deck = null
       if (isRankingCategory(category)) {
-        deck = await getDeckByRanking(idToken, 'pt', category, userInfo.cardsPerSession)
+        deck = await getDeckByRanking(idToken, 'pt', category)
       } else {
-        deck = await getDeckByCategory(idToken, 'pt', category, userInfo.cardsPerSession)
+        deck = await getDeckByCategory(idToken, 'pt', category)
       }
       if (deck.length > 0) {
         setDeck(deck)

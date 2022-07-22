@@ -1,13 +1,10 @@
 .stats-window {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     margin: 20px;
     text-align: center;
-}
-
-.stats-title {
-    margin-bottom: 20px;
 }
 
 .flex-column{
