@@ -16,3 +16,10 @@
 .exercise-footer > div{
     margin-top: 15px;
 }
+
+@media only screen and (max-width: 900px) {
+    .exercise-footer{
+        flex-direction: column;
+        align-items: center;
+    }
+}
