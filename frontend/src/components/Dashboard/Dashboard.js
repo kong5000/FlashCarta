@@ -9,8 +9,8 @@ import StudyPage from './StudyPage/StudyPage';
 import NewCardModal from './CardModal/NewCardModal'
 import StorePage from './StorePage/StorePage';
 import SettingsPage from './SettingsPage/SettingsPage';
-import UnderConstructionPage from '../ExercisePage/LoadingPage/UnderConstructionPage'
-import MuiAlert from '@mui/material/Alert';
+import StatsWindow from './StatsWindow/StatsWindow';
+import LockedWindow from './StatsWindow/LockedWindow';import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -113,7 +113,8 @@ const Dashboard = ({ user, logout }) => {
           categoryClickHandler={categoryClickHandler}
         />
       }
-      {activePage === 'stats' && <UnderConstructionPage />}
+      {activePage === 'stats' && userInfo && userInfo.subscription && <StatsWindow userStats={userStats}/>}
+      {activePage === 'stats' && userInfo && !userInfo.subscription && <LockedWindow/>}
       {activePage === 'shop' && <StorePage user={user} />}
       {activePage === 'settings' && <SettingsPage userSettings={userInfo} updateUserInfo={updateStats} />}
       <ExerciseModal

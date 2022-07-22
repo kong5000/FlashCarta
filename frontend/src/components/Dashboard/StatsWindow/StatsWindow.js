@@ -7,7 +7,7 @@ function StatsWindow({ userStats }) {
         console.log(userStats)
     }, [userStats])
     return (
-        <div className='study-page-container'>
+        <div className='stats-page'>
             <div className='stats-window'>
                 <div className='flex-column'>
                     <div className='stat-header'>
