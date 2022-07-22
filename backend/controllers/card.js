@@ -109,8 +109,7 @@ const getNumberOfMasteredCards = async (user, language) => {
 const MAX_PRIORITY = 5 //move to constants files
 const updateCardPriority = async (card, rating) => {
     let newPriority = card.priority + parseInt(rating)
-    console.log(rating)
-    console.log(newPriority)
+
     if (newPriority < 0) {
         newPriority = 0
     } else if (newPriority > MAX_PRIORITY) {

@@ -10,6 +10,7 @@ const {
 } = require('../controllers/card')
 const { textToSpeech } = require('../services/polly')
 const { uploadAudioFolderToBucket } = require('../services/s3')
+const { getUser } = require('../controllers/user')
 
 router.post('/add-custom-card', auth.isAuthorized, async (req, res) => {
     const { language, word, definition } = req.body
@@ -29,13 +30,16 @@ router.post('/add-custom-card', auth.isAuthorized, async (req, res) => {
 router.get('/get-deck-ranking/:language/:start/:end/:size', auth.isAuthorized, async (req, res) => {
     try {
         const { language, start, end, size } = req.params
-        const user = res.locals.user
-        let deck = await getDeckByRanking(user.uid, language, start, end, size)
+        const userId = res.locals.user.uid
+        let userInfoResult = await getUser(userId)
+        let userInfo = userInfoResult[0]
+        
+        let deck = await getDeckByRanking(userId, language, start, end, userInfo.cardsPerSession)
         if (deck.length === 0) {
             console.log("generating deck")
-            const deckRequest = { userId: user.uid, language, start, end }
+            const deckRequest = { userId, language, start, end }
             await generateDeck(deckRequest)
-            deck = await getDeckByRanking(user.uid, language, start, end, size)
+            deck = await getDeckByRanking(userId, language, start, end, userInfo.cardsPerSession)
         }
         return res.status(200).send(deck)
     } catch (err) {
@@ -46,14 +50,17 @@ router.get('/get-deck-ranking/:language/:start/:end/:size', auth.isAuthorized, a
 
 router.get('/get-deck-category/:language/:category/:size', auth.isAuthorized, async (req, res) => {
     try {
-        const { language, category, size } = req.params
-        const user = res.locals.user
-        let deck = await getDeckByCategory(user.uid, language, category, size)
+        const { language, category } = req.params
+
+        const userId = res.locals.user.uid
+        let userInfoResult = await getUser(userId)
+        let userInfo = userInfoResult[0]
+
+        let deck = await getDeckByCategory(userId, language, category, userInfo.cardsPerSession)
         if (deck.length === 0) {
-            console.log("generating deck")
-            const deckRequest = { userId: user.uid, language, category }
+            const deckRequest = { userId, language, category }
             await generateDeck(deckRequest)
-            deck = await getDeckByCategory(user.uid, language, category, size)
+            deck = await getDeckByCategory(userId, language, category,  userInfo.cardsPerSession)
         }
         return res.status(200).send(deck)
     } catch (err) {
