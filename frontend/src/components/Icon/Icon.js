@@ -70,7 +70,7 @@ function Icon(props) {
     },[userStats, category])
 
     return (
-        <div className="icon">
+        <div className="icon clickable">
             <div
                 className="animation"
                 ref={container}

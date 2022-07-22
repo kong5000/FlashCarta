@@ -65,6 +65,8 @@ body, html{
 
 .animation{
   display: block;
+}
+.clickable{
   cursor: pointer;
 }
 .circle {
